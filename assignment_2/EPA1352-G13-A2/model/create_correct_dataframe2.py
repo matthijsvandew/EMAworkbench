@@ -23,6 +23,9 @@ df_bmms = df_bmms.drop_duplicates(subset=['LRPName'])
 
 df_roads = df_roads.rename(columns={'lrp':'LRPName'})
 
+for i in range(len(df_roads['chainage'])): #chainage omzetten naar meters, want dat is lengte ook.
+    df_roads.loc[i,'chainage'] = (df_roads.loc[i,'chainage'] * 1000)
+
 merge_inner = df_bmms.merge(df_roads, how = 'right',on=['LRPName','road'])
 
 #print(merge_inner['lon_y'].isna().sum()) # Geen missing values!
@@ -40,12 +43,12 @@ merge_inner = df_bmms.merge(df_roads, how = 'right',on=['LRPName','road'])
 #print(merge_inner.length[2]) # kan allebei
 #print(merge_inner.loc[2,'length']) # kan allebei
 
-for i in range(len(merge_inner['length'])-1):
+for i in range(len(merge_inner['length'])-1): #als er geen lengte is gespecificeerd, neem dan het verschil in chainage.
     if np.isnan(merge_inner.loc[i,'length']) == True:
         merge_inner.loc[i,'length'] = (merge_inner.chainage_y[i+1] - merge_inner.chainage_y[i])
         #print(merge_inner.loc[i,'length'])
 
-merge_inner = merge_inner[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']]
+merge_inner = merge_inner[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']] #alleen kolommen die nodig zijn.
 print(merge_inner)
 
 merge_inner.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self.csv",index=False)
