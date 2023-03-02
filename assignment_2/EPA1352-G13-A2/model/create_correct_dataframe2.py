@@ -25,13 +25,16 @@ df_bmms = df_bmms.drop_duplicates(subset=['LRPName'])
 df_roads = df_roads.rename(columns={'lrp':'LRPName'})
 
 
-merge_inner = df_bmms.merge(df_roads, how = 'inner',on=['LRPName','road'])
+merge_inner = df_bmms.merge(df_roads, how = 'right',on=['LRPName','road'])
 
 print(merge_inner)
-#print(len(merge_inner))
+print(len(merge_inner))
 print(merge_inner.columns)
 
 print(merge_inner['lon_y'].isna().sum())
-print(merge_inner['lon_x'].isna().sum())
+print(merge_inner['lon_x'].isna().sum()) #924 missing values!
 print(merge_inner['lat_y'].isna().sum())
 print(merge_inner['lat_y'].isna().sum())
+print(merge_inner['length'].isna().sum()) #924 missing values. Voor missing values length oplossing: als length == NaN: vervang NaN door verschil chainage i en i+1. Dat kan omdat dit roads zijn en geen bridges. Voor bridges is namelijk geen NaN value bij length.
+print(merge_inner['chainage_x'].isna().sum()) #924 missing values
+print(merge_inner['chainage_y'].isna().sum())
