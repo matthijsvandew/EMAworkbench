@@ -19,6 +19,11 @@ df_roads = df_roads.drop(df_roads[df_roads['road'] != 'N1'].index)
 
 df_roads = df_roads.rename(columns={'lrp':'LRPName'})
 
+df_bmms = df_bmms.drop_duplicates(subset=['LRPName'])
+
+
+df_roads = df_roads.rename(columns={'lrp':'LRPName'})
+
 for i in df_roads['road']:
     i.strip()
 for i in df_bmms['road']:
@@ -31,16 +36,6 @@ for i in df_bmms['LRPName']:
 df_roads['LRPName'].str.strip()
 df_bmms['LRPName'].str.strip()
 
-print(df_roads['road'].dtypes)
-print(df_roads['LRPName'].dtypes)
-print(df_bmms['road'].dtypes)
-print(df_bmms['LRPName'].dtypes)
-print(type(df_roads['road']))
+merge_inner = df_bmms.merge(df_roads, how = 'inner',on=['LRPName','road'])
 
-merge = df_bmms.merge(df_roads, how = 'outer',on=['LRPName','road'])
-#print(merge)
-#print(merge.columns)
-#print(merge.head(10))
-
-#print(merge.loc[2,:])
-#print(merge.loc[3,:]) #er zit spatie achter die LRP008b, daarom herkent ie m niet en staat ie er dubbel in! White space verwijderen proberen.
+print(merge_inner)
