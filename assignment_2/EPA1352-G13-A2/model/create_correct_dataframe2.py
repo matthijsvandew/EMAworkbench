@@ -24,18 +24,14 @@ df_bmms = df_bmms.drop_duplicates(subset=['LRPName'])
 
 df_roads = df_roads.rename(columns={'lrp':'LRPName'})
 
-for i in df_roads['road']:
-    i.strip()
-for i in df_bmms['road']:
-    i.strip()
-for i in df_roads['LRPName']:
-    i.strip()
-for i in df_bmms['LRPName']:
-    i.strip()
-
-df_roads['LRPName'].str.strip()
-df_bmms['LRPName'].str.strip()
 
 merge_inner = df_bmms.merge(df_roads, how = 'inner',on=['LRPName','road'])
 
 print(merge_inner)
+#print(len(merge_inner))
+print(merge_inner.columns)
+
+print(merge_inner['lon_y'].isna().sum())
+print(merge_inner['lon_x'].isna().sum())
+print(merge_inner['lat_y'].isna().sum())
+print(merge_inner['lat_y'].isna().sum())
