@@ -16,28 +16,28 @@ df_roads = df_roads.rename(columns={'lrp':'LRPName'})
 for i in range(len(df_roads['chainage'])): #chainage omzetten naar meters, want dat is lengte ook.
     df_roads.loc[i,'chainage'] = (df_roads.loc[i,'chainage'] * 1000)
 
-merge_inner = df_bmms.merge(df_roads, how = 'right',on=['LRPName','road'])
+merge_right = df_bmms.merge(df_roads, how = 'right',on=['LRPName','road'])
 
 #Check which one must be selected for the final dataset
-#print(merge_inner['lon_y'].isna().sum()) # No missing values!
-#print(merge_inner['lon_x'].isna().sum()) # 924 missing values!
-#print(merge_inner['lat_y'].isna().sum()) # No missing values!
-#print(merge_inner['lat_x'].isna().sum()) # 924 missing values
-#print(merge_inner['length'].isna().sum()) # 924 missing values. --> Must be fixed. solution: if length == NaN: swap NaN by difference in chainage i and i+1. This is possible becasue they are roads and not bridges. Bridges doesn't contain Nan values for length.
-#print(merge_inner['chainage_x'].isna().sum()) # 924 missing values
-#print(merge_inner['chainage_y'].isna().sum()) # No missing values!
-#print(merge_inner['type_x'].isna().sum()) # 924 missing values
-#print(merge_inner['name_x'].isna().sum()) # 924 missing values
-#print(merge_inner['type_y'].isna().sum()) # No missing values!
-#print(merge_inner['name_y'].isna().sum()) # No missing values
-#print(merge_inner.length[2]) # both possible
-#print(merge_inner.loc[2,'length']) # Both possible
+#print(merge_right['lon_y'].isna().sum()) # No missing values!
+#print(merge_right['lon_x'].isna().sum()) # 924 missing values!
+#print(merge_right['lat_y'].isna().sum()) # No missing values!
+#print(merge_right['lat_x'].isna().sum()) # 924 missing values
+#print(merge_right['length'].isna().sum()) # 924 missing values. --> Must be fixed. solution: if length == NaN: swap NaN by difference in chainage i and i+1. This is possible becasue they are roads and not bridges. Bridges doesn't contain Nan values for length.
+#print(merge_right['chainage_x'].isna().sum()) # 924 missing values
+#print(merge_right['chainage_y'].isna().sum()) # No missing values!
+#print(merge_right['type_x'].isna().sum()) # 924 missing values
+#print(merge_right['name_x'].isna().sum()) # 924 missing values
+#print(merge_right['type_y'].isna().sum()) # No missing values!
+#print(merge_right['name_y'].isna().sum()) # No missing values
+#print(merge_right.length[2]) # both possible
+#print(merge_right.loc[2,'length']) # Both possible
 
-for i in range(len(merge_inner['length'])-1): #when length is nan, take difference in chainage
-    if np.isnan(merge_inner.loc[i,'length']) == True:
-        merge_inner.loc[i,'length'] = (merge_inner.chainage_y[i+1] - merge_inner.chainage_y[i])
+for i in range(len(merge_right['length'])-1): #when length is nan, take difference in chainage
+    if np.isnan(merge_right.loc[i,'length']) == True:
+        merge_right.loc[i,'length'] = (merge_right.chainage_y[i+1] - merge_right.chainage_y[i])
 
-merge_inner = merge_inner[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']] #only necessary columns.
-print(merge_inner)
+merge_right = merge_right[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']] #only necessary columns.
+print(merge_right)
 
-merge_inner.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self.csv",index=False)
+merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self.csv",index=False)
