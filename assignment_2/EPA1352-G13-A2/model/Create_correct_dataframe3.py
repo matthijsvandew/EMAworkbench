@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
+import random
 
 df_roads = pd.read_csv(r'C:\Github\epa1352advancedsimulation\assignment_2\WBSIM_Lab1_cleanedDataset\infrastructure\_roads3.csv')
-#df_roads = df_roads.drop(columns='gap')
 df_bmms = pd.read_excel('BMMS_overview.xlsx')
 
 df_bmms = df_bmms.drop(df_bmms[df_bmms['road'] != 'N1'].index)
@@ -28,7 +28,7 @@ for i in range(len(merge_right['length'])-1): #when length is nan, take differen
         merge_right.loc[i,'length'] = (merge_right.chainage_y[i+1] - merge_right.chainage_y[i])
 
 merge_right = merge_right[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']] #only necessary columns.
-print(merge_right)
+#print(merge_right)
 
 CountA = 0
 CountB = 0
@@ -47,15 +47,62 @@ for i in range(len(merge_right['condition'])-1):
      elif np.isnan(merge_right.loc[i, 'condition']) == True:
           continue
 
-total_count = CountA + CountB + CountC + CountD
+Total_count = CountA + CountB + CountC + CountD
+Count_BCD = CountB + CountC + CountD
+Count_CD = CountC + CountD
+
+Fraction_A_total = CountA / Total_count
+Fraction_B_total = CountB / Total_count
+Fraction_C_total = CountC / Total_count
+Fraction_D_total = CountD / Total_count
+
+Fraction_B_BCD = CountB / Count_BCD
+Fraction_C_CD = CountC / Count_CD
+
 # print(CountA)
 # print(CountB)
 # print(CountC)
 # print(CountD)
-# print(total_count)
-fraction_A = CountA / total_count
-fraction_B = CountB / total_count
-fraction_C = CountD / total_count
-fraction_D = CountD / total_count
+# print('stop')
+# print(Count_BCD)
+# print(Count_CD)
+# print('stop')
+print(Fraction_A_total)
+print(Fraction_B_BCD)
+print(Fraction_C_CD)
+print('stop')
+a = random.random()
+b = random.random()
+c = random.random()
 
-#merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self2.csv",index=False)
+print(a)
+print(b)
+print(c)
+
+
+#print(merge_right.isna().sum())
+
+for i in range(len(merge_right['condition'])-1):
+     if merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
+          if np.isnan(merge_right.loc[i, 'condition']) == True:
+               if a < Fraction_A_total:
+                    merge_right.loc[i, 'condition'] == 'A'
+               elif b < Fraction_B_BCD:
+                    merge_right.loc[i, 'condition'] == 'B'
+               elif c < Fraction_C_CD:
+                    merge_right.loc[i, 'condition'] == 'C'
+               else:
+                    merge_right.loc[i, 'condition'] == 'D'
+
+
+
+# if a < Fraction_A_total:
+#      print('het is kwaliteit A geworden')
+# elif b < Fraction_B_BCD:
+#      print('het is kwaliteit B geworden')
+# elif c < Fraction_C_CD:
+#      print('het is kwaliteit C geworden')
+# else:
+#      print('het is kwaliteit D geworden')
+
+#merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self3.csv",index=False)
