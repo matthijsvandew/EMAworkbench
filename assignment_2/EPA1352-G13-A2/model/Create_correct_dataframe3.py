@@ -17,7 +17,6 @@ df_roads = df_roads.drop(columns='gap')
 
 df_roads = df_roads.rename(columns={'lrp':'LRPName'})
 df_bmms = df_bmms.drop_duplicates(subset=['LRPName'])
-df_roads = df_roads.rename(columns={'lrp':'LRPName'})
 
 
 
@@ -82,9 +81,9 @@ print(c)
 
 #print(merge_right.isna().sum())
 
-for i in range(len(merge_right['condition'])-1):
+for i in range(len(merge_right['condition'])):
      if merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
-          if np.isnan(merge_right.loc[i, 'condition']) == True:
+          if pd.isna(merge_right.loc[i, 'condition']) == True:
                if a < Fraction_A_total:
                     merge_right.loc[i, 'condition'] == 'A'
                elif b < Fraction_B_BCD:
