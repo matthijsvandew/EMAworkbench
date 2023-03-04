@@ -85,15 +85,20 @@ for i in range(len(merge_right['condition'])):
      if merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
           if pd.isna(merge_right.loc[i, 'condition']) == True:
                if a < Fraction_A_total:
-                    merge_right.loc[i, 'condition'] == 'A'
+                    merge_right.loc[i, 'condition'] = 'A'
                elif b < Fraction_B_BCD:
-                    merge_right.loc[i, 'condition'] == 'B'
+                    merge_right.loc[i, 'condition'] = 'B'
                elif c < Fraction_C_CD:
-                    merge_right.loc[i, 'condition'] == 'C'
+                    merge_right.loc[i, 'condition'] = 'C'
                else:
-                    merge_right.loc[i, 'condition'] == 'D'
+                    merge_right.loc[i, 'condition'] = 'D'
 
-
+count=0
+for i in range(len(merge_right['condition'])):
+     if merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
+          if pd.isna(merge_right.loc[i, 'condition']) == True:
+               count+=1
+print(count)
 
 # if a < Fraction_A_total:
 #      print('het is kwaliteit A geworden')
@@ -104,4 +109,24 @@ for i in range(len(merge_right['condition'])):
 # else:
 #      print('het is kwaliteit D geworden')
 
-#merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self3.csv",index=False)
+merge_right.insert(loc=0,column='id',value=0)
+
+for i in range(len(merge_right)):
+     merge_right.loc[i, 'id'] = round(i)
+     #print(i)
+     #print(int(i))
+
+
+for i in range(len(merge_right)):
+     if i == 0:
+          merge_right.loc[i, 'type_y'] = 'source'
+     elif i == len(merge_right):
+          merge_right.loc[i, 'type_y'] = 'sink'
+     elif merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
+          merge_right.loc[i, 'type_y'] = 'bridge'
+     else:
+          merge_right.loc[i, 'type_y'] = 'link'
+
+merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
+
+merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self2.csv",index=False)
