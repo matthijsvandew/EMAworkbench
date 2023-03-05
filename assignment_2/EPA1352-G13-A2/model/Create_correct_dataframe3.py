@@ -18,8 +18,6 @@ df_roads = df_roads.drop(columns='gap')
 df_roads = df_roads.rename(columns={'lrp':'LRPName'})
 df_bmms = df_bmms.drop_duplicates(subset=['LRPName'])
 
-
-
 merge_right = df_bmms.merge(df_roads, how = 'right',on=['LRPName','road'])
 
 for i in range(len(merge_right['length'])-1): #when length is nan, take difference in chainage
@@ -27,7 +25,6 @@ for i in range(len(merge_right['length'])-1): #when length is nan, take differen
         merge_right.loc[i,'length'] = (merge_right.chainage_y[i+1] - merge_right.chainage_y[i])
 
 merge_right = merge_right[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']] #only necessary columns.
-#print(merge_right)
 
 CountA = 0
 CountB = 0
@@ -51,35 +48,12 @@ Count_BCD = CountB + CountC + CountD
 Count_CD = CountC + CountD
 
 Fraction_A_total = CountA / Total_count
-Fraction_B_total = CountB / Total_count
-Fraction_C_total = CountC / Total_count
-Fraction_D_total = CountD / Total_count
-
 Fraction_B_BCD = CountB / Count_BCD
 Fraction_C_CD = CountC / Count_CD
 
-# print(CountA)
-# print(CountB)
-# print(CountC)
-# print(CountD)
-# print('stop')
-# print(Count_BCD)
-# print(Count_CD)
-# print('stop')
-print(Fraction_A_total)
-print(Fraction_B_BCD)
-print(Fraction_C_CD)
-print('stop')
 a = random.random()
 b = random.random()
 c = random.random()
-
-print(a)
-print(b)
-print(c)
-
-
-#print(merge_right.isna().sum())
 
 for i in range(len(merge_right['condition'])):
      if merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
@@ -93,21 +67,12 @@ for i in range(len(merge_right['condition'])):
                else:
                     merge_right.loc[i, 'condition'] = 'D'
 
-count=0
-for i in range(len(merge_right['condition'])):
-     if merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
-          if pd.isna(merge_right.loc[i, 'condition']) == True:
-               count+=1
-print(count)
-
-# if a < Fraction_A_total:
-#      print('het is kwaliteit A geworden')
-# elif b < Fraction_B_BCD:
-#      print('het is kwaliteit B geworden')
-# elif c < Fraction_C_CD:
-#      print('het is kwaliteit C geworden')
-# else:
-#      print('het is kwaliteit D geworden')
+# count=0
+# for i in range(len(merge_right['condition'])):
+#      if merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
+#           if pd.isna(merge_right.loc[i, 'condition']) == True:
+#                count+=1
+# print(count)
 
 merge_right.insert(loc=0,column='id',value=0)
 
@@ -129,4 +94,4 @@ for i in range(len(merge_right)):
 
 merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
 
-merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self2.csv",index=False)
+#merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self3.csv",index=False)
