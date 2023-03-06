@@ -72,13 +72,13 @@ class Bridge(Infra):
         if self.condition == 'A' and self.change_A < self.down_A and self.length > 200:
             self.delay_time = self.random.triangular(60,120,240)
 
-        elif self.condition == 'A' and self.change < self.down_A and self.length < 10:
+        elif self.condition == 'A' and self.change_A < self.down_A and self.length < 10:
             self.delay_time = self.random.uniform(10,20)
 
-        elif self.condition == 'A' and self.change < self.down_A and self.length > 10 and self.length < 50:
+        elif self.condition == 'A' and self.change_A < self.down_A and self.length > 10 and self.length < 50:
             self.delay_time = self.random.uniform(10,20)
 
-        elif self.condition == 'A' and self.change < self.down_A and self.length < 200 and self.length > 50:
+        elif self.condition == 'A' and self.change_A < self.down_A and self.length < 200 and self.length > 50:
             self.delay_time = self.random.uniform(10,20)
 
         elif self.condition == 'B' and self.change_B < self.down_B and self.length > 200:
@@ -118,7 +118,8 @@ class Bridge(Infra):
             self.delay_time = self.random.uniform(10, 20)
 
 
-        #self.delay_time = self.random.randrange(0, 1) #10
+        else:
+            self.delay_time = self.random.randrange(0, 10)
         # print(self.delay_time)
 
     # TODO
@@ -276,7 +277,7 @@ class Vehicle(Agent):
         self.waiting_time = 0
         self.waited_at = None
         self.removed_at_step = None
-        self.datacollector = DataCollector(agent_reporters={self.removed_at_step - self.generated_at_step})
+        #self.datacollector = DataCollector(agent_reporters={self.removed_at_step - self.generated_at_step})
 
     def __str__(self):
         return "Vehicle" + str(self.unique_id) + \
@@ -303,7 +304,7 @@ class Vehicle(Agent):
         if self.state == Vehicle.State.DRIVE:
             self.drive()
 
-        self.datacollector.collect(self)
+        #self.datacollector.collect(self)
         """
         To print the vehicle trajectory at each step
         """
