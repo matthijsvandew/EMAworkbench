@@ -85,7 +85,7 @@ for i in range(len(merge_right)):
 for i in range(len(merge_right)):
      if i == 0:
           merge_right.loc[i, 'type_y'] = 'source'
-     elif i == len(merge_right):
+     elif i == len(merge_right)-1:
           merge_right.loc[i, 'type_y'] = 'sink'
      elif merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
           merge_right.loc[i, 'type_y'] = 'bridge'
@@ -94,4 +94,4 @@ for i in range(len(merge_right)):
 
 merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
 
-#merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self3.csv",index=False)
+merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self3.csv",index=False)

@@ -1186,4 +1186,4 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 1184,N1,LRP466a,428.0,461476.0,92.2982219,20.8688604,bridge,Box culvert,B
 1185,N1,LRP466b,220.0,461904.0,92.2982497,20.8650278,bridge,Bridge start,B
 1186,N1,LRP467,130.0,462124.0,92.298083,20.8629722,link,Infor.missing,
-1187,N1,LRPE,,462254.0,92.298083,20.8629167,link,"End of Road at Shapla Chattar ,Teknaf Meet with Z1098 &Z1099.",
+1187,N1,LRPE,,462254.0,92.298083,20.8629167,sink,"End of Road at Shapla Chattar ,Teknaf Meet with Z1098 &Z1099.",
