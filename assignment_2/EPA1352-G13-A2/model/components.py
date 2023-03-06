@@ -117,7 +117,6 @@ class Bridge(Infra):
         elif self.condition == 'D' and self.change_D < self.down_D and self.length < 200 and self.length > 50:
             self.delay_time = self.random.uniform(10, 20)
 
-
         else:
             self.delay_time = self.random.randrange(0, 10)
         # print(self.delay_time)
