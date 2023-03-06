@@ -54,7 +54,7 @@ class Bridge(Infra):
     """
 
     def __init__(self,unique_id, model, length=0,
-                 name='Unknown', road_name='Unknown', condition='Unknown',scenario=0):
+                 name='Unknown', road_name='Unknown', condition='Unknown',scenario=7):
         super().__init__(unique_id, model, length, name, road_name)
 
         self.condition = condition
@@ -69,62 +69,32 @@ class Bridge(Infra):
         self.change_B = self.random.randrange(0, 100)
         self.change_C = self.random.randrange(0, 100)
         self.change_D = self.random.randrange(0, 100)
-        if self.condition == 'A' and self.change_A < self.down_A and self.length > 200:
-            self.delay_time = self.random.triangular(60,120,240)
 
-        elif self.condition == 'A' and self.change_A < self.down_A and self.length < 10:
-            self.delay_time = self.random.uniform(10,20)
+        self.condition = condition
+        randomizer = random.randrange(0, 100)
+        if self.condition == 'A' and randomizer < self.down_A:
+            self.condition = 'broken'
+        elif self.condition == 'B' and randomizer < self.down_B:
+            self.condition = 'broken'
+        elif self.condition == 'C' and randomizer < self.down_C:
+            self.condition = 'broken'
+        elif self.condition == 'D' and randomizer < self.down_D:
+            self.condition = 'broken'
 
-        elif self.condition == 'A' and self.change_A < self.down_A and self.length > 10 and self.length < 50:
-            self.delay_time = self.random.uniform(10,20)
-
-        elif self.condition == 'A' and self.change_A < self.down_A and self.length < 200 and self.length > 50:
-            self.delay_time = self.random.uniform(10,20)
-
-        elif self.condition == 'B' and self.change_B < self.down_B and self.length > 200:
-            self.delay_time = self.random.triangular(60, 120, 240)
-
-        elif self.condition == 'B' and self.change_B < self.down_B and self.length < 10:
-            self.delay_time = self.random.uniform(10, 20)
-
-        elif self.condition == 'B' and self.change_B < self.down_B and self.length > 10 and self.length < 50:
-            self.delay_time = self.random.uniform(10, 20)
-
-        elif self.condition == 'B' and self.change_B < self.down_B and self.length < 200 and self.length > 50:
-            self.delay_time = self.random.uniform(10, 20)
-
-        elif self.condition == 'C' and self.change_C < self.down_C and self.length > 200:
-            self.delay_time = self.random.triangular(60, 120, 240)
-
-        elif self.condition == 'C' and self.change_C < self.down_C and self.length < 10:
-            self.delay_time = self.random.uniform(10, 20)
-
-        elif self.condition == 'C' and self.change_C < self.down_C and self.length > 10 and self.length < 50:
-            self.delay_time = self.random.uniform(10, 20)
-
-        elif self.condition == 'C' and self.change_C < self.down_C and self.length < 200 and self.length > 50:
-            self.delay_time = self.random.uniform(10, 20)
-
-        elif self.condition == 'D' and self.change_D < self.down_D and self.length > 200:
-            self.delay_time = self.random.triangular(60, 120, 240)
-
-        elif self.condition == 'D' and self.change_D < self.down_D and self.length < 10:
-            self.delay_time = self.random.uniform(10, 20)
-
-        elif self.condition == 'D' and self.change_D < self.down_D and self.length > 10 and self.length < 50:
-            self.delay_time = self.random.uniform(10, 20)
-
-        elif self.condition == 'D' and self.change_D < self.down_D and self.length < 200 and self.length > 50:
-            self.delay_time = self.random.uniform(10, 20)
-
-        else:
-            self.delay_time = self.random.randrange(0, 10)
-        # print(self.delay_time)
-
-    # TODO
     def get_delay_time(self):
+        if self.condition == 'broken':
+            if self.length > 200:
+                self.delay_time = random.triangular(1, 2, 4)
+            elif 200 > self.length > 50:
+                self.delay_time = random.uniform(45, 90)
+            elif 50 > self.length > 10:
+                self.delay_time = random.uniform(15, 60)
+            elif self.length < 10:
+                self.delay_time = random.uniform(10, 20)
+        else:
+            self.delay_time = 0
+        print(self.delay_time,self.unique_id,self.condition)
         return self.delay_time
-
 
 # ---------------------------------------------------------------
 class Link(Infra):
