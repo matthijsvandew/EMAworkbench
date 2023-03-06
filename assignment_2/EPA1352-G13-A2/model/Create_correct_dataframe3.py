@@ -26,6 +26,17 @@ for i in range(len(merge_right['length'])-1): #when length is nan, take differen
 
 merge_right = merge_right[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']] #only necessary columns.
 
+merge_right.insert(loc=0,column='id',value=0)
+
+for i in range(len(merge_right)):
+     merge_right.loc[i, 'id'] = round(i)
+     #print(i)
+     #print(int(i))
+
+merge_right = merge_right.loc[merge_right['id'] <= 502]
+print(merge_right.tail())
+
+
 CountA = 0
 CountB = 0
 CountC = 0
@@ -73,14 +84,6 @@ for i in range(len(merge_right['condition'])):
 #           if pd.isna(merge_right.loc[i, 'condition']) == True:
 #                count+=1
 # print(count)
-
-merge_right.insert(loc=0,column='id',value=0)
-
-for i in range(len(merge_right)):
-     merge_right.loc[i, 'id'] = round(i)
-     #print(i)
-     #print(int(i))
-
 
 for i in range(len(merge_right)):
      if i == 0:
