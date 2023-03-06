@@ -3,7 +3,6 @@ import random
 from mesa import Agent
 from enum import Enum
 import pandas as pd
-from mesa.datacollection import DataCollector
 
 # ---------------------------------------------------------------
 class Infra(Agent):
@@ -276,7 +275,6 @@ class Vehicle(Agent):
         self.waiting_time = 0
         self.waited_at = None
         self.removed_at_step = None
-        self.datacollector = DataCollector(agent_reporters={self.removed_at_step - self.generated_at_step})
 
     def __str__(self):
         return "Vehicle" + str(self.unique_id) + \
@@ -303,7 +301,6 @@ class Vehicle(Agent):
         if self.state == Vehicle.State.DRIVE:
             self.drive()
 
-        self.datacollector.collect(self)
         """
         To print the vehicle trajectory at each step
         """
