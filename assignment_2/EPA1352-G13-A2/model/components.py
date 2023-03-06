@@ -63,11 +63,6 @@ class Bridge(Infra):
         self.down_D = df_scenario.iloc[scenario, 4]
 
         # TODO
-        self.change_A = self.random.randrange(0,100)
-        self.change_B = self.random.randrange(0, 100)
-        self.change_C = self.random.randrange(0, 100)
-        self.change_D = self.random.randrange(0, 100)
-
         self.condition = condition
         randomizer = random.randrange(0, 100)
         if self.condition == 'A' and randomizer < self.down_A:
@@ -79,6 +74,7 @@ class Bridge(Infra):
         elif self.condition == 'D' and randomizer < self.down_D:
             self.condition = 'broken'
 
+    # TODO
     def get_delay_time(self):
         if self.condition == 'broken':
             if self.length > 200:

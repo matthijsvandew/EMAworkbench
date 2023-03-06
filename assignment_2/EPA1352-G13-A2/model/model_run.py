@@ -1,4 +1,5 @@
 from model import BangladeshModel
+import random
 
 """
     Run simulation
@@ -13,15 +14,19 @@ from model import BangladeshModel
 # run time 1000 ticks
 run_length = 1000
 
-seed = 1234567
+#seed = 1234567
 
-scenario = 3
-
-sim_model = BangladeshModel(seed=seed,scenario=scenario)
+for sce in range(8): #eight different scenarios
+    for rep in range(10): #ten replications per scenario
+        scenario = sce
+        seed = random.seed(4444)
+        sim_model = BangladeshModel(seed=seed,scenario=scenario)
+        for i in range(run_length):
+            sim_model.step()
 
 # Check if the seed is set
-print("SEED " + str(sim_model._seed))
+#print("SEED " + str(sim_model._seed))
 
 # One run with given steps
-for i in range(run_length):
-    sim_model.step()
+#for i in range(run_length):
+    #sim_model.step()
