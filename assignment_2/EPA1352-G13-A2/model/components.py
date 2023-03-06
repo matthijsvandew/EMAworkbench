@@ -1,3 +1,5 @@
+import random
+
 from mesa import Agent
 from enum import Enum
 import pandas as pd
@@ -63,8 +65,59 @@ class Bridge(Infra):
         self.down_D = df_scenario.iloc[scenario, 4]
 
         # TODO
-        if self.condition == 'A' and self.random.randrange(0,100) < self.down_A:
-            self.delay_time
+        self.change_A = self.random.randrange(0,100)
+        self.change_B = self.random.randrange(0, 100)
+        self.change_C = self.random.randrange(0, 100)
+        self.change_D = self.random.randrange(0, 100)
+        if self.condition == 'A' and self.change_A < self.down_A and self.length > 200:
+            self.delay_time = self.random.triangular(60,120,240)
+
+        elif self.condition == 'A' and self.change < self.down_A and self.length < 10:
+            self.delay_time = self.random.uniform(10,20)
+
+        elif self.condition == 'A' and self.change < self.down_A and self.length > 10 and self.length < 50:
+            self.delay_time = self.random.uniform(10,20)
+
+        elif self.condition == 'A' and self.change < self.down_A and self.length < 200 and self.length > 50:
+            self.delay_time = self.random.uniform(10,20)
+
+        elif self.condition == 'B' and self.change_B < self.down_B and self.length > 200:
+            self.delay_time = self.random.triangular(60, 120, 240)
+
+        elif self.condition == 'B' and self.change_B < self.down_B and self.length < 10:
+            self.delay_time = self.random.uniform(10, 20)
+
+        elif self.condition == 'B' and self.change_B < self.down_B and self.length > 10 and self.length < 50:
+            self.delay_time = self.random.uniform(10, 20)
+
+        elif self.condition == 'B' and self.change_B < self.down_B and self.length < 200 and self.length > 50:
+            self.delay_time = self.random.uniform(10, 20)
+
+        elif self.condition == 'C' and self.change_C < self.down_C and self.length > 200:
+            self.delay_time = self.random.triangular(60, 120, 240)
+
+        elif self.condition == 'C' and self.change_C < self.down_C and self.length < 10:
+            self.delay_time = self.random.uniform(10, 20)
+
+        elif self.condition == 'C' and self.change_C < self.down_C and self.length > 10 and self.length < 50:
+            self.delay_time = self.random.uniform(10, 20)
+
+        elif self.condition == 'C' and self.change_C < self.down_C and self.length < 200 and self.length > 50:
+            self.delay_time = self.random.uniform(10, 20)
+
+        elif self.condition == 'D' and self.change_D < self.down_D and self.length > 200:
+            self.delay_time = self.random.triangular(60, 120, 240)
+
+        elif self.condition == 'D' and self.change_D < self.down_D and self.length < 10:
+            self.delay_time = self.random.uniform(10, 20)
+
+        elif self.condition == 'D' and self.change_D < self.down_D and self.length > 10 and self.length < 50:
+            self.delay_time = self.random.uniform(10, 20)
+
+        elif self.condition == 'D' and self.change_D < self.down_D and self.length < 200 and self.length > 50:
+            self.delay_time = self.random.uniform(10, 20)
+
+
         #self.delay_time = self.random.randrange(0, 1) #10
         # print(self.delay_time)
 
