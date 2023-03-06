@@ -1,5 +1,4 @@
 import pandas as pd
-#pip install --force-reinstall -v "openpyxl==3.1.0"
 
 df_roads = pd.read_csv('_roads3.csv')
 #print(df.head)
