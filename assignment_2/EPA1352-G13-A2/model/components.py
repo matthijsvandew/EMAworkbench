@@ -1,9 +1,7 @@
-import random
-
 from mesa import Agent
 from enum import Enum
 import pandas as pd
-from mesa.datacollection import DataCollector
+import random
 
 # ---------------------------------------------------------------
 class Infra(Agent):
@@ -53,11 +51,11 @@ class Bridge(Infra):
 
     """
 
-    def __init__(self,unique_id, model, length=0,
-                 name='Unknown', road_name='Unknown', condition='Unknown',scenario=7):
+    def __init__(self, unique_id, model, scenario, length=0,
+                 name='Unknown', road_name='Unknown', condition='Unknown'):
         super().__init__(unique_id, model, length, name, road_name)
 
-        self.condition = condition
+        self.scenario = scenario
         df_scenario = pd.read_csv(r'C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\experiment\experimental_input.csv')
         self.down_A = df_scenario.iloc[scenario, 1]
         self.down_B = df_scenario.iloc[scenario, 2]
@@ -93,7 +91,7 @@ class Bridge(Infra):
                 self.delay_time = random.uniform(10, 20)
         else:
             self.delay_time = 0
-        print(self.delay_time,self.unique_id,self.condition)
+        print(self.delay_time,self.unique_id,self.condition,self.scenario)
         return self.delay_time
 
 # ---------------------------------------------------------------
@@ -246,7 +244,6 @@ class Vehicle(Agent):
         self.waiting_time = 0
         self.waited_at = None
         self.removed_at_step = None
-        #self.datacollector = DataCollector(agent_reporters={self.removed_at_step - self.generated_at_step})
 
     def __str__(self):
         return "Vehicle" + str(self.unique_id) + \
@@ -273,7 +270,6 @@ class Vehicle(Agent):
         if self.state == Vehicle.State.DRIVE:
             self.drive()
 
-        #self.datacollector.collect(self)
         """
         To print the vehicle trajectory at each step
         """

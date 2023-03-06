@@ -56,7 +56,7 @@ class BangladeshModel(Model):
 
     step_time = 1
 
-    def __init__(self, seed=None, x_max=500, y_max=500, x_min=0, y_min=0):
+    def __init__(self, seed=None, x_max=500, y_max=500, x_min=0, y_min=0,scenario=0):
 
         self.schedule = BaseScheduler(self)
         self.running = True
@@ -64,6 +64,8 @@ class BangladeshModel(Model):
         self.space = None
         self.sources = []
         self.sinks = []
+
+        self.scenario = scenario
 
         self.generate_model()
 
@@ -138,7 +140,7 @@ class BangladeshModel(Model):
                     self.sources.append(agent.unique_id)
                     self.sinks.append(agent.unique_id)
                 elif model_type == 'bridge':
-                    agent = Bridge(row['id'], self, row['length'], row['name'], row['road'], row['condition'])
+                    agent = Bridge(row['id'], self, self.scenario, row['length'], row['name'], row['road'], row['condition'])
                 elif model_type == 'link':
                     agent = Link(row['id'], self, row['length'], row['name'], row['road'])
 
