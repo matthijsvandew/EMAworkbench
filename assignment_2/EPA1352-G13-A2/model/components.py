@@ -1,5 +1,6 @@
 from mesa import Agent
 from enum import Enum
+import pandas as pd
 
 
 # ---------------------------------------------------------------
@@ -50,14 +51,21 @@ class Bridge(Infra):
 
     """
 
-    def __init__(self, unique_id, model, length=0,
-                 name='Unknown', road_name='Unknown', condition='Unknown'):
+    def __init__(self,unique_id, model, length=0,
+                 name='Unknown', road_name='Unknown', condition='Unknown',scenario=0):
         super().__init__(unique_id, model, length, name, road_name)
 
         self.condition = condition
+        df_scenario = pd.read_csv(r'C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\experiment\experimental_input.csv')
+        self.down_A = df_scenario.iloc[scenario, 1]
+        self.down_B = df_scenario.iloc[scenario, 2]
+        self.down_C = df_scenario.iloc[scenario, 3]
+        self.down_D = df_scenario.iloc[scenario, 4]
 
         # TODO
-        self.delay_time = self.random.randrange(0, 1) #10
+        if self.condition == 'A' and self.random.randrange(0,100) < self.down_A:
+            self.delay_time
+        #self.delay_time = self.random.randrange(0, 1) #10
         # print(self.delay_time)
 
     # TODO

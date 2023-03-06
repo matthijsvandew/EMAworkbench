@@ -56,7 +56,7 @@ class BangladeshModel(Model):
 
     step_time = 1
 
-    def __init__(self, seed=None, x_max=500, y_max=500, x_min=0, y_min=0, scenario=0):
+    def __init__(self, seed=None, x_max=500, y_max=500, x_min=0, y_min=0):
 
         self.schedule = BaseScheduler(self)
         self.running = True
@@ -64,13 +64,6 @@ class BangladeshModel(Model):
         self.space = None
         self.sources = []
         self.sinks = []
-        self.scenario = scenario
-
-        df_scenario = pd.read_csv(r'C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\experiment\experimental_input.csv')
-        self.down_A = df_scenario.iloc[self.scenario, 1]
-        self.down_B = df_scenario.iloc[self.scenario, 2]
-        self.down_C = df_scenario.iloc[self.scenario, 3]
-        self.down_D = df_scenario.iloc[self.scenario, 4]
 
         self.generate_model()
 
