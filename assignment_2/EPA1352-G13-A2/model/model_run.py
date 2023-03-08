@@ -19,7 +19,7 @@ run_length = 5 * 24 * 60
 for sce in range(1,3): #eight different scenarios
     for rep in range(1,3): #ten replications per scenario
         scenario = sce
-        seed = random.seed(4444)
+        seed = random.seed()
         sim_model = BangladeshModel(seed=seed,scenario=scenario,replication=rep,run_length_model=run_length)
         for i in range(run_length):
             #print(i)
