@@ -87,7 +87,6 @@ class Bridge(Infra):
                 self.delay_time = random.uniform(10, 20)
         else:
             self.delay_time = 0
-        print(self.delay_time,self.unique_id,self.condition,self.scenario)
         return self.delay_time
 
 # ---------------------------------------------------------------
@@ -112,7 +111,7 @@ class Sink(Infra):
     def remove(self, vehicle):
         self.model.schedule.remove(vehicle)
         self.vehicle_removed_toggle = not self.vehicle_removed_toggle
-        print(str(self) + ' REMOVE ' + str(vehicle))
+        #print(str(self) + ' REMOVE ' + str(vehicle))
 
 
 # ---------------------------------------------------------------
@@ -159,7 +158,7 @@ class Source(Infra):
                 Source.truck_counter += 1
                 self.vehicle_count += 1
                 self.vehicle_generated_flag = True
-                print(str(self) + " GENERATE " + str(agent))
+                #print(str(self) + " GENERATE " + str(agent))
         except Exception as e:
             print("Oops!", e.__class__, "occurred.")
 
@@ -266,10 +265,6 @@ class Vehicle(Agent):
         if self.state == Vehicle.State.DRIVE:
             self.drive()
 
-        """
-        To print the vehicle trajectory at each step
-        """
-        print(self)
 
     def drive(self):
 
@@ -298,6 +293,12 @@ class Vehicle(Agent):
             # arrive at the sink
             self.arrive_at_next(next_infra, 0)
             self.removed_at_step = self.model.schedule.steps
+            self.drive_time = self.removed_at_step - self.generated_at_step
+            print(self.drive_time)
+            self.dictionary = {'id':self.unique_id, 'drive_time':self.drive_time, 'exp':self.model.replication, 'sce':self.model.scenario}
+            print(self.dictionary)
+            self.model.df = self.model.df.append(self.dictionary, ignore_index=True)
+            print(self.model.df)
             self.location.remove(self)
             return
         elif isinstance(next_infra, Bridge):

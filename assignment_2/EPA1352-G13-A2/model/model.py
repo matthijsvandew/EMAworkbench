@@ -56,7 +56,8 @@ class BangladeshModel(Model):
 
     step_time = 1
 
-    def __init__(self, seed=None, x_max=500, y_max=500, x_min=0, y_min=0,scenario=0):
+
+    def __init__(self, run_length_model, seed=None, x_max=500, y_max=500, x_min=0, y_min=0,scenario=0,replication=0):
 
         self.schedule = BaseScheduler(self)
         self.running = True
@@ -64,10 +65,11 @@ class BangladeshModel(Model):
         self.space = None
         self.sources = []
         self.sinks = []
-
+        self.replication = replication
         self.scenario = scenario
-
+        self.df = pd.DataFrame(columns=['id', 'drive_time', 'exp', 'sce'])
         self.generate_model()
+        self.run_length_model = run_length_model
 
     def generate_model(self):
         """
@@ -167,6 +169,10 @@ class BangladeshModel(Model):
         Advance the simulation by one step.
         """
         self.schedule.step()
+
+    def save_results(self):
+        self.df.to_csv(
+            r'C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\experiment\experiments_data.csv')
 
 
 # EOF -----------------------------------------------------------
