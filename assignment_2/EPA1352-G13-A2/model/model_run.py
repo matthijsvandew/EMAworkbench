@@ -20,8 +20,8 @@ run_length = 5 * 24 * 60
 
 df_combined_sce_rep = pd.DataFrame()
 
-for sce in range(1,2): #eight different scenarios
-    for rep in range(1,3): #ten replications per scenario
+for sce in range(9): #eight different scenarios
+    for rep in range(10): #ten replications per scenario
         scenario = sce
         seed = random.seed()
         sim_model = BangladeshModel(seed=seed,scenario=scenario,replication=rep,run_length_model=run_length)
