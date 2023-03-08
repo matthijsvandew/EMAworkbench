@@ -89,7 +89,7 @@ class Bridge(Infra):
             self.delay_time = 0
 
         #self.dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': self.delay_time, 'replication': self.model.replication,
-                            'scenario': self.model.scenario}
+                           # 'scenario': self.model.scenario}
         # print(self.dictionary_bridge)
         #self.model.df_bridge = self.model.df_bridge.append(self.dictionary_bridge, ignore_index=True)
         # print(self.model.df_bridge)
