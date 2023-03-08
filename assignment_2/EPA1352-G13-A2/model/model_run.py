@@ -10,20 +10,28 @@ import random
 
 # ---------------------------------------------------------------
 
-# run time 5 x 24 hours; 1 tick 1 minute
-run_length = 5 * 24 * 60
+# run time 5 x 24 hours x 60 minutes; 1 tick 1 minute
+long_run_length = 5 * 24 * 60
 
-# run time 1000 ticks
-#run_length = 1000
+short_run_length = 500
 
-#seed = 1234567
+short_run = False
+if short_run == True:
+    run_length = short_run_length
+else:
+    run_length = long_run_length
+
+use_random_seed = True
 
 df_combined_sce_rep = pd.DataFrame()
 
 for sce in range(9): #eight different scenarios
     for rep in range(10): #ten replications per scenario
         scenario = sce
-        seed = random.seed()
+        if use_random_seed == True:
+            seed = random.seed()
+        else:
+            seed = 123456789
         sim_model = BangladeshModel(seed=seed,scenario=scenario,replication=rep,run_length_model=run_length)
         for i in range(run_length):
             sim_model.step()
