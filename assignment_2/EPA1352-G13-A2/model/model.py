@@ -172,6 +172,8 @@ class BangladeshModel(Model):
         self.schedule.step()
 
     def save_results(self):
-        self.df.to_csv(f'C:\Github\epa1352advancedsimulation\data_assignment_2\scenario{self.scenario}_replication_{self.replication}.csv')
+        return self.df
+
+        #self.df.to_csv(f'C:\Github\epa1352advancedsimulation\data_assignment_2\scenario{self.scenario}_replication_{self.replication}.csv')
 
 # EOF -----------------------------------------------------------

@@ -1,3 +1,5 @@
+import pandas as pd
+
 from model import BangladeshModel
 import random
 
@@ -16,7 +18,9 @@ run_length = 5 * 24 * 60
 
 #seed = 1234567
 
-for sce in range(1,3): #eight different scenarios
+df_combined_sce_rep = pd.DataFrame()
+
+for sce in range(1,2): #eight different scenarios
     for rep in range(1,3): #ten replications per scenario
         scenario = sce
         seed = random.seed()
@@ -24,8 +28,11 @@ for sce in range(1,3): #eight different scenarios
         for i in range(run_length):
             #print(i)
             sim_model.step()
-            if i == run_length - 1:
-                sim_model.save_results()
+        if i == run_length - 1:
+            df_combined_sce_rep =df_combined_sce_rep.append(sim_model.save_results(), ignore_index=True)
+
+df_combined_sce_rep.to_csv(f'C:\Github\epa1352advancedsimulation\data_assignment_2\combined.csv')
+
 
 # Check if the seed is set
 #print("SEED " + str(sim_model._seed))
