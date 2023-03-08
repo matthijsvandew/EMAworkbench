@@ -67,7 +67,7 @@ class BangladeshModel(Model):
         self.sinks = []
         self.replication = replication
         self.scenario = scenario
-        self.df = pd.DataFrame(columns=['id', 'drive_time', 'exp', 'sce'])
+        self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario'])
         self.generate_model()
         self.run_length_model = run_length_model
 
@@ -171,8 +171,6 @@ class BangladeshModel(Model):
         self.schedule.step()
 
     def save_results(self):
-        self.df.to_csv(
-            r'C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\experiment\experiments_data.csv')
-
+        self.df.to_csv(f'C:\Github\epa1352advancedsimulation\data_assignment_2\scenario{self.scenario}_replication_{self.replication}.csv')
 
 # EOF -----------------------------------------------------------

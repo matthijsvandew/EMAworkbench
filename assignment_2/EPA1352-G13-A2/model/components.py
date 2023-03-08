@@ -295,7 +295,7 @@ class Vehicle(Agent):
             self.removed_at_step = self.model.schedule.steps
             self.drive_time = self.removed_at_step - self.generated_at_step
             print(self.drive_time)
-            self.dictionary = {'id':self.unique_id, 'drive_time':self.drive_time, 'exp':self.model.replication, 'sce':self.model.scenario}
+            self.dictionary = {'id':self.unique_id, 'drive_time':self.drive_time, 'replication':self.model.replication, 'scenario':self.model.scenario}
             print(self.dictionary)
             self.model.df = self.model.df.append(self.dictionary, ignore_index=True)
             print(self.model.df)
