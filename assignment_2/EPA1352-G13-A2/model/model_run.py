@@ -31,8 +31,7 @@ for sce in range(9): #eight different scenarios
         if i == run_length - 1:
             df_combined_sce_rep =df_combined_sce_rep.append(sim_model.save_results(), ignore_index=True)
 
-df_combined_sce_rep.to_csv(f'C:\Github\epa1352advancedsimulation\data_assignment_2\combined.csv')
-
+df_combined_sce_rep.to_csv(f'C:\Github\epa1352advancedsimulation\data_assignment_2\combined.csv',index_label='index')
 
 # Check if the seed is set
 #print("SEED " + str(sim_model._seed))
