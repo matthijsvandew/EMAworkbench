@@ -68,6 +68,7 @@ class BangladeshModel(Model):
         self.replication = replication
         self.scenario = scenario
         self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario'])
+        self.df_bridge = pd.DataFrame()
         self.generate_model()
         self.run_length_model = run_length_model
 
