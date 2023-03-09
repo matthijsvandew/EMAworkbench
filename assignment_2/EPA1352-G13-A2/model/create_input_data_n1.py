@@ -8,6 +8,13 @@ df_bmms = pd.read_excel('../data\BMMS_overview.xlsx')
 df_bmms = df_bmms.drop(df_bmms[df_bmms['road'] != 'N1'].index)
 df_roads = df_roads.drop(df_roads[df_roads['road'] != 'N1'].index)
 
+#These lines of codes could be used in order to delete 'Left bridges' out of the data set for this specific assignment.
+#However, this is not representitive when this model would be applied for more than just one route and, therefore, this line of code is shown in markdown format.
+#This subject is further explained in the discussion of the report.
+# df_bmms = df_bmms[df_bmms["name"].str.contains("(L)") == False]
+# df_bmms = df_bmms[df_bmms["name"].str.contains("( L )") == False]
+
+
 for i in range(len(df_roads['chainage'])): #chainage omzetten naar meters, want dat is lengte ook.
      df_roads.loc[i,'chainage'] = (df_roads.loc[i,'chainage'] * 1000)
 
@@ -40,17 +47,6 @@ for i in range(len(merge_right['length'])-1): #when length is nan, take differen
         merge_right.loc[i,'length'] = (merge_right.chainage_y[i+1] - merge_right.chainage_y[i])
 
 merge_right = merge_right[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']] #only necessary columns.
-
-merge_right.insert(loc=0,column='id',value=0)
-
-for i in range(len(merge_right)):
-     merge_right.loc[i, 'id'] = round(i)
-     #print(i)
-     #print(int(i))
-
-merge_right = merge_right.loc[merge_right['id'] <= 502]
-print(merge_right.tail())
-
 
 CountA = 0
 CountB = 0
@@ -100,16 +96,28 @@ for i in range(len(merge_right['condition'])):
 #                count+=1
 # print(count)
 
+
+merge_right.insert(loc=0,column='id',value=0)
+
 for i in range(len(merge_right)):
-     if i == 0:
-          merge_right.loc[i, 'type_y'] = 'source'
-     elif i == len(merge_right)-1:
-          merge_right.loc[i, 'type_y'] = 'sink'
-     elif merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
-          merge_right.loc[i, 'type_y'] = 'bridge'
-     else:
-          merge_right.loc[i, 'type_y'] = 'link'
+     merge_right.loc[i, 'id'] = round(i)
+     #print(i)
+     #print(int(i))
 
-merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
+merge_right = merge_right.loc[merge_right['id'] <= 502]
 
-merge_right.to_csv(r"../data\input_data_n1.csv",index=False)
+# for i in range(len(merge_right)):
+#      #Start at Chittagong
+#      if i == len(merge_right)-1:
+#           merge_right.loc[i, 'type_y'] = 'source'
+#      #End in Dhaka
+#      elif i == 0:
+#           merge_right.loc[i, 'type_y'] = 'sink'
+#      elif merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
+#           merge_right.loc[i, 'type_y'] = 'bridge'
+#      else:
+#           merge_right.loc[i, 'type_y'] = 'link'
+#
+# merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
+#
+# merge_right.to_csv(r"../data\input_data_n1.csv",index=False)

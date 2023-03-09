@@ -57,7 +57,7 @@ class BangladeshModel(Model):
     step_time = 1
 
 
-    def __init__(self, run_length_model, seed=None, x_max=500, y_max=500, x_min=0, y_min=0,scenario=0,replication=0):
+    def __init__(self, seed=None, x_max=500, y_max=500, x_min=0, y_min=0,scenario=0,replication=0):
 
         self.schedule = BaseScheduler(self)
         self.running = True
@@ -70,7 +70,9 @@ class BangladeshModel(Model):
         self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario'])
         self.df_bridge = pd.DataFrame()
         self.generate_model()
-        self.run_length_model = run_length_model
+        #Setting the run length for the experiments. This used to be in the __init__ function, because this would be a better modelling structure,
+        #but in this way of modelling the model_viz.py file does not run anymore. Therefore, we added this parameter as a constant.
+        self.run_length_model = 5*24*60
 
     def generate_model(self):
         """
