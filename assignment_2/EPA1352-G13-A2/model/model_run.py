@@ -10,32 +10,37 @@ import random
 
 # ---------------------------------------------------------------
 
-# run time 5 x 24 hours x 60 minutes; 1 tick 1 minute
+### The long run length reflects the run that will be used for experimentation
+### run time 5 x 24 hours x 60 minutes; 1 tick 1 minute
 long_run_length = 5 * 24 * 60
 
+### The short run length reflects a run that will be used for debugging because it is a lot faster.
 short_run_length = 500
 
-short_run = False
-if short_run == True:
+debug_run = False ### If we want to debug: use the shorter run length
+if debug_run == True:
     run_length = short_run_length
 else:
     run_length = long_run_length
 
+### Similar to the shorter run length, a non-random seed is more useful for debugging.
 use_random_seed = True
 
+### Initiate an empty dataframe. We will store all data for all replications and scenario's there
 df_combined_sce_rep = pd.DataFrame()
 
-for sce in range(9): #nine different scenarios
-    for rep in range(1,11): #ten replications per scenario
+for sce in range(9): ### Nine different scenarios
+    for rep in range(1,11): ### Ten replications per scenario
         scenario = sce
-        if use_random_seed == True:
+        if use_random_seed == True: ### If we want to use a random seed: use random seed, otherwise seed 123456789
             seed = random.seed()
         else:
             seed = 123456789
+        ### Initiate model
         sim_model = BangladeshModel(seed=seed,scenario=scenario,replication=rep,run_length_model=run_length)
-        for i in range(run_length):
+        for i in range(run_length): ### Run model as long as the run_length
             sim_model.step()
-        if i == run_length - 1:
+        if i == run_length - 1: ### Save the model at the last step. The - 1 is because then it would be done at last step.
             df_combined_sce_rep =df_combined_sce_rep.append(sim_model.save_results(), ignore_index=True)
 
 #df_combined_sce_rep.to_csv(r'C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\experiment\experimental_output_combined.csv',index_label='index')
