@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import random
 
-df_roads = pd.read_csv(r'C:\Github\epa1352advancedsimulation\assignment_2\WBSIM_Lab1_cleanedDataset\infrastructure\_roads3.csv')
-df_bmms = pd.read_excel('BMMS_overview.xlsx')
+df_roads = pd.read_csv(r'../data\_roads3.csv')
+df_bmms = pd.read_excel('../data\BMMS_overview.xlsx')
 
 df_bmms = df_bmms.drop(df_bmms[df_bmms['road'] != 'N1'].index)
 df_roads = df_roads.drop(df_roads[df_roads['road'] != 'N1'].index)
@@ -112,4 +112,4 @@ for i in range(len(merge_right)):
 
 merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
 
-merge_right.to_csv(r"C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self3.csv",index=False)
+merge_right.to_csv(r"../data\input_data_n1.csv",index=False)

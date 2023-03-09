@@ -56,7 +56,7 @@ class Bridge(Infra):
         super().__init__(unique_id, model, length, name, road_name)
 
         self.scenario = scenario
-        df_scenario = pd.read_csv(r'C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\experiment\experimental_input.csv')
+        df_scenario = pd.read_csv(r'../experiment\experimental_input.csv')
         self.down_A = df_scenario.iloc[scenario, 1]
         self.down_B = df_scenario.iloc[scenario, 2]
         self.down_C = df_scenario.iloc[scenario, 3]

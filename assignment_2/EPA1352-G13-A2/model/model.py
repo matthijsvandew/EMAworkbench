@@ -80,7 +80,7 @@ class BangladeshModel(Model):
         """
 
 
-        df = pd.read_csv(r'C:\Github\epa1352advancedsimulation\assignment_2\EPA1352-G13-A2\data\demo_try_self3.csv')
+        df = pd.read_csv(r'../data\input_data_n1.csv')
 
         # a list of names of roads to be generated
         roads = ['N1']
@@ -174,6 +174,6 @@ class BangladeshModel(Model):
     def save_results(self):
         return self.df
 
-        #self.df.to_csv(f'C:\Github\epa1352advancedsimulation\data_assignment_2\scenario{self.scenario}_replication_{self.replication}.csv')
+        #self.df.to_csv(f'../experiment\scenario{self.scenario}_replication_{self.replication}.csv')
 
 # EOF -----------------------------------------------------------
