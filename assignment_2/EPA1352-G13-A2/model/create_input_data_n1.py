@@ -106,18 +106,18 @@ for i in range(len(merge_right)):
 
 merge_right = merge_right.loc[merge_right['id'] <= 502]
 
-# for i in range(len(merge_right)):
-#      #Start at Chittagong
-#      if i == len(merge_right)-1:
-#           merge_right.loc[i, 'type_y'] = 'source'
-#      #End in Dhaka
-#      elif i == 0:
-#           merge_right.loc[i, 'type_y'] = 'sink'
-#      elif merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
-#           merge_right.loc[i, 'type_y'] = 'bridge'
-#      else:
-#           merge_right.loc[i, 'type_y'] = 'link'
-#
-# merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
-#
-# merge_right.to_csv(r"../data\input_data_n1.csv",index=False)
+for i in range(len(merge_right)):
+     #Start at Chittagong
+     if i == len(merge_right)-1:
+          merge_right.loc[i, 'type_y'] = 'source'
+     #End in Dhaka
+     elif i == 0:
+          merge_right.loc[i, 'type_y'] = 'sink'
+     elif merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
+          merge_right.loc[i, 'type_y'] = 'bridge'
+     else:
+          merge_right.loc[i, 'type_y'] = 'link'
+
+merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
+
+merge_right.to_csv(r"../data\input_data_n1.csv",index=False)
