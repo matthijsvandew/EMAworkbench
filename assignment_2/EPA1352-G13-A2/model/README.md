@@ -1,28 +1,21 @@
 # Simple Transport Model Demo in MESA
 
-Created by: 
-Yilin HUANG 
-
-Email:
-y.huang@tudelft.nl
-
-Version:
-1.0
+Created by: EPA1352 Group 13 
 
 ## Introduction
 
-A simple transport model demo in MESA for EPA1352 Advanced Simulation course Assignment 2. 
+A transport model in MESA for EPA1352 Advanced Simulation course Assignment 2. 
 
 ## How to Use
 
 * Launch the simulation model with visualization
 ```
-    $ python model_viz.py
+     python model_viz.py
 ```
 
 * Launch the simulation model without visualization
 ```
-    $ python model_run.py
+     python model_run.py
 ```
 
 ## Files
@@ -34,15 +27,23 @@ A simple transport model demo in MESA for EPA1352 Advanced Simulation course Ass
 * [components.py](components.py): Contains the model component definitions for the (main) model. Check the file carefully to see which components are already defined. 
   
     In this file, you modify and add your own components.
+* [components_bridges_data_collecting.py](components_bridges_data_collecting.py): This is an extension of the `components.py` file, specifically made for running the bridge experiment. The only changes made in comparison with the `model.py` file are in the bridge class and the vehicle class. The bridge class is extended. Within the get_delay_time(self) function, a dictionary is added, which keeps track of the caused delay time by each bridge. This dictionary is added to the bridge data frame of the `model_bridges_data_collecting.py`
+
+* [create_input_data_n1.py](create_input_data_n1.py): read both the file `_roads.csv` and `BMMS_overview.xlsx` and merges these files in order to create the `input_data_n1.csv` file which is implemented in the model. 
+   
+  In this file, you create the dataset being used in the model.
 
 * [model_viz.py](model_viz.py): Sets up the visualization; uses the `SimpleCanvas` element defined. Calls the model. Run the visualization server.
 
     In this file, you define simple visualization.
+* [model_bridges_data_collecting.py](model_bridges_data_collecting.py): This is an extension of the `model.py` file, specifically made for running the bridge experiment. The only changes made in comparison with the model.py file are the construction of a data frame for the bridges in the __init__ method and a method called bridge_save_results(self) in which the model returns its data frame for the bridges. 
 
 * [model_run.py](model_run.py): Sets up the model run (conditions). Calls the model. Run the simulation without visualization. 
 
     In this file, you define model batch runs.
-  
+* [model_run_bridges_data_collecting.py](model_run_bridges_data_collecting.py): This is an extension of the `model_run.py` file, specifically made or running the bridge experiment. The only changes made in comparison with the `model_run.py` file are that a bridge data frame is created and appended instead of a data frame for vehicles and that this experiment setup only runs one scenario (scenario 8). 
+This bridge data frame is appended with the data frame that is updated every tick in the `model_bridges_data_collecting.py` file.
+
 * [ContinuousSpace](ContinuousSpace): The directory contains files needed to visualize Python3 Mesa models on a continuous canvas with geo-coordinates, a functionality not contained in the current Mesa package. 
   
     Editing files in this directory is NOT recommended for our assignment. 
