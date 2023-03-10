@@ -1,5 +1,4 @@
 import pandas as pd
-
 from model import BangladeshModel
 import random
 
@@ -35,7 +34,7 @@ for sce in range(9): ### Nine different scenarios
         else:
             seed = 123456789
         ### Initiate model
-        sim_model = BangladeshModel(seed=seed,scenario=sce,replication=rep,run_length_model=run_length)
+        sim_model = BangladeshModel(seed=seed,scenario=sce,replication=rep)
         for i in range(run_length): ### Run model as long as the run_length
             sim_model.step()
         df_combined_sce =df_combined_sce.append(sim_model.save_results(), ignore_index=True)

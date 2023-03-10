@@ -1,7 +1,7 @@
 from mesa import Model
 from mesa.time import BaseScheduler
 from mesa.space import ContinuousSpace
-from components import Source, Sink, SourceSink, Bridge, Link
+from components_bridges_data_collecting import Source, Sink, SourceSink, Bridge, Link
 import pandas as pd
 from collections import defaultdict
 
@@ -69,10 +69,10 @@ class BangladeshModel(Model):
         self.scenario = scenario
         self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario'])
         self.df_bridge = pd.DataFrame()
-        self.generate_model()
         #Setting the run length for the experiments. This used to be in the __init__ function, because this would be a better modelling structure,
         #but in this way of modelling the model_viz.py file does not run anymore. Therefore, we added this parameter as a constant.
         self.run_length_model = 5*24*60
+        self.generate_model()
 
     def generate_model(self):
         """
@@ -173,9 +173,8 @@ class BangladeshModel(Model):
         """
         self.schedule.step()
 
-    def save_results(self):
-        return self.df
 
-        #self.df.to_csv(f'../experiment\scenario{self.scenario}_replication_{self.replication}.csv')
+    def bridge_save_results(self):
+        return self.df_bridge
 
 # EOF -----------------------------------------------------------
