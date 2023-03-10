@@ -55,6 +55,8 @@ class Bridge(Infra):
                  name='Unknown', road_name='Unknown', condition='Unknown'):
         super().__init__(unique_id, model, length, name, road_name)
 
+        ### Use the scenario number to pick the correct scenario from the csv.
+        ### Store the probability for bridges with A quality to break as self.down_A etc.
         self.scenario = scenario
         df_scenario = pd.read_csv(r'../experiment\experimental_input.csv')
         self.down_A = df_scenario.iloc[scenario, 1]
@@ -62,20 +64,24 @@ class Bridge(Infra):
         self.down_C = df_scenario.iloc[scenario, 3]
         self.down_D = df_scenario.iloc[scenario, 4]
 
-        # TODO
         self.condition = condition
+
+        ### The following lines determine whether the bridge breaks down based on the probability to break down and condition
         randomizer = random.randrange(0, 100)
         if self.condition == 'A' and randomizer < self.down_A:
-            self.condition = 'broken'
+            self.condition = 'broken' ### Change the condition from 'A' to 'broken'
         elif self.condition == 'B' and randomizer < self.down_B:
-            self.condition = 'broken'
+            self.condition = 'broken' ### Change the condition from 'B' to 'broken'
         elif self.condition == 'C' and randomizer < self.down_C:
-            self.condition = 'broken'
+            self.condition = 'broken' ### Change the condition from 'C' to 'broken'
         elif self.condition == 'D' and randomizer < self.down_D:
-            self.condition = 'broken'
+            self.condition = 'broken' ### Change the condition from 'D' to 'broken'
 
-    # TODO
     def get_delay_time(self):
+        """
+        Provides a delay time which vehicles will use. Only broken bridges provide delay. Delay time distribution
+        depends on the length of the bridge.
+        """
         if self.condition == 'broken':
             if self.length > 200:
                 self.delay_time = random.triangular(1, 2, 4)
@@ -86,13 +92,7 @@ class Bridge(Infra):
             elif self.length < 10:
                 self.delay_time = random.uniform(10, 20)
         else:
-            self.delay_time = 0
-
-        #self.dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': self.delay_time, 'replication': self.model.replication,
-                           # 'scenario': self.model.scenario}
-        # print(self.dictionary_bridge)
-        #self.model.df_bridge = self.model.df_bridge.append(self.dictionary_bridge, ignore_index=True)
-        # print(self.model.df_bridge)
+            self.delay_time = 0 ### If the bridge is not broken, the delay time is 0.
 
         return self.delay_time
 
@@ -301,6 +301,8 @@ class Vehicle(Agent):
             self.arrive_at_next(next_infra, 0)
             self.removed_at_step = self.model.schedule.steps
 
+            ### The following lines determined the total driving time. The driving time for the trucks is stored in
+            ### the dataframe of the model.
             self.drive_time = self.removed_at_step - self.generated_at_step
             #print(self.drive_time)
             self.dictionary = {'id':self.unique_id, 'drive_time':self.drive_time, 'replication':self.model.replication, 'scenario':self.model.scenario}

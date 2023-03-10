@@ -37,9 +37,14 @@ for sce in range(9): ### Nine different scenarios
         sim_model = BangladeshModel(seed=seed,scenario=sce,replication=rep)
         for i in range(run_length): ### Run model as long as the run_length
             sim_model.step()
+        ### Append the data that is generated in the replication to the dataframe of the scenario (which contains replications)
         df_combined_sce =df_combined_sce.append(sim_model.save_results(), ignore_index=True)
 
-    if sce == 0:
+        ### The following 2 lines can be used if you want to store data for each replication individually
+        #df_single_rep_sce  = sim_model.save_results
+        #df_single_rep_sce.to_csv(f'../experiment\scenario{sce}_replication_{rep}.csv')
+
+    if sce == 0: ### Call scenario 0 the base case and store it
         df_combined_sce.to_csv(r'../experiment\base_case_results.csv', index_label='index')
-    else:
+    else: ### The rest of the scenario's will store their data based on the scenario number
         df_combined_sce.to_csv(f'../experiment\scenario{sce}_results.csv', index_label='index')
