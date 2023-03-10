@@ -28,7 +28,7 @@ use_random_seed = True
 for sce in range(8,9): ### Last scenario
     ### Initiate an empty dataframe. We will store all data for a single scenario over all replications there
     df_bridges_combined = pd.DataFrame()
-    for rep in range(1,11): ### Ten replications per scenario
+    for rep in range(1,11): ### Ten replications per scenario. Excel is only able to display around four scenarios. The number of rows are too large. See discussion in repport for an ellaboration on this.
         if use_random_seed == True: ### If we want to use a random seed: use random seed, otherwise seed 123456789
             seed = random.seed()
         else:
