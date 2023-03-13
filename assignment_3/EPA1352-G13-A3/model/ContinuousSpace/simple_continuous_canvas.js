@@ -80,20 +80,36 @@ var Simple_Continuous_Module = function(canvas_width, canvas_height) {
 	// Create the element
 	// ------------------
 
-	// Create the tag:
-	var canvas_tag = "<canvas width='" + canvas_width + "' height='" + canvas_height + "' ";
-	canvas_tag += "style='border:1px dotted'></canvas>";
+	// ORIGINAL CODE:
+	// // Create the tag:
+	// var canvas_tag = "<canvas width='" + canvas_width + "' height='" + canvas_height + "' ";
+	// canvas_tag += "style='border:1px dotted'></canvas>";
+	// var parent_div_tag = '<div id="parent" style="height:' + canvas_height + 'px;" class="world-grid-parent" target="_sim"></div>'
+	// // Append it to body:
+	// var canvas = $(canvas_tag)[0];
+	// var parent = $(parent_div_tag)[0];
+	// //$("body").append(canvas);
+	// $("#elements").append(parent);
+	// parent.append(canvas);
+
+	// FIXED CODE (If you are getting Javascript '$ not defined' error)
+	// Create Canvas object
+	const canvas = document.createElement('canvas');
+	canvas.setAttribute('width', canvas_width);
+	canvas.setAttribute('height', canvas_height);
+	canvas.setAttribute('style', 'border:1px dotted');
 	
-	var parent_div_tag = '<div style="height:' + canvas_height + 'px;" class="world-grid-parent" target="_sim"></div>'
-	
-	// Append it to body:
-	var canvas = $(canvas_tag)[0];
-	
-	var parent = $(parent_div_tag)[0];
-	
-	//$("body").append(canvas);
-	$("#elements").append(parent);
-	parent.append(canvas);
+	// Create Parent object
+	const parent_div = document.createElement('div');
+	let parent_style = 'height:' + canvas_height + 'px;';
+	parent_div.setAttribute('style', parent_style);
+	parent_div.setAttribute('class', 'world-grid-parent');
+	parent_div.setAttribute('target', '_sim');
+
+	// Add both to document
+	let elements_div = document.getElementById('elements');
+	elements_div.appendChild(parent_div);
+	parent_div.appendChild(canvas);
 
 	// Create the context and the drawing controller:
 	var context = canvas.getContext("2d");
