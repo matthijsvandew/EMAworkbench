@@ -28,9 +28,8 @@ merge_right = merge_right[['road','LRPName','length','chainage_y','lon_y','lat_y
 for i in range(len(merge_right['road'])-1):
     if merge_right.loc[i, 'road'] != merge_right.loc[i+1, 'road']:
         type_road = merge_right.loc[i, 'road']
-        lengte_road = merge_right.chainage_y[i]
-        if lengte_road < 25000:
-
+        length_road = merge_right.chainage_y[i]
+        if length_road < 25000:
              merge_right = merge_right.drop(merge_right[merge_right['road'] == type_road].index)
 
 merge_right = merge_right.reset_index(drop=True)
@@ -85,17 +84,36 @@ for i in range(len(merge_right)):
      #print(int(i))
 
 for i in range(len(merge_right)):
-     #Start at Chittagong
      if i == len(merge_right)-1:
-          merge_right.loc[i, 'type_y'] = 'source'
-     #End in Dhaka
+          merge_right.loc[i, 'type_y'] = 'sourcesink'
      elif i == 0:
-          merge_right.loc[i, 'type_y'] = 'sink'
+          merge_right.loc[i, 'type_y'] = 'sourcesink'
      elif merge_right.loc[i, 'type_y'] == 'Culvert' or merge_right.loc[i, 'type_y'] == 'Bridge':
           merge_right.loc[i, 'type_y'] = 'bridge'
      else:
           merge_right.loc[i, 'type_y'] = 'link'
+     if 'Intersect' in merge_right.loc[i, 'name_y']:
+          merge_right.loc[i, 'type_y'] = 'intersection'
+     if (merge_right.loc[i, 'type_y'] == 'CrossRoad') and ('N1' or 'N2' in merge_right.loc[i, 'type_y']):
+          merge_right.loc[i, 'type_y'] = 'intersection'
+
+for i in range(len(merge_right)-1):
+     if merge_right.loc[i, 'road'] != merge_right.loc[i + 1, 'road']:
+          merge_right.loc[i,'type_y'] = 'sourcesink'
 
 merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
+
+#print(len(merge_right))
+#print(merge_right.index[2566])
+
+for i in range(len(merge_right)-1):
+     if merge_right.loc[i, 'model_type'] == 'link':
+          start_link = i
+          while merge_right.loc[i+1, 'model_type'] == 'link':
+               merge_right.loc[start_link, 'length'] = merge_right.loc[start_link, 'length'] + merge_right.loc[i+1, 'length']
+               merge_right = merge_right.drop(merge_right.index[i+1])
+               merge_right = merge_right.reset_index(drop=True)
+               i = i+1
+
 
 merge_right.to_csv(r"../data\input_data_roads_test.csv",index=False)

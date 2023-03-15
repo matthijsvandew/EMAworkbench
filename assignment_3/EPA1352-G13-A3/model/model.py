@@ -163,7 +163,8 @@ class BangladeshModel(Model):
         for i in range(len(df)):
             if df.loc[i, 'model_type'] == 'sourcesink' or df.loc[i, 'model_type'] == 'bridge' or df.loc[i, 'intersection']:
                 G.add_node(df.loc[i, 'id'], condition=df.loc[i, 'condition'], type=df.loc[i, 'type'])
-        for i in nodes
+            if df.loc[i, 'model_type'] == 'link':
+                G.add_edge() #we moeten ervoor zorgen dat tussen nodes echt alleen maar links zitten en niet links achter links..
 
             G.add_node(self.sources[i])
             G.add_weighted_edges_from([(1, 2, 2.5), (2, 3, 1.2), (2, 5, 3), (4, 5, 4)])
