@@ -19,12 +19,28 @@ merge_right = df_bmms.merge(df_roads, how = 'right',on=['LRPName','road'])
 
 merge_right = merge_right[(merge_right["road"].str.contains("N1") == True) | (merge_right["road"].str.contains("N2") == True)]
 
-
 for i in range(len(merge_right['length'])-1): #when length is nan, take difference in chainage
     if np.isnan(merge_right.loc[i,'length']) == True:
         merge_right.loc[i,'length'] = (merge_right.chainage_y[i+1] - merge_right.chainage_y[i])
 
 merge_right = merge_right[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']] #only necessary columns.
+
+# eerste_i = 0
+# for i in range(1, len(merge_right['road'])-1):
+#     if merge_right.loc[i, 'road'] != merge_right.loc[i-1, 'road']:
+#         eerste_i = i
+#     if merge_right.loc[i, 'road'] != merge_right.loc[i+1, 'road']:
+#         type_road = merge_right.loc[i, 'road']
+#         lengte_road = (merge_right.chainage_y[i] - merge_right.chainage_y[eerste_i])
+#         if lengte_road < 25000:
+#             merge_right = merge_right.drop(merge_right[merge_right['road'] == type_road].index)
+
+            #
+            # while merge_right.loc[i, 'road'] == merge_right.loc[i+1, 'road']:
+            #     merge_right.drop()
+            #     i = i+1
+
+
 
 CountA = 0
 CountB = 0
@@ -89,4 +105,4 @@ for i in range(len(merge_right)):
 
 merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
 
-merge_right.to_csv(r"../data\input_data_n1.csv",index=False)
+merge_right.to_csv(r"../data\input_data_roads_test.csv",index=False)
