@@ -20,7 +20,7 @@ merge_right = df_bmms.merge(df_roads, how = 'right',on=['LRPName','road'])
 merge_right = merge_right[(merge_right["road"].str.contains("N1") == True) | (merge_right["road"].str.contains("N2") == True)]
 
 for i in range(len(merge_right['length'])-1): #when length is nan, take difference in chainage
-    if np.isnan(merge_right.loc[i,'length']) == True:
+    if np.isnan(merge_right.loc[i, 'length']) == True:
         merge_right.loc[i,'length'] = (merge_right.chainage_y[i+1] - merge_right.chainage_y[i])
 
 merge_right = merge_right[['road','LRPName','length','chainage_y','lon_y','lat_y','type_y','name_y','condition']] #only necessary columns.
@@ -80,8 +80,6 @@ merge_right.insert(loc=0,column='id',value=0)
 
 for i in range(len(merge_right)):
      merge_right.loc[i, 'id'] = round(i)
-     #print(i)
-     #print(int(i))
 
 for i in range(len(merge_right)):
      if i == len(merge_right)-1:
@@ -103,17 +101,22 @@ for i in range(len(merge_right)-1):
 
 merge_right= merge_right.rename(columns={'type_y':'model_type','lat_y':'lat','lon_y':'lon','name_y':'name','chainage_y':'chainage'})
 
-#print(len(merge_right))
-#print(merge_right.index[2566])
-
 for i in range(len(merge_right)-1):
-     if merge_right.loc[i, 'model_type'] == 'link':
-          start_link = i
-          while merge_right.loc[i+1, 'model_type'] == 'link':
-               merge_right.loc[start_link, 'length'] = merge_right.loc[start_link, 'length'] + merge_right.loc[i+1, 'length']
-               merge_right = merge_right.drop(merge_right.index[i+1])
-               merge_right = merge_right.reset_index(drop=True)
-               i = i+1
+     if merge_right.loc[i, 'model_type'] == 'bridge' and merge_right.loc[i+1, 'model_type'] == 'bridge':
+          merge_right.loc[(i+0.5)] = [(i+1), merge_right.road[i], 'LRP_inserted', 0, 0, ((merge_right.lon[i] + merge_right.lon[i+1])/2), ((merge_right.lat[i] + merge_right.lat[i+1])/2), 'link', 'inserted_link', 'NaN']
+
+merge_right = merge_right.sort_index().reset_index(drop=True)
+
+#
+# for i in range(0, len(merge_right)-1, 1):
+#      if merge_right.loc[i, 'model_type'] == 'link':
+#           start_link = i
+#           while merge_right.loc[i+1, 'model_type'] == 'link':
+#                merge_right.length[start_link] = merge_right.length[start_link] + merge_right.length[i+1]
+#                merge_right = merge_right.drop([i+1])
+#                i = i+1
+#           merge_right = merge_right.reset_index(drop=True)
 
 
-merge_right.to_csv(r"../data\input_data_roads_test.csv",index=False)
+
+merge_right.to_csv(r"../data\input_data_roads_test.csv", index=False)
