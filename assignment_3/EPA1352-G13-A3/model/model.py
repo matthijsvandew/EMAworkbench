@@ -4,7 +4,7 @@ from mesa.space import ContinuousSpace
 from components import Source, Sink, SourceSink, Bridge, Link, Intersection
 import pandas as pd
 from collections import defaultdict
-
+import networkx as nx
 
 # ---------------------------------------------------------------
 def set_lat_lon_bound(lat_min, lat_max, lon_min, lon_max, edge_ratio=0.02):
@@ -88,6 +88,7 @@ class BangladeshModel(Model):
 
             if not df_objects_on_road.empty:
                 df_objects_all.append(df_objects_on_road)
+                print(df_objects_all)
 
                 """
                 Set the path 
@@ -104,6 +105,7 @@ class BangladeshModel(Model):
                 path_ids.reset_index(inplace=True, drop=True)
                 self.path_ids_dict[path_ids[0], path_ids.iloc[-1]] = path_ids
                 self.path_ids_dict[path_ids[0], None] = path_ids
+                #print(self.path_ids_dict)
 
         # put back to df with selected roads so that min and max and be easily calculated
         df = pd.concat(df_objects_all)
@@ -156,6 +158,27 @@ class BangladeshModel(Model):
                     x = row['lon']
                     self.space.place_agent(agent, (x, y))
                     agent.pos = (x, y)
+
+        G = nx.DiGraph()
+        for i in range(len(df)):
+            if df.loc[i, 'model_type'] == 'sourcesink' or df.loc[i, 'model_type'] == 'bridge' or df.loc[i, 'intersection']:
+                G.add_node(df.loc[i, 'id'], condition=df.loc[i, 'condition'], type=df.loc[i, 'type'])
+        for i in nodes
+
+            G.add_node(self.sources[i])
+            G.add_weighted_edges_from([(1, 2, 2.5), (2, 3, 1.2), (2, 5, 3), (4, 5, 4)])
+        for id in self.sinks:
+            G.add_node(id)
+            G.add_weighted_edges_from([(1, 2, 2.5), (2, 3, 1.2), (2, 5, 3), (4, 5, 4)])
+
+        G.add_weighted_edges_from([(1, 2, 2.5), (2, 3, 1.2), (2, 5, 3), (4, 5, 4)])
+        pos = nx.spring_layout(G)
+        nx.draw(G, pos, with_labels=True,
+                node_color='orange')  # elke node andere kleur kan, manual opzoeken, voor bridges categorieën
+        labels = nx.get_edge_attributes(G, 'weight')
+        print(labels)
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+        plt.show()
 
     def get_random_route(self, source):
         """
