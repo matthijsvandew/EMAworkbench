@@ -90,7 +90,7 @@ for i in range(len(merge_right)):
           merge_right.loc[i, 'type_y'] = 'bridge'
      else:
           merge_right.loc[i, 'type_y'] = 'link'
-     if 'Intersect' in merge_right.loc[i, 'name_y']:
+     if 'Intersect' in merge_right.loc[i, 'name_y'] and ('N1' or 'N2' in merge_right.loc[i, 'type_y']):
           merge_right.loc[i, 'type_y'] = 'intersection'
      if (merge_right.loc[i, 'type_y'] == 'CrossRoad') and ('N1' or 'N2' in merge_right.loc[i, 'type_y']):
           merge_right.loc[i, 'type_y'] = 'intersection'
@@ -107,16 +107,15 @@ for i in range(len(merge_right)-1):
 
 merge_right = merge_right.sort_index().reset_index(drop=True)
 
-#
-# for i in range(0, len(merge_right)-1, 1):
-#      if merge_right.loc[i, 'model_type'] == 'link':
-#           start_link = i
-#           while merge_right.loc[i+1, 'model_type'] == 'link':
-#                merge_right.length[start_link] = merge_right.length[start_link] + merge_right.length[i+1]
-#                merge_right = merge_right.drop([i+1])
-#                i = i+1
-#           merge_right = merge_right.reset_index(drop=True)
-
-
+for i in range(0, len(merge_right)-1):
+     if i == len(merge_right):
+          break
+     if merge_right.loc[i, 'model_type'] == 'link':
+          start_link = i
+          while merge_right.loc[i+1, 'model_type'] == 'link':
+               merge_right.length[start_link] = merge_right.length[start_link] + merge_right.length[i+1]
+               merge_right = merge_right.drop([i+1])
+               i = i+1
+          merge_right = merge_right.reset_index(drop=True)
 
 merge_right.to_csv(r"../data\input_data_roads_test.csv", index=False)
