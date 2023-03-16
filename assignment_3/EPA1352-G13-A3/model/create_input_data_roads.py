@@ -75,7 +75,6 @@ for i in range(len(merge_right['condition'])):
                else:
                     merge_right.loc[i, 'condition'] = 'D'
 
-
 merge_right.insert(loc=0,column='id',value=0)
 
 for i in range(len(merge_right)):
@@ -107,6 +106,7 @@ for i in range(len(merge_right)-1):
 
 merge_right = merge_right.sort_index().reset_index(drop=True)
 
+
 for i in range(0, len(merge_right)-1):
      if i == len(merge_right):
           break
@@ -118,4 +118,11 @@ for i in range(0, len(merge_right)-1):
                i = i+1
           merge_right = merge_right.reset_index(drop=True)
 
-merge_right.to_csv(r"../data\input_data_roads_test.csv", index=False)
+merge_right = merge_right.drop(columns=['id'])
+
+merge_right.insert(loc=0,column='id',value=0)
+
+for i in range(len(merge_right)):
+     merge_right.loc[i, 'id'] = round(i)
+
+merge_right.to_csv(r"../data\input_data_roads_test.csv", index_label='id')

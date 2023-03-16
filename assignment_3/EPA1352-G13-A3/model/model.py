@@ -55,7 +55,7 @@ class BangladeshModel(Model):
 
     step_time = 1
 
-    file_name = '../data/demo-4.csv'
+    file_name = '../data/input_data_roads_test.csv'
 
     def __init__(self, seed=None, x_max=500, y_max=500, x_min=0, y_min=0):
 
@@ -158,12 +158,12 @@ class BangladeshModel(Model):
                     self.space.place_agent(agent, (x, y))
                     agent.pos = (x, y)
 
-        G = nx.DiGraph()
-        for i in range(len(df)):
-            if df.loc[i, 'model_type'] == 'sourcesink' or df.loc[i, 'model_type'] == 'bridge' or df.loc[i, 'intersection']:
-                G.add_node(df.loc[i, 'id'], condition=df.loc[i, 'condition'], type=df.loc[i, 'type'])
-            if df.loc[i, 'model_type'] == 'link':
-                G.add_edge(df.id[i-1], df.id[i+1], length=df.length[i])  #we moeten ervoor zorgen dat tussen nodes echt alleen maar links zitten en niet links achter links..
+        # G = nx.DiGraph()
+        # for i in range(len(df)):
+        #     if df.loc[i, 'model_type'] == 'sourcesink' or df.loc[i, 'model_type'] == 'bridge' or df.loc[i, 'intersection']:
+        #         G.add_node(df.loc[i, 'id'], condition=df.loc[i, 'condition'], type=df.loc[i, 'type'])
+        #     if df.loc[i, 'model_type'] == 'link':
+        #         G.add_edge(df.id[i-1], df.id[i+1], length=df.length[i])  #we moeten ervoor zorgen dat tussen nodes echt alleen maar links zitten en niet links achter links..
 
 
 

@@ -56,7 +56,7 @@ def agent_portrayal(agent):
 
     # define text labels
     if isinstance(agent, Infra) and agent.name != "":
-        portrayal["Text"] = agent.name
+        # portrayal["Text"] = agent.name ### Makes the map readable instead of the names
         portrayal["Text_color"] = "DarkSlateGray"
 
     return portrayal
