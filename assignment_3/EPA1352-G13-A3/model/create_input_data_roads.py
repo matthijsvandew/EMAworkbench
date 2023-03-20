@@ -133,4 +133,16 @@ merge_right.insert(loc=0,column='id',value=0)
 for i in range(len(merge_right)):
      merge_right.loc[i, 'id'] = round(i)
 
-merge_right.to_csv(r"../data\input_data2.csv", index = False)
+merge_right.loc[(565+0.5)] = [(565+1), merge_right.road[565], 'LRP_inserted', 0, 0, 91.833060, 22.368996, 'intersection', 'inserted_intersection', 'NaN']
+merge_right.loc[(1938+0.5)] = [(565+1), merge_right.road[1939], 'LRP_inserted', 0, 0, 91.833060, 22.368996, 'intersection', 'inserted_intersection', 'NaN']
+
+merge_right = merge_right.sort_index().reset_index(drop=True)
+
+merge_right = merge_right.drop(columns=['id'])
+
+merge_right.insert(loc=0,column='id',value=0)
+
+for i in range(len(merge_right)):
+     merge_right.loc[i, 'id'] = round(i)
+
+merge_right.to_csv(r"../data\input_data4.csv", index = False)
