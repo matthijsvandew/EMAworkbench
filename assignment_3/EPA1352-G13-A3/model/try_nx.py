@@ -46,7 +46,12 @@ for i in G.nodes():
 print(sourcesinks)
 #print(type(sourcesinks))
 
-
+for i in sourcesinks:
+    for j in sourcesinks:
+        if i !=j:
+            sp = nx.shortest_path(G, i, j, weight='length')
+            splen = nx.shortest_path_length(G,i,j,weight='length')
+            print(i,j,splen)
 
 #     sp = nx.shortest_path(G, 4, 3, weight='weight')
 #     splen = nx.shortest_path_length(G, 4, 3, weight='weight')
