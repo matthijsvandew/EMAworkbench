@@ -158,7 +158,7 @@ class BangladeshModel(Model):
                     self.space.place_agent(agent, (x, y))
                     agent.pos = (x, y)
 
-        # G = nx.DiGraph()
+        # G = nx.Graph()
         # for i in range(len(df)):
         #     if df.loc[i, 'model_type'] == 'sourcesink' or df.loc[i, 'model_type'] == 'bridge' or df.loc[i, 'intersection']:
         #         G.add_node(df.loc[i, 'id'], condition=df.loc[i, 'condition'], type=df.loc[i, 'type'])
