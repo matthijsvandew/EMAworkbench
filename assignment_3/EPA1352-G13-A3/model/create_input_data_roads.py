@@ -145,4 +145,28 @@ merge_right.insert(loc=0,column='id',value=0)
 for i in range(len(merge_right)):
      merge_right.loc[i, 'id'] = round(i)
 
-merge_right.to_csv(r"../data\input_data4.csv", index = False)
+#Some sourcesinks need to be intersections points
+#1939 thus 1941
+merge_right.loc[1941,['model_type']] = ['link']
+merge_right.loc[1691,['model_type']] = ['intersection']
+merge_right.loc[1687,['model_type']] = ['intersection']
+merge_right.loc[3021,['model_type']] = ['intersection']
+merge_right.loc[3058,['model_type']] = ['intersection']
+merge_right.loc[3412,['model_type']] = ['intersection']
+merge_right.loc[3657,['model_type']] = ['intersection']
+
+merge_right.loc[2194,['id','lon','lat']] = ['16','90.521527','23.7060833'] # intersection N1 N2
+merge_right.loc[1477,['id','lon','lat']] = ['175','91.118166','23.4789716'] # intersection N1 N102
+merge_right.loc[1691,['id','lon','lat']] = ['325','91.3813604','23.0095556'] # intersection N1 N104
+merge_right.loc[1811,['id','lon','lat']] = ['29','90.5466108','23.6904163'] # intersection N1 N105
+merge_right.loc[2211,['id','lon','lat']] = ['1840','90.5688049','23.7851941'] # intersection N105 N2
+merge_right.loc[2438,['id','lon','lat']] = ['1687','91.1144444','24.0508333'] # intersection N102 N2
+merge_right.loc[3173,['id','lon','lat']] = ['2514','91.3464441','24.1478608'] # intersection N2 N204
+merge_right.loc[3297,['id','lon','lat']] = ['2654','91.5100833','24.294721'] # intersection N2 N207
+merge_right.loc[3461,['id','lon','lat']] = ['2918','91.6774993','24.6264993'] # intersection N2 N207
+merge_right.loc[3663,['id','lon','lat']] = ['3021','91.8752771','24.8776938'] # intersection N2 N208
+merge_right.loc[3664,['id','lon','lat']] = ['3058','91.949583','24.9163056'] # intersection N2 N210
+merge_right.loc[3462,['id','lon','lat']] = ['3412','91.7654722','24.4714438'] # intersection N207 N208
+merge_right.loc[3714,['id','lon','lat']] = ['3657','91.896583','24.8479997'] # intersection N208 N210
+
+merge_right.to_csv(r"../data\input_data5.csv", index = False)
