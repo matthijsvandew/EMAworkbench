@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import scipy
 
-file_name = '../data/input_data2.csv'
+file_name = '../data/input_data5.csv'
 
 df = pd.read_csv(file_name)
 
@@ -36,6 +36,7 @@ for i in roads:
 
 pos = nx.get_node_attributes(G, 'pos')
 nx.draw_networkx(G,pos,node_size=10,with_labels=False)
+plt.show()
 
 sourcesinks = set()
 for i in G.nodes():
@@ -44,7 +45,7 @@ for i in G.nodes():
             #print(G.nodes[i])
             sourcesinks.add(G.nodes[i]['id'])
 print(sourcesinks)
-#print(type(sourcesinks))
+
 
 for i in sourcesinks:
     for j in sourcesinks:
@@ -52,25 +53,3 @@ for i in sourcesinks:
             sp = nx.shortest_path(G, i, j, weight='length')
             splen = nx.shortest_path_length(G,i,j,weight='length')
             print(i,j,splen)
-
-#     sp = nx.shortest_path(G, 4, 3, weight='weight')
-#     splen = nx.shortest_path_length(G, 4, 3, weight='weight')
-#     print(f"Shortest path from node 4 to node 3 is {sp} with length {splen}")
-#     print(f"All shortest paths  {nx.floyd_warshall(G, 'weight')}")
-#     print(f"Degree centrality: {nx.degree_centrality(G)}")
-#     for n in G.nodes:
-#         print(f"Closeness centrality node {n}: {nx.closeness_centrality(G, n, 'weight')}")
-#     for n in G.nodes:
-#         print(f"Betweenness centrality node {n}: {nx.betweenness_centrality(G, n, weight='weight')}")
-#     pos = nx.get_node_attributes(G, 'pos')
-#     nx.draw(G, pos, node_color='orange', with_labels=True)
-#     labels = nx.get_edge_attributes(G, 'weight')
-#     nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
-#     plt.show()
-
-#plt.show()
-
-# for i in path_ids_dict1:
-#     print()
-#     print(i)
-#     print(path_ids_dict1[i])
