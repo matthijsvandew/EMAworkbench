@@ -4,52 +4,63 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import scipy
 
-file_name = '../data/input_data5.csv'
+class road_network():
+    def __init__self(self,file_name = r'demo-4.csv'):
+        self.file_name = file_name
 
-df = pd.read_csv(file_name)
+    def find_shortest_path():
+        file_name = '../data/demo-4.csv'
 
-# a list of names of roads to be generated
-roads = df["road"].unique()
+        df = pd.read_csv(file_name)
 
-G = nx.Graph()
+        # a list of names of roads to be generated
+        roads = df["road"].unique()
 
-for i in roads:
-    # print()
-    # print()
-    # print(i)
-    road_sections = df.loc[df['road']==i]
-    for i in range(len(road_sections)):
-        current_section = road_sections.iloc[i]
-        #print(current_section.id)
-        G.add_node(current_section.id,pos=(current_section.lon,current_section.lat),model_type=current_section.model_type, id=current_section.id)
-        #print(nx.get_node_attributes(G,'model_type'))
-    for i in range(len(road_sections)-1):
-        current_section = road_sections.iloc[i]
-        next_section = road_sections.iloc[i+1]
-        # print(current_section.id)
-        # print(next_section.id)
-        if i != (len(road_sections)-1):
-            G.add_edge(u_of_edge=current_section.id,v_of_edge=next_section.id,length=current_section.length)
-            #print(current_section.id,current_section.length)
-        else:
-            G.add_edge(u_of_edge=current_section.id, v_of_edge=next_section.id, length=(current_section.length + next_section.length) )
+        G = nx.Graph()
 
-pos = nx.get_node_attributes(G, 'pos')
-nx.draw_networkx(G,pos,node_size=10,with_labels=False)
-plt.show()
+        for i in roads:
+            # print()
+            # print()
+            # print(i)
+            road_sections = df.loc[df['road']==i]
+            for i in range(len(road_sections)):
+                current_section = road_sections.iloc[i]
+                #print(current_section.id)
+                G.add_node(current_section.id,pos=(current_section.lon,current_section.lat),model_type=current_section.model_type, id=current_section.id)
+                #print(nx.get_node_attributes(G,'model_type'))
+            for i in range(len(road_sections)-1):
+                current_section = road_sections.iloc[i]
+                next_section = road_sections.iloc[i+1]
+                # print(current_section.id)
+                # print(next_section.id)
+                if i != (len(road_sections)-1):
+                    G.add_edge(u_of_edge=current_section.id,v_of_edge=next_section.id,length=current_section.length)
+                    #print(current_section.id,current_section.length)
+                else:
+                    G.add_edge(u_of_edge=current_section.id, v_of_edge=next_section.id, length=(current_section.length + next_section.length) )
 
-sourcesinks = set()
-for i in G.nodes():
-    for attribute in G.nodes[i]['model_type']:
-        if G.nodes[i]['model_type'] == 'sourcesink':
-            #print(G.nodes[i])
-            sourcesinks.add(G.nodes[i]['id'])
-print(sourcesinks)
+        pos = nx.get_node_attributes(G, 'pos')
+        nx.draw_networkx(G,pos,node_size=10,with_labels=False)
+        plt.show()
 
+        sourcesinks = set()
+        for i in G.nodes():
+            for attribute in G.nodes[i]['model_type']:
+                if G.nodes[i]['model_type'] == 'sourcesink':
+                    #print(G.nodes[i])
+                    sourcesinks.add(G.nodes[i]['id'])
 
-for i in sourcesinks:
-    for j in sourcesinks:
-        if i !=j:
-            sp = nx.shortest_path(G, i, j, weight='length')
-            splen = nx.shortest_path_length(G,i,j,weight='length')
-            print(i,j,splen)
+        sourcesinks_routes = {}
+        for i in sourcesinks:
+            for j in sourcesinks:
+                if i !=j:
+                    sp = nx.shortest_path(G, i, j, weight='length')
+                    splen = nx.shortest_path_length(G,i,j,weight='length')
+                    #print(i,j,splen)
+
+                    route = {(i, j): sp}
+                    sourcesinks_routes.update(route)
+                    serie = pd.Series(sp)
+                    serie = serie.rename('id')
+
+        return sourcesinks

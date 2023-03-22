@@ -1,5 +1,7 @@
 from model import BangladeshModel
+from try_nx import road_network
 
+print(road_network.find_shortest_path())
 """
     Run simulation
     Print output at terminal
