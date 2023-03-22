@@ -16,9 +16,11 @@ run_length = 5 * 24 * 60
 
 seed = 1234567
 
-shortest_routes_sourcesinks = road_network.find_shortest_path()
+file = '../data\input_data5.csv'
+network = road_network(file_name=file)
+shortest_routes_sourcesinks = network.find_shortest_path()
 
-sim_model = BangladeshModel(shortest_routes_sourcesinks,seed=seed)
+sim_model = BangladeshModel(shortest_routes_sourcesinks,seed=seed,file = file)
 
 # Check if the seed is set
 print("SEED " + str(sim_model._seed))

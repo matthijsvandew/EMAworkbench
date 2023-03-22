@@ -55,9 +55,9 @@ class BangladeshModel(Model):
 
     step_time = 1
 
-    file_name = '../data/demo-4.csv'
 
-    def __init__(self, shortest_routes_sourcesinks, seed=None, x_max=500, y_max=500, x_min=0, y_min=0):
+
+    def __init__(self, shortest_routes_sourcesinks,file, seed=None, x_max=500, y_max=500, x_min=0, y_min=0):
 
         self.schedule = BaseScheduler(self)
         self.running = True
@@ -66,6 +66,7 @@ class BangladeshModel(Model):
         self.sources = []
         self.sinks = []
 
+        self.file = file
         self.shortest_routes_sourcesinks = shortest_routes_sourcesinks
 
         self.generate_model()
@@ -77,7 +78,7 @@ class BangladeshModel(Model):
         Warning: the labels are the same as the csv column labels
         """
 
-        df = pd.read_csv(self.file_name)
+        df = pd.read_csv(self.file)
 
         # a list of names of roads to be generated
         roads = df["road"].unique()
