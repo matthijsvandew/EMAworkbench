@@ -161,14 +161,6 @@ class BangladeshModel(Model):
                     self.space.place_agent(agent, (x, y))
                     agent.pos = (x, y)
 
-        # G = nx.Graph()
-        # for i in range(len(df)):
-        #     if df.loc[i, 'model_type'] == 'sourcesink' or df.loc[i, 'model_type'] == 'bridge' or df.loc[i, 'intersection']:
-        #         G.add_node(df.loc[i, 'id'], condition=df.loc[i, 'condition'], type=df.loc[i, 'type'])
-        #     if df.loc[i, 'model_type'] == 'link':
-        #         G.add_edge(df.id[i-1], df.id[i+1], length=df.length[i])  #we moeten ervoor zorgen dat tussen nodes echt alleen maar links zitten en niet links achter links..
-
-
 
     def get_random_route(self, source):
         """
@@ -176,18 +168,17 @@ class BangladeshModel(Model):
         """
         while True:
             # different source and sink
-            print('sinks that I can go to',self.sinks)
+            #print('sinks that I can go to',self.sinks)
             sink = self.random.choice(self.sinks)
-            print('This is my sink',sink)
+            #print('This is my sink',sink)
             if sink is not source:
                 break
 
-        print(self.shortest_routes_sourcesinks[(source, sink)])
+        #print(self.shortest_routes_sourcesinks[(source, sink)])
         serie = pd.Series(self.shortest_routes_sourcesinks[(source, sink)])
         serie = serie.rename('id')
-        print()
-        print(serie)
-        print('I can find my random route based on shortest path')
+        #print(serie)
+        #print('I can find my random route based on shortest path')
         return serie
 
     # TODO
@@ -195,10 +186,21 @@ class BangladeshModel(Model):
         return self.get_random_route(source)
 
     def get_straight_route(self, source):
+        #print(source)
         """
         pick up a straight route given an origin
         """
-        return self.path_ids_dict[source, None]
+        #return self.path_ids_dict[source, None]
+        #print(self.path_ids_dict[source, None])
+        #return self.path_ids_dict[source, None]
+        #print('I can print')
+        #print(self.sourcesinks_routes[(source, 1000025)])
+        serie = pd.Series(self.sourcesinks_routes[(source, None)])
+        #print('I can print after serie')
+        serie = serie.rename('id')
+        #print(serie)
+        #print('I can print before return')
+        return serie
 
     def step(self):
         """
