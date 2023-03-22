@@ -1,7 +1,6 @@
 from model import BangladeshModel
 from try_nx import road_network
 
-print(road_network.find_shortest_path())
 """
     Run simulation
     Print output at terminal
@@ -17,7 +16,9 @@ run_length = 5 * 24 * 60
 
 seed = 1234567
 
-sim_model = BangladeshModel(seed=seed)
+shortest_routes_sourcesinks = road_network.find_shortest_path()
+
+sim_model = BangladeshModel(shortest_routes_sourcesinks,seed=seed)
 
 # Check if the seed is set
 print("SEED " + str(sim_model._seed))

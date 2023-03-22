@@ -55,9 +55,9 @@ class BangladeshModel(Model):
 
     step_time = 1
 
-    file_name = '../data/input_data5.csv'
+    file_name = '../data/demo-4.csv'
 
-    def __init__(self, seed=None, x_max=500, y_max=500, x_min=0, y_min=0):
+    def __init__(self, shortest_routes_sourcesinks, seed=None, x_max=500, y_max=500, x_min=0, y_min=0):
 
         self.schedule = BaseScheduler(self)
         self.running = True
@@ -65,6 +65,8 @@ class BangladeshModel(Model):
         self.space = None
         self.sources = []
         self.sinks = []
+
+        self.shortest_routes_sourcesinks = shortest_routes_sourcesinks
 
         self.generate_model()
 
@@ -173,14 +175,23 @@ class BangladeshModel(Model):
         """
         while True:
             # different source and sink
+            print('sinks that I can go to',self.sinks)
             sink = self.random.choice(self.sinks)
+            print('This is my sink',sink)
             if sink is not source:
                 break
-        return self.path_ids_dict[source, sink]
+
+        print(self.shortest_routes_sourcesinks[(source, sink)])
+        serie = pd.Series(self.shortest_routes_sourcesinks[(source, sink)])
+        serie = serie.rename('id')
+        print()
+        print(serie)
+        print('I can find my random route based on shortest path')
+        return serie
 
     # TODO
     def get_route(self, source):
-        return self.get_straight_route(source)
+        return self.get_random_route(source)
 
     def get_straight_route(self, source):
         """
