@@ -2,6 +2,7 @@ from mesa.visualization.ModularVisualization import ModularServer
 from ContinuousSpace.SimpleContinuousModule import SimpleCanvas
 from model import BangladeshModel
 from components import Source, Sink, Bridge, Link, Intersection, Infra
+from try_nx import road_network
 
 """
 Run simulation with Visualization 
@@ -68,6 +69,10 @@ Launch the animation server
 Open a browser tab 
 """
 
+file = '../data\input_data5.csv'
+network = road_network(file_name=file)
+shortest_routes_sourcesinks = network.find_shortest_path()
+
 canvas_width = 400
 canvas_height = 400
 
@@ -76,7 +81,9 @@ space = SimpleCanvas(agent_portrayal, canvas_width, canvas_height)
 server = ModularServer(BangladeshModel,
                        [space],
                        "Transport Model Demo",
-                       {"seed": 1234567})
+                       {"seed": 1234567,
+                        "file": file,
+                        "shortest_routes_sourcesinks":shortest_routes_sourcesinks})
 
 # The default port
 server.port = 8521
