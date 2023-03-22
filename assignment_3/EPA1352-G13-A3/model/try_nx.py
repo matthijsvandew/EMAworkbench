@@ -60,7 +60,5 @@ class road_network():
 
                     route = {(i, j): sp}
                     sourcesinks_routes.update(route)
-                    serie = pd.Series(sp)
-                    serie = serie.rename('id')
 
-        return sourcesinks
+        return sourcesinks_routes
