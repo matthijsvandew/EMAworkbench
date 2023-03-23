@@ -2,8 +2,6 @@ from model import BangladeshModel
 from try_nx import road_network
 import pandas as pd
 import random
-# import sys
-# sys.setrecursionlimit(2000)
 
 """
     Run simulation
@@ -42,6 +40,7 @@ for sce in range(5): ### Five different scenarios
         sim_model = BangladeshModel(shortest_routes_sourcesinks, seed=seed,file = file,scenario=sce,replication=rep)
         for i in range(run_length): ### Run model as long as the run_length
             sim_model.step()
+        print(f'Finished replication {rep} for scenario {sce}')
         ### Append the data that is generated in the replication to the dataframe of the scenario (which contains replications)
         df_combined_sce =df_combined_sce.append(sim_model.save_results(), ignore_index=True)
 
@@ -53,18 +52,3 @@ for sce in range(5): ### Five different scenarios
         df_combined_sce.to_csv(r'../experiment\base_case_results.csv', index_label='index')
     else: ### The rest of the scenario's will store their data based on the scenario number
         df_combined_sce.to_csv(f'../experiment\scenario{sce}_results.csv', index_label='index')
-
-# seed = 1234567
-#
-# file = '../data\input_data5.csv'
-# network = road_network(file_name=file)
-# shortest_routes_sourcesinks = network.find_shortest_path()
-#
-# sim_model = BangladeshModel(shortest_routes_sourcesinks,seed=seed,file = file)
-#
-# # Check if the seed is set
-# print("SEED " + str(sim_model._seed))
-#
-# # One run with given steps
-# for i in range(run_length):
-#     sim_model.step()

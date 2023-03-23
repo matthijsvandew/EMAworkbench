@@ -94,7 +94,7 @@ class BangladeshModel(Model):
 
             if not df_objects_on_road.empty:
                 df_objects_all.append(df_objects_on_road)
-                print(df_objects_all)
+                #print(df_objects_all)
 
                 """
                 Set the path 

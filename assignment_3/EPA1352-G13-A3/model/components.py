@@ -78,11 +78,6 @@ class Bridge(Infra):
         elif self.condition == 'D' and randomizer < self.down_D:
             self.condition = 'broken'  ### Change the condition from 'D' to 'broken'
 
-        # # TODO
-        # self.delay_time = self.random.randrange(0, 10)
-        # # print(self.delay_time)
-
-    # TODO
     def get_delay_time(self):
         if self.condition == 'broken':
             if self.length > 200:
@@ -175,8 +170,7 @@ class Source(Infra):
                 self.vehicle_generated_flag = True
                 #print(str(self) + " GENERATE " + str(agent))
         except Exception as e:
-            test = e # used because there should be something after except.
-            #print("Oops!", e.__class__, "occurred.")
+            print("Oops!", e.__class__, "occurred.")
 
 
 # ---------------------------------------------------------------

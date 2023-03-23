@@ -7,7 +7,6 @@ import scipy
 class road_network():
     def __init__(self,file_name = '../data\demo-4.csv'):
         self.file_name = file_name
-        print(self.file_name)
 
     def find_shortest_path(self):
 
@@ -41,7 +40,7 @@ class road_network():
 
         pos = nx.get_node_attributes(G, 'pos')
         nx.draw_networkx(G,pos,node_size=10,with_labels=False)
-        plt.show()
+        #plt.show()
 
         sourcesinks = set()
         for i in G.nodes():
