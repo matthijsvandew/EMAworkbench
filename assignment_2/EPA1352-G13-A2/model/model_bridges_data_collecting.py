@@ -69,7 +69,7 @@ class BangladeshModel(Model):
         self.scenario = scenario
         self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario'])
         self.df_bridge = pd.DataFrame()
-        #Setting the run length for the experiments. This used to be in the __init__ function, because this would be a better modelling structure,
+        #Setting the run length for the experiment. This used to be in the __init__ function, because this would be a better modelling structure,
         #but in this way of modelling the model_viz.py file does not run anymore. Therefore, we added this parameter as a constant.
         self.run_length_model = 5*24*60
         self.generate_model()

@@ -1,6 +1,7 @@
 from mesa import Agent
 from enum import Enum
-
+import pandas as pd
+import random
 
 # ---------------------------------------------------------------
 class Infra(Agent):
@@ -50,18 +51,51 @@ class Bridge(Infra):
 
     """
 
-    def __init__(self, unique_id, model, length=0,
+    def __init__(self, unique_id, model, scenario,length=0,
                  name='Unknown', road_name='Unknown', condition='Unknown'):
         super().__init__(unique_id, model, length, name, road_name)
 
+        ### Use the scenario number to pick the correct scenario from the csv.
+        ### Store the probability for bridges with A quality to break as self.down_A etc.
+        self.scenario = scenario
+        df_scenario = pd.read_csv(r'../experiment\experimental_input.csv')
+
+        self.down_A = df_scenario.iloc[scenario, 1]
+        self.down_B = df_scenario.iloc[scenario, 2]
+        self.down_C = df_scenario.iloc[scenario, 3]
+        self.down_D = df_scenario.iloc[scenario, 4]
+
         self.condition = condition
 
-        # TODO
-        self.delay_time = self.random.randrange(0, 10)
-        # print(self.delay_time)
+        ### The following lines determine whether the bridge breaks down based on the probability to break down and condition
+        randomizer = random.randrange(0, 100)
+        if self.condition == 'A' and randomizer < self.down_A:
+            self.condition = 'broken'  ### Change the condition from 'A' to 'broken'
+        elif self.condition == 'B' and randomizer < self.down_B:
+            self.condition = 'broken'  ### Change the condition from 'B' to 'broken'
+        elif self.condition == 'C' and randomizer < self.down_C:
+            self.condition = 'broken'  ### Change the condition from 'C' to 'broken'
+        elif self.condition == 'D' and randomizer < self.down_D:
+            self.condition = 'broken'  ### Change the condition from 'D' to 'broken'
+
+        # # TODO
+        # self.delay_time = self.random.randrange(0, 10)
+        # # print(self.delay_time)
 
     # TODO
     def get_delay_time(self):
+        if self.condition == 'broken':
+            if self.length > 200:
+                self.delay_time = random.triangular(1, 2, 4)
+            elif 200 > self.length > 50:
+                self.delay_time = random.uniform(45, 90)
+            elif 50 > self.length > 10:
+                self.delay_time = random.uniform(15, 60)
+            elif self.length < 10:
+                self.delay_time = random.uniform(10, 20)
+        else:
+            self.delay_time = 0  ### If the bridge is not broken, the delay time is 0.
+
         return self.delay_time
 
 
@@ -279,6 +313,17 @@ class Vehicle(Agent):
             # arrive at the sink
             self.arrive_at_next(next_infra, 0)
             self.removed_at_step = self.model.schedule.steps
+
+            ### The following lines determined the total driving time. The driving time for the trucks is stored in
+            ### the dataframe of the model.
+            self.drive_time = self.removed_at_step - self.generated_at_step
+            # print(self.drive_time)
+            self.dictionary = {'id': self.unique_id, 'drive_time': self.drive_time,
+                               'replication': self.model.replication, 'scenario': self.model.scenario}
+            # print(self.dictionary)
+            self.model.df = self.model.df.append(self.dictionary, ignore_index=True)
+            # print(self.model.df)
+
             self.location.remove(self)
             return
         elif isinstance(next_infra, Bridge):

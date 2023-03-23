@@ -57,7 +57,7 @@ class BangladeshModel(Model):
 
 
 
-    def __init__(self, shortest_routes_sourcesinks,file, seed=None, x_max=500, y_max=500, x_min=0, y_min=0):
+    def __init__(self, shortest_routes_sourcesinks,file, seed=None, x_max=500, y_max=500, x_min=0, y_min=0,scenario=0,replication=0):
 
         self.schedule = BaseScheduler(self)
         self.running = True
@@ -66,10 +66,14 @@ class BangladeshModel(Model):
         self.sources = []
         self.sinks = []
 
+        self.replication = replication
+        self.scenario = scenario
         self.file = file
         self.shortest_routes_sourcesinks = shortest_routes_sourcesinks
 
         self.generate_model()
+        self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario'])
+        self.df_bridge = pd.DataFrame()  ### Create an empty dataframe to store all data for the model run.
 
     def generate_model(self):
         """
@@ -147,7 +151,7 @@ class BangladeshModel(Model):
                     self.sources.append(agent.unique_id)
                     self.sinks.append(agent.unique_id)
                 elif model_type == 'bridge':
-                    agent = Bridge(row['id'], self, row['length'], name, row['road'], row['condition'])
+                    agent = Bridge(row['id'], self, self.scenario, row['length'], row['name'], row['road'], row['condition'])
                 elif model_type == 'link':
                     agent = Link(row['id'], self, row['length'], name, row['road'])
                 elif model_type == 'intersection':
@@ -207,5 +211,11 @@ class BangladeshModel(Model):
         Advance the simulation by one step.
         """
         self.schedule.step()
+
+    def save_results(self):
+        """
+        Return the dataframe that contains all data from current replication. Intended for use at end simulation.
+        """
+        return self.df
 
 # EOF -----------------------------------------------------------
