@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import scipy
 
-class road_network():
+class road_graph():
     def find_shortest_path(file_name = '../data\demo-4.csv'):
 
         df = pd.read_csv(file_name)

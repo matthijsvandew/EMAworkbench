@@ -2,7 +2,7 @@ from mesa.visualization.ModularVisualization import ModularServer
 from ContinuousSpace.SimpleContinuousModule import SimpleCanvas
 from model import BangladeshModel
 from components import Source, Sink, Bridge, Link, Intersection, Infra
-from try_nx import road_network
+from road_graph_nx import road_graph
 
 """
 Run simulation with Visualization 
@@ -69,9 +69,8 @@ Launch the animation server
 Open a browser tab 
 """
 
-file = '../data\input_data6.csv'
-network = road_network(file_name=file)
-shortest_routes_sourcesinks = network.find_shortest_path()
+file = '../data\input_data.csv'
+shortest_routes_sourcesinks = road_graph.find_shortest_path(file_name=file)
 
 canvas_width = 400
 canvas_height = 400
