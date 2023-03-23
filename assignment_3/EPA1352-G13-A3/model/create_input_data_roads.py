@@ -175,4 +175,4 @@ for i in range(len(merge_right)):
           merge_right.loc[i, 'length'] = 0
 
 
-merge_right.to_csv(r"../data\input_data6.csv", index = False)
+merge_right.to_csv(r"../data\input_data.csv", index = False)

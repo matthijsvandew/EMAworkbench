@@ -24,7 +24,7 @@ else:
 
 use_random_seed = True
 
-file = '../data\input_data6.csv'
+file = '../data\input_data.csv'
 shortest_routes_sourcesinks = road_network.find_shortest_path(file_name=file)
 
 for sce in range(5): ### Five different scenarios
