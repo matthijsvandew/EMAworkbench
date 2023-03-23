@@ -1300,7 +1300,7 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 1473,N1,LRP_inserted,0.0,0.0,92.2982358,20.866944099999998,link,inserted_link,NaN
 1474,N1,LRP466b,220.0,461904.0,92.2982497,20.8650278,bridge,Bridge start,A
 1475,N1,LRP467,130.0,462124.0,92.298083,20.8629722,link,Infor.missing,
-1476,N1,LRPE,-462254.0,462254.0,92.298083,20.8629167,sourcesink,"End of Road at Shapla Chattar ,Teknaf Meet with Z1098 &Z1099.",
+1476,N1,LRPE,0.0,462254.0,92.298083,20.8629167,sourcesink,"End of Road at Shapla Chattar ,Teknaf Meet with Z1098 &Z1099.",
 175,N102,LRPS,329.0,0.0,91.118166,23.4789716,intersection,Start of road from N1 Mainamati,
 1478,N102,LRPSa,666.0,329.0,91.1167771,23.4815827,bridge,Box Culvert,A
 1479,N102,LRP_inserted,0.0,0.0,91.1150691,23.4841245,link,inserted_link,NaN
@@ -1473,7 +1473,7 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 1683,N102,LRP080a,626.0,80073.0,91.1124444,24.0275271,bridge,Box Culvert,A
 1684,N102,LRP081,1434.0,80699.0,91.1129167,24.0330827,link,Km post missing,
 1686,N102,LRP082a,549.0,82133.0,91.1146667,24.045833,bridge,Box Culvert,A
-1687,N102,LRPE,-82682.0,82682.0,91.1146667,24.0506111,intersection,Meet with N 2 at Sanail,
+1687,N102,LRPE,0.0,82682.0,91.1146667,24.0506111,intersection,Meet with N 2 at Sanail,
 1688,N104,LRPS,445.0,0.0,91.3994163,23.0096667,sourcesink,Intersection with Z1031,
 1689,N104,LRPSa,555.0,445.0,91.3952497,23.0092778,bridge,Box culvert,A
 1690,N104,LRP001,878.0,1000.0,91.3898052,23.0093056,link,Km post missing,
@@ -1565,7 +1565,7 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 1807,N104,LRP_inserted,0.0,0.0,91.10091664999999,22.830166,link,inserted_link,NaN
 1808,N104,LRP049b,116.0,49394.0,91.10125,22.8278327,bridge,Box culvert,A
 1809,N104,LRP049c,120.0,49510.0,91.10134555254236,22.8268086559322,link,Sonapur Link Road Z-1440,
-1810,N104,LRPE,-49630.0,49630.0,91.1014444,22.8257493,sourcesink,Meet with Z1441& Z1405 at Sonapur.,
+1810,N104,LRPE,0.0,49630.0,91.1014444,22.8257493,sourcesink,Meet with Z1441& Z1405 at Sonapur.,
 29,N105,LRPS,1000.0,0.0,90.5466108,23.6904163,intersection,"Starts of road from N1,Dhaka teknaf road at Madanpur.",
 1812,N105,LRP001,120.0,1000.0,90.5510556,23.6984163,link,Km post missing,
 1813,N105,LRP001a,934.0,1120.0,90.5515278,23.6993052,bridge,Box culvert,A
@@ -1671,7 +1671,7 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 1936,N105,LRP047a,622.0,47643.0,90.3669993,23.9826382,bridge,Box culvert,A
 1937,N105,LRP_inserted,0.0,0.0,90.36474965,23.9846106,link,inserted_link,NaN
 1938,N105,LRP047b,605.0,48265.0,90.3625,23.986583,bridge,Box Culvert,A
-1939,N105,LRP048,-48870.0,48870.0,90.3582222,23.9895274,sourcesink,"B.Bridge 83 km,Tangail 60 km / End of Road  Intersection at N4 at Joydebpur.",
+1939,N105,LRP048,0.0,48870.0,90.3582222,23.9895274,sourcesink,"B.Bridge 83 km,Tangail 60 km / End of Road  Intersection at N4 at Joydebpur.",
 566,N106,LRP_inserted,0.0,0.0,91.83306,22.368996,intersection,inserted_intersection,NaN
 1941,N106,LRPS,480.0,0.0,91.8215827,22.3935552,link,Start of Road  from Oxygen  More,
 1942,N106,LRPSa,168.0,480.0,91.8200271,22.3974997,bridge,Box culvert,A
@@ -1900,7 +1900,7 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 2179,N106,LRP058,1247.0,55809.0,92.1289716,22.6446108,link,Rangamati 12 km,
 2181,N106,LRP059a,247.0,57056.0,92.1364163,22.6474163,bridge,Bridge start,A
 2182,N106,LRP059c,9547.0,57303.0,92.1379997,22.6488886,link,"R162, Road to Khagrachari",
-2193,N106,LRPE,-66850.0,66850.0,92.2018333,22.6485274,sourcesink,The road ends Infront of DC Bunglow,
+2193,N106,LRPE,0.0,66850.0,92.2018333,22.6485274,sourcesink,The road ends Infront of DC Bunglow,
 16,N2,LRPS,166.0,0.0,90.521527,23.7060833,intersection,Road Start from N1 at Katchpur,
 2195,N2,LRP001,1370.0,166.0,90.5204716,23.7068889,link,Sylhet 230 km,
 2197,N2,LRP002a,630.0,1536.0,90.5156944,23.7182771,bridge,Bridge start,A
@@ -2820,7 +2820,7 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 3169,N2,LRP287a,238.0,286022.0,92.0172771,25.1613333,bridge,Bridge start,A
 3170,N2,LRP_inserted,0.0,0.0,92.01737435,25.16054165,link,inserted_link,NaN
 3171,N2,LRP287c,256.0,286260.0,92.0174716,25.15975,bridge,Box culvert,A
-3172,N2,LRPE,-286516.0,286516.0,92.0176382,25.1570556,sourcesink,Road End at Jaflong.,
+3172,N2,LRPE,0.0,286516.0,92.0176382,25.1570556,sourcesink,Road End at Jaflong.,
 2514,N204,LRPS,545.0,0.0,91.3464441,24.1478608,intersection,Road start from N2 at Jagannathganj.,
 3174,N204,LRPSa,85.0,545.0,91.3513889,24.1483608,bridge,Box culvert,A
 3175,N204,LRP001,176.0,630.0,91.3513611,24.1475552,link,Hobiganj 31 km,
@@ -2911,7 +2911,7 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 3275,N204,LRP035b,536.0,33724.0,91.4812216,24.2626944,bridge,Box culvert,A
 3276,N204,LRP036,27.0,34260.0,91.4778604,24.2665556,link,Km post missing,
 3277,N204,LRP036a,134.0,34287.0,91.4776938,24.2667493,bridge,Box culvert,A
-3278,N204,LRPE,-34421.0,34421.0,91.4771382,24.2673882,intersection,Road End intersecting N2 at Shaistagonj Round About.,
+3278,N204,LRPE,0.0,34421.0,91.4771382,24.2673882,intersection,Road End intersecting N2 at Shaistagonj Round About.,
 2654,N207,LRPS,226.0,0.0,91.5100833,24.294721,intersection,Road start from N2 at Mirpur.,
 3280,N207,LRPSa,231.0,226.0,91.5120833,24.2964163,bridge,Pipe culvert,A
 3281,N207,LRP_inserted,0.0,0.0,91.51280555,24.29699965,link,inserted_link,NaN
@@ -3074,7 +3074,7 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 3456,N207,LRP065,1376.0,64715.0,91.6809716,24.598083,link,Sylhet 41 km,
 3458,N207,LRP066a,594.0,66091.0,91.6780271,24.6095556,bridge,Box Culvert,A
 3459,N207,LRP067,1300.0,66685.0,91.6772216,24.6150556,link,Sylhet 39 km,
-2918,N207,LRPE,-67985.0,67985.0,91.6774993,24.6264993,intersection,Road end with N2 at Mukti joddha Chattor Sherpur.,
+2918,N207,LRPE,0.0,67985.0,91.6774993,24.6264993,intersection,Road end with N2 at Mukti joddha Chattor Sherpur.,
 3412,N208,LRPS,1000.0,0.0,91.7654722,24.4714438,intersection,Road Start from N207 infront of RHD,
 3463,N208,LRP001,305.0,1000.0,91.7727771,24.4757216,link,Km post missing,
 3464,N208,LRP001a,515.0,1305.0,91.7758049,24.4756382,bridge,Box culvert,A
@@ -3265,7 +3265,7 @@ id,road,LRPName,length,chainage,lon,lat,model_type,name,condition
 3658,N208,LRP055,1925.0,53585.0,91.8949163,24.8495274,link,Sylhet 8 km,
 3660,N208,LRP056a,85.0,55510.0,91.8818604,24.8615278,bridge,Box culvert,A
 3661,N208,LRP057,1900.0,55595.0,91.8810271,24.8618889,link,Sylhet 6 km,
-3021,N208,LRPE,-57495.0,57495.0,91.8752771,24.8776938,intersection,"Road end at Humayun Rashid Chattar, Intersection od N2 and N208",
+3021,N208,LRPE,0.0,57495.0,91.8752771,24.8776938,intersection,"Road end at Humayun Rashid Chattar, Intersection od N2 and N208",
 3058,N210,LRPS,40.0,0.0,91.949583,24.9163056,intersection,Road Start From N2 At Khadimnagar Bypass Point,
 3665,N210,LRP001,160.0,40.0,91.9496663,24.9158889,link,Dhaka 255 Km,
 3666,N210,LRP001a,449.0,200.0,91.9496941,24.9145,bridge,Box Culvert,A

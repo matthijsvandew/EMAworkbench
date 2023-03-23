@@ -170,4 +170,9 @@ for i in range(0, len(merge_right)-1):
                     i = i+1
                merge_right = merge_right.reset_index(drop=True)
 
+for i in range(len(merge_right)):
+     if merge_right.loc[i, 'length'] < 0:
+          merge_right.loc[i, 'length'] = 0
+
+
 merge_right.to_csv(r"../data\input_data6.csv", index = False)
