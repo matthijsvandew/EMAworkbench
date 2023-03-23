@@ -112,20 +112,6 @@ for i in range(len(merge_right)-1):
 
 merge_right = merge_right.sort_index().reset_index(drop=True)
 
-
-# for i in range(0, len(merge_right)-1):
-#      if i == len(merge_right):
-#           break
-#      if merge_right.loc[i, 'model_type'] == 'link':
-#           start_link = i
-#           if (merge_right.loc[i, 'road'] == merge_right.loc[i + 1, 'road']):
-#                while (merge_right.loc[i+1, 'model_type'] == 'link'):
-#                     merge_right.length[start_link] = merge_right.length[start_link] + merge_right.length[i+1]
-#                     merge_right = merge_right.drop([i+1])
-#                     i = i+1
-#                merge_right = merge_right.reset_index(drop=True)
-
-
 merge_right = merge_right.drop(columns=['id'])
 
 merge_right.insert(loc=0,column='id',value=0)
@@ -172,4 +158,21 @@ merge_right.loc[3664,['id','lon','lat']] = ['3058','91.949583','24.9163056'] # i
 merge_right.loc[3462,['id','lon','lat']] = ['3412','91.7654722','24.4714438'] # intersection N207 N208
 merge_right.loc[3714,['id','lon','lat']] = ['3657','91.896583','24.8479997'] # intersection N208 N210
 
-merge_right.to_csv(r"../data\input_data5.csv", index = False)
+for i in range(0, len(merge_right)-1):
+     if i == len(merge_right):
+          break
+     if merge_right.loc[i, 'model_type'] == 'link':
+          start_link = i
+          if (merge_right.loc[i, 'road'] == merge_right.loc[i + 1, 'road']):
+               while (merge_right.loc[i+1, 'model_type'] == 'link'):
+                    merge_right.length[start_link] = merge_right.length[start_link] + merge_right.length[i+1]
+                    merge_right = merge_right.drop([i+1])
+                    i = i+1
+               merge_right = merge_right.reset_index(drop=True)
+
+for i in range(len(merge_right)):
+     if merge_right.loc[i, 'length'] < 0:
+          merge_right.loc[i, 'length'] = 0
+
+
+merge_right.to_csv(r"../data\input_data6.csv", index = False)
