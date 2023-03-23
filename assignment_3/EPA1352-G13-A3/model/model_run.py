@@ -39,10 +39,12 @@ for sce in range(5): ### Five different scenarios
         ### Initiate model
         sim_model = BangladeshModel(shortest_routes_sourcesinks, seed=seed,file = file,scenario=sce,replication=rep)
         for i in range(run_length): ### Run model as long as the run_length
+            if i % 100 == 0:
+                print(f'At step {i} for replication {rep} for scenario {sce}')
             sim_model.step()
         print(f'Finished replication {rep} for scenario {sce}')
         ### Append the data that is generated in the replication to the dataframe of the scenario (which contains replications)
-        df_combined_sce =df_combined_sce.append(sim_model.save_results(), ignore_index=True)
+        df_combined_sce = pd.concat([df_combined_sce,sim_model.save_results()])
 
         ### The following 2 lines can be used if you want to store data for each replication individually
         #df_single_rep_sce  = sim_model.save_results

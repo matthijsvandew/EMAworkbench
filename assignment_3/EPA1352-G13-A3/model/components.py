@@ -314,9 +314,10 @@ class Vehicle(Agent):
             # print(self.drive_time)
             self.dictionary = {'id': self.unique_id, 'drive_time': self.drive_time,
                                'replication': self.model.replication, 'scenario': self.model.scenario}
-            # print(self.dictionary)
-            self.model.df = self.model.df.append(self.dictionary, ignore_index=True)
-            # print(self.model.df)
+            #print(self.dictionary)
+            df_delay = pd.DataFrame.from_dict([self.dictionary])
+            self.model.df = pd.concat([self.model.df,df_delay])
+            #print(self.model.df)
 
             self.location.remove(self)
             return
