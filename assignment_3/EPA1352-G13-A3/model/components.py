@@ -51,27 +51,22 @@ class Bridge(Infra):
 
     """
 
-    def __init__(self, unique_id, model, df_scenario,length=0,
-                 name='Unknown', road_name='Unknown', condition='Unknown'):
-        super().__init__(unique_id, model, length, name, road_name)
+    def _init_(self, unique_id, model, scenario, length=0,
+               name='Unknown', road_name='Unknown', condition='Unknown', delay_time=0):
+        super()._init_(unique_id, model, length, name, road_name)
 
         ### Use the scenario number to pick the correct scenario from the csv.
         ### Store the probability for bridges with A quality to break as self.down_A etc.
-        self.df_scenario = df_scenario
-        #print(df_scenario)
+        self.scenario = scenario
+        df_scenario = pd.read_csv(r'../experiment\experimental_input.csv')
 
-        self.down_A = df_scenario.loc[0,"Cat A %"]
-        self.down_B = df_scenario.loc[0,"Cat B %"]
-        self.down_C = df_scenario.loc[0,"Cat C %"]
-        self.down_D = df_scenario.loc[0,"Cat D %"]
-
-        # print()
-        # print('breakdown probability A:',self.down_A)
-        # print('breakdown probability B:',self.down_B)
-        # print('breakdown probability C:',self.down_C)
-        # print('breakdown probability D:',self.down_D)
+        self.down_A = df_scenario.iloc[scenario, 1]
+        self.down_B = df_scenario.iloc[scenario, 2]
+        self.down_C = df_scenario.iloc[scenario, 3]
+        self.down_D = df_scenario.iloc[scenario, 4]
 
         self.condition = condition
+        self.delay_time = delay_time
 
         ### The following lines determine whether the bridge breaks down based on the probability to break down and condition
         randomizer = random.randrange(0, 100)
