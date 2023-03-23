@@ -71,9 +71,15 @@ class BangladeshModel(Model):
         self.file = file
         self.shortest_routes_sourcesinks = shortest_routes_sourcesinks
 
-        self.generate_model()
         self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario'])
         self.df_bridge = pd.DataFrame()  ### Create an empty dataframe to store all data for the model run.
+
+        df_scenario = pd.read_csv(r'../experiment\experimental_input.csv')
+        self.df_scenario = df_scenario.loc[[scenario]]
+        self.df_scenario  = self.df_scenario.reset_index(drop=True)
+
+        self.generate_model()
+
 
     def generate_model(self):
         """
@@ -151,7 +157,8 @@ class BangladeshModel(Model):
                     self.sources.append(agent.unique_id)
                     self.sinks.append(agent.unique_id)
                 elif model_type == 'bridge':
-                    agent = Bridge(row['id'], self, self.scenario, row['length'], row['name'], row['road'], row['condition'])
+                    agent = Bridge(row['id'], self, self.df_scenario, row['length'], row['name'], row['road'],
+                                   row['condition'])
                 elif model_type == 'link':
                     agent = Link(row['id'], self, row['length'], name, row['road'])
                 elif model_type == 'intersection':

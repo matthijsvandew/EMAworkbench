@@ -1,5 +1,5 @@
 from model import BangladeshModel
-from try_nx import road_network
+from road_graph_nx import road_graph
 import pandas as pd
 import random
 
@@ -24,9 +24,8 @@ else:
 
 use_random_seed = True
 
-file = '../data\input_data6.csv'
-network = road_network(file_name=file)
-shortest_routes_sourcesinks = network.find_shortest_path()
+file = '../data\input_data.csv'
+shortest_routes_sourcesinks = road_graph.find_shortest_path(file_name=file)
 
 for sce in range(5): ### Five different scenarios
     ### Initiate an empty dataframe. We will store all data for a single scenario over all replications there
