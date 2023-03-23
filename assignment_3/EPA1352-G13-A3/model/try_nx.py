@@ -5,12 +5,9 @@ import matplotlib.pyplot as plt
 import scipy
 
 class road_network():
-    def __init__(self,file_name = '../data\demo-4.csv'):
-        self.file_name = file_name
+    def find_shortest_path(file_name = '../data\demo-4.csv'):
 
-    def find_shortest_path(self):
-
-        df = pd.read_csv(self.file_name)
+        df = pd.read_csv(file_name)
 
         # a list of names of roads to be generated
         roads = df["road"].unique()

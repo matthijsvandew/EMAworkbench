@@ -25,8 +25,7 @@ else:
 use_random_seed = True
 
 file = '../data\input_data6.csv'
-network = road_network(file_name=file)
-shortest_routes_sourcesinks = network.find_shortest_path()
+shortest_routes_sourcesinks = road_network.find_shortest_path(file_name=file)
 
 for sce in range(5): ### Five different scenarios
     ### Initiate an empty dataframe. We will store all data for a single scenario over all replications there
