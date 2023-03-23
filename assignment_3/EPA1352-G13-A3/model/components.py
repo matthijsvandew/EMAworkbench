@@ -85,6 +85,7 @@ class Bridge(Infra):
             self.condition = 'broken'  ### Change the condition from 'D' to 'broken'
 
     def get_delay_time(self):
+        self.delay_time = 0 ### If the bridge is not broken, the delay time is 0.
         if self.condition == 'broken':
             if self.length > 200:
                 self.delay_time = random.triangular(1, 2, 4)
@@ -94,8 +95,6 @@ class Bridge(Infra):
                 self.delay_time = random.uniform(15, 60)
             elif self.length < 10:
                 self.delay_time = random.uniform(10, 20)
-        else:
-            self.delay_time = 0  ### If the bridge is not broken, the delay time is 0.
 
         return self.delay_time
 
