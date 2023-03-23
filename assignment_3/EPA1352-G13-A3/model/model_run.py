@@ -53,3 +53,4 @@ for sce in range(5): ### Five different scenarios
         df_combined_sce.to_csv(r'../experiment\base_case_results.csv', index_label='index')
     else: ### The rest of the scenario's will store their data based on the scenario number
         df_combined_sce.to_csv(f'../experiment\scenario{sce}_results.csv', index_label='index')
+#print('done')
