@@ -10,6 +10,16 @@ Created by: EPA1352 Group 13
 | Yassine Mouhdad | 5879566 |
 | Tom Hillenaar | 4861973 |
 
+### Getting started
+
+First setup a new virtual environement in **Python 3.10**
+
+Install the requirements:
+
+`````shell
+ pip install -r requirements.txt 
+`````
+
 
 ## Introduction
 
