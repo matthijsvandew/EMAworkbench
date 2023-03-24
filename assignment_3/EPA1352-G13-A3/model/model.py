@@ -69,14 +69,13 @@ class BangladeshModel(Model):
         self.replication = replication
         self.scenario = scenario
         self.file = file
-        self.shortest_routes_sourcesinks = shortest_routes_sourcesinks
+        self.shortest_routes_sourcesinks = shortest_routes_sourcesinks # Load in the shortest path from every sourcesink to every other sourcesink.
 
-        self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario'])
-        self.df_bridge = pd.DataFrame()  ### Create an empty dataframe to store all data for the model run.
+        self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario']) # Create a dataframe to store the driving time of every vehicle.
 
-        df_scenario = pd.read_csv(r'../experiment\experimental_input.csv')
-        self.df_scenario = df_scenario.loc[[scenario]]
-        self.df_scenario  = self.df_scenario.reset_index(drop=True)
+        df_scenario = pd.read_csv(r'../experiment\experimental_input.csv') # Load in all the scenarios.
+        self.df_scenario = df_scenario.loc[[scenario]] # Choose the current scenario.
+        self.df_scenario = self.df_scenario.reset_index(drop=True)
 
         self.generate_model()
 
@@ -158,7 +157,7 @@ class BangladeshModel(Model):
                     self.sinks.append(agent.unique_id)
                 elif model_type == 'bridge':
                     agent = Bridge(row['id'], self, self.df_scenario, row['length'], row['name'], row['road'],
-                                   row['condition'])
+                                   row['condition']) # Add self.df_scenario so that a bridge knows the 'broken down bridges' scheme.
                 elif model_type == 'link':
                     agent = Link(row['id'], self, row['length'], name, row['road'])
                 elif model_type == 'intersection':
@@ -186,7 +185,7 @@ class BangladeshModel(Model):
                 break
 
         #print(self.shortest_routes_sourcesinks[(source, sink)])
-        serie = pd.Series(self.shortest_routes_sourcesinks[(source, sink)])
+        serie = pd.Series(self.shortest_routes_sourcesinks[(source, sink)]) # Turn the values from the dictionary (shortest path between two sourcesinks) given an key (origin-destination) in a Series format so that there are no formatting issues.
         serie = serie.rename('id')
         #print(serie)
         #print('I can find my random route based on shortest path')
@@ -194,24 +193,16 @@ class BangladeshModel(Model):
 
     # TODO
     def get_route(self, source):
-        return self.get_random_route(source)
+        return self.get_random_route(source) # Choose a random destination.
 
     def get_straight_route(self, source):
         #print(source)
         """
         pick up a straight route given an origin
         """
-        #return self.path_ids_dict[source, None]
+
         #print(self.path_ids_dict[source, None])
-        #return self.path_ids_dict[source, None]
-        #print('I can print')
-        #print(self.sourcesinks_routes[(source, 1000025)])
-        serie = pd.Series(self.sourcesinks_routes[(source, None)])
-        #print('I can print after serie')
-        serie = serie.rename('id')
-        #print(serie)
-        #print('I can print before return')
-        return serie
+        return self.path_ids_dict[source, None]
 
     def step(self):
         """

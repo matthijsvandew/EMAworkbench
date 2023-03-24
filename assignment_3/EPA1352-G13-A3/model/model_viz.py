@@ -70,8 +70,8 @@ Open a browser tab
 """
 
 file = '../data\input_data.csv'
-shortest_routes_sourcesinks = road_graph.find_shortest_path(file_name=file)
-
+shortest_routes_sourcesinks = road_graph.find_shortest_path(file_name=file) # Find the shortest paths from every source to every sink.
+                                                                            # Call the find_shortest_path in the road_graph class, which are in the road_graph_nx.py file.
 canvas_width = 400
 canvas_height = 400
 

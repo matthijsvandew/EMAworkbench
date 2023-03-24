@@ -25,7 +25,8 @@ else:
 use_random_seed = True
 
 file = '../data\input_data.csv'
-shortest_routes_sourcesinks = road_graph.find_shortest_path(file_name=file)
+shortest_routes_sourcesinks = road_graph.find_shortest_path(file_name=file) # Find the shortest paths from every node to every other node in the network.
+                                                                            # Call the find_shortest_path in the road_graph class, which are in the road_graph_nx.py file.
 
 for sce in range(5): ### Five different scenarios
     ### Initiate an empty dataframe. We will store all data for a single scenario over all replications there
