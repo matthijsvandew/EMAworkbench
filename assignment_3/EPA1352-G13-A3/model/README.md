@@ -3,6 +3,8 @@
 Created by: 
 Yilin HUANG 
 
+Adapted by EPA1352 Group 13
+
 Email:
 y.huang@tudelft.nl
 
@@ -42,6 +44,9 @@ A simple transport model demo in MESA for EPA1352 Advanced Simulation course Ass
 * [model_run.py](model_run.py): Sets up the model run (conditions). Calls the model. Run the simulation without visualization. 
 
     In this file, you define model batch runs.
+
+* [road_graph_nx.py](road_graph_nx.py): Draws a graph from the file that is also used in `model.py`.
+Uses the information in the file to calculate the shortest paths between sourcesinks.
   
 * [ContinuousSpace](ContinuousSpace): The directory contains files needed to visualize Python3 Mesa models on a continuous canvas with geo-coordinates, a functionality not contained in the current Mesa package. 
   
