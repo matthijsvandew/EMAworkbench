@@ -32,7 +32,8 @@ but the coding section is explained with markdown lines in between the lines of 
 ## How to Use
 The assignment is structured in such a way that the model files are combined in the folder `model`, 
 the input data that is being used by the model in the folder `data` and the results of the experiments and the
-experimental setup are given in the folder `experiment`. 
+experimental setup are given in the folder `experiment`. The report pdf is stored as 
+`Advanced_Simulation_assignment_3.pdf`
 
 In order to run the model, one should open and run the `model_run.py` file. This file is connected with other 
 files containing data, model information etc. While running the model_run file, the other files are being activated 
@@ -57,6 +58,9 @@ Finally, the file `visuals.py` is used to analyse the data which is being create
 extend this analysis by implementing more statistical measures.
 
 ## File-structure
+
+**Advanced_Simulation_assignment_3.pdf**
+This file is the report for assignment 3
 
 **data**
 Used for input data for the model.
@@ -84,6 +88,11 @@ Used to design experimental input and store the experimental output.
 - `model_run.py`
 - `model_viz.py`
 - `road_graph_nx.py`
+
+**bonus**
+Contains the files for the bonus assignment
+`assignment3_bonus_intersections_roads_conclusion.ipynb`
+`intersections_roads_bonus_assingment3_input_file.ipynb`
 
 **img**
 Shows some pictures which visualises how the model works.
