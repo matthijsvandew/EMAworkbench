@@ -73,7 +73,7 @@ class Bridge(Infra):
 
         self.condition = condition
 
-        # The following lines determine whether the bridge breaks down based on the probability to break down and condition
+        # The following lines determine whether the bridge breaks down based on the probability to break down and condition.
         randomizer = random.randrange(0, 100)
         if self.condition == 'A' and randomizer < self.down_A:
             self.condition = 'broken'  # Change the condition from 'A' to 'broken'.
@@ -313,16 +313,14 @@ class Vehicle(Agent):
             self.arrive_at_next(next_infra, 0)
             self.removed_at_step = self.model.schedule.steps
 
-            # The following lines determine the total driving time of a vehicle.
-            # The driving time for the trucks is stored in the dataframe of the model.
-
+            # The following line determine the total driving time of a vehicle. This value is stored in dictionary format.
             self.drive_time = self.removed_at_step - self.generated_at_step
             # print(self.drive_time)
             self.dictionary = {'id': self.unique_id, 'drive_time': self.drive_time,
                                'replication': self.model.replication, 'scenario': self.model.scenario}
             #print(self.dictionary)
-            df_delay = pd.DataFrame.from_dict([self.dictionary])
-            self.model.df = pd.concat([self.model.df, df_delay])
+            df_delay = pd.DataFrame.from_dict([self.dictionary]) # Convert the dictionary format to a dataframe format.
+            self.model.df = pd.concat([self.model.df, df_delay]) # The driving time for the trucks is stored in the dataframe of the model.
             #print(self.model.df)
 
             self.location.remove(self)
