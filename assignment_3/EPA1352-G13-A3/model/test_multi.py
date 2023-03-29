@@ -2,7 +2,7 @@ import multiprocessing as mp
 import pandas as pd
 
 #Definiëren scenario's. Ik zal ze hier in een lijst zetten. In het echt gaat dat iets gecompliceerder
-list_runs = [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2]]
+list_runs = [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2],[3,0],[3,1],[3,2]]
 
 def perform_experiment(core_number,run):
     # hier zou dus iets moeten gebeuren met de input. In het echte model willen we een dataframe returnen
@@ -12,12 +12,6 @@ def perform_experiment(core_number,run):
     dict_new_run = {'scenario':sce,'replication':rep,'core':core_number}
     dataframe = pd.DataFrame.from_dict([dict_new_run])
     return dataframe
-
-def merge_experiment_dataframes(experimental_results):
-    final_dataframe = pd.DataFrame()
-    for i in experimental_results:
-        pd.concat([final_dataframe,i])
-    return final_dataframe
 
 def proc_func(procnum, jobs_r, results_w):
     running = True
@@ -79,12 +73,15 @@ def perform_multi_threading(): # confirms that the code is under main function
                     df = result
                     print(df)
                     combined = pd.concat([combined, df])
-                    print(combined)
+
+
 
     # Clean up
     for procnum, proc, _, _ in procs:
         proc.join()
         #print(f"Joined process {procnum}")
+
+    return combined
 
 def perform_single_threading():
     combined = pd.DataFrame()
@@ -94,8 +91,9 @@ def perform_single_threading():
         print(df)
         combined = pd.concat([combined,df])
 
-    print(combined)
+    return combined
 
 if __name__ == "__main__":
-    #perform_single_threading()
-    perform_multi_threading()
+    #combined = perform_single_threading()
+    combined = perform_multi_threading()
+    print(combined)
