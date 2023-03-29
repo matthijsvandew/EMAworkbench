@@ -2,6 +2,11 @@ from model import BangladeshModel
 from road_graph_nx import road_graph
 import pandas as pd
 import random
+from datetime import datetime
+
+start_time = datetime.now()
+
+print("The start time of the simulation =", start_time)
 
 """
     Run simulation
@@ -54,4 +59,8 @@ for sce in range(5): # Five different scenarios.
         df_combined_sce.to_csv(r'../experiment\base_case_results.csv', index_label='index')
     else: # The rest of the scenario's will store their data based on the scenario number.
         df_combined_sce.to_csv(f'../experiment\scenario{sce}_results.csv', index_label='index')
-#print('done')
+
+end_time = datetime.now()
+
+print("The simulation started at ", start_time, "The end time of the simulation is ", end_time)
+print("Therefore the simulation ran for ",end_time-start_time)
