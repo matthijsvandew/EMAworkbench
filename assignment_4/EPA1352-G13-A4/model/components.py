@@ -51,37 +51,23 @@ class Bridge(Infra):
 
     """
 
-    def __init__(self, unique_id, model, df_scenario,length=0,
+    def __init__(self, unique_id, model, dict_scenario,length=0,
                  name='Unknown', road_name='Unknown', condition='Unknown'):
         super().__init__(unique_id, model, length, name, road_name)
 
-        # Use the scenario number to pick the correct scenario from the csv.
-        self.df_scenario = df_scenario
-        #print(df_scenario)
-
-        # Store the probability for bridges with A quality to break as self.down_A etc.
-        self.down_A = df_scenario.loc[0,"Cat A %"]
-        self.down_B = df_scenario.loc[0,"Cat B %"]
-        self.down_C = df_scenario.loc[0,"Cat C %"]
-        self.down_D = df_scenario.loc[0,"Cat D %"]
-
-        # print()
-        # print('breakdown probability A:',self.down_A)
-        # print('breakdown probability B:',self.down_B)
-        # print('breakdown probability C:',self.down_C)
-        # print('breakdown probability D:',self.down_D)
+        self.dict_scenario = dict_scenario
 
         self.condition = condition
 
         # The following lines determine whether the bridge breaks down based on the probability to break down and condition.
         randomizer = random.randrange(0, 100)
-        if self.condition == 'A' and randomizer < self.down_A:
+        if self.condition == 'A' and randomizer < self.dict_scenario['A']:
             self.condition = 'broken'  # Change the condition from 'A' to 'broken'.
-        elif self.condition == 'B' and randomizer < self.down_B:
+        elif self.condition == 'B' and randomizer < self.dict_scenario['B']:
             self.condition = 'broken'  # Change the condition from 'B' to 'broken'.
-        elif self.condition == 'C' and randomizer < self.down_C:
+        elif self.condition == 'C' and randomizer < self.dict_scenario['C']:
             self.condition = 'broken'  # Change the condition from 'C' to 'broken'.
-        elif self.condition == 'D' and randomizer < self.down_D:
+        elif self.condition == 'D' and randomizer < self.dict_scenario['D']:
             self.condition = 'broken'  # Change the condition from 'D' to 'broken'.
 
     def get_delay_time(self):

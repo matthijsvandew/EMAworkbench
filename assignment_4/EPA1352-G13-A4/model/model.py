@@ -74,8 +74,13 @@ class BangladeshModel(Model):
         self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario']) # Create a dataframe to store the driving time of every vehicle.
 
         df_scenario = pd.read_csv(r'../experiment\experimental_input.csv') # Load in all the scenarios.
-        self.df_scenario = df_scenario.loc[[scenario]] # Choose the current scenario.
-        self.df_scenario = self.df_scenario.reset_index(drop=True)
+        df_scenario = df_scenario.loc[[scenario]] # Choose the current scenario.
+        df_scenario = df_scenario.reset_index(drop=True)
+        self.dict_scenario = {}
+        self.dict_scenario['A'] = df_scenario.loc[0, "Cat A %"]
+        self.dict_scenario['B'] = df_scenario.loc[0, "Cat B %"]
+        self.dict_scenario['C'] = df_scenario.loc[0, "Cat C %"]
+        self.dict_scenario['D'] = df_scenario.loc[0, "Cat D %"]
 
         self.generate_model()
 
@@ -156,8 +161,8 @@ class BangladeshModel(Model):
                     self.sources.append(agent.unique_id)
                     self.sinks.append(agent.unique_id)
                 elif model_type == 'bridge':
-                    agent = Bridge(row['id'], self, self.df_scenario, row['length'], row['name'], row['road'],
-                                   row['condition']) # Add self.df_scenario so that a bridge knows the 'broken down bridges' scheme.
+                    agent = Bridge(row['id'], self, self.dict_scenario, row['length'], row['name'], row['road'],
+                                   row['condition']) # Add self.dict_scenario so that a bridge knows the 'broken down bridges' scheme.
                 elif model_type == 'link':
                     agent = Link(row['id'], self, row['length'], name, row['road'])
                 elif model_type == 'intersection':
