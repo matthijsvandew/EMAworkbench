@@ -24,8 +24,8 @@ def perform_experiment(core_number,job):
             print(f'CORE {core_number}: At step {i} for replication {rep} for scenario {sce}')
         sim_model.step()
     print(f'CORE {core_number}: Finished replication {rep} for scenario {sce}')
-    results_df = sim_model.save_results()
-    return results_df
+    results_df_trucks, results_df_bridges = sim_model.save_results()
+    return results_df_trucks, results_df_bridges
 
 def proc_func(procnum, jobs_r, results_w):
     running = True
@@ -40,7 +40,9 @@ def proc_func(procnum, jobs_r, results_w):
 
 def perform_multi_threading(sce_rep_dict): # confirms that the code is under main function
     # instantiating process with arguments
-    combined = pd.DataFrame()
+    results_df_combined_trucks = pd.DataFrame()
+    results_df_combined_bridges = pd.DataFrame()
+
     procs = []
     results = []
     num_procs = max(1, mp.cpu_count()-2) # Start at least 1 process
@@ -76,20 +78,23 @@ def perform_multi_threading(sce_rep_dict): # confirms that the code is under mai
                     #print(f"Process {procnum} is done")
                     break # We've invalidated i, so break out to the outer while
                 else:
-                    df = result
-                    combined = pd.concat([combined, df])
+                    results_df_trucks, results_df_bridges = result
+                    results_df_combined_trucks = pd.concat([results_df_combined_trucks, results_df_trucks])
+                    results_df_combined_bridges = pd.concat([results_df_combined_bridges, results_df_bridges])
 
     # Clean up
     for procnum, proc, _, _ in procs:
         proc.join()
         #print(f"Joined process {procnum}")
 
-    return combined
+    return results_df_combined_trucks, results_df_combined_bridges
 
 def perform_single_threading(sce_rep_dict):
-    combined = pd.DataFrame()
+    results_df_combined_trucks = pd.DataFrame()
+    results_df_combined_bridges = pd.DataFrame()
     for job in sce_rep_dict.items():
-        df = perform_experiment(0,job)
-        combined = pd.concat([combined,df])
+        results_df_trucks, results_df_bridges = perform_experiment(0,job)
+        results_df_combined_trucks = pd.concat([results_df_combined_trucks, results_df_trucks])
+        results_df_combined_bridges = pd.concat([results_df_combined_bridges, results_df_bridges])
 
-    return combined
+    return results_df_combined_trucks, results_df_combined_bridges
