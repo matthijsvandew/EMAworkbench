@@ -1,6 +1,7 @@
 import multiprocessing as mp
 import pandas as pd
 from model import BangladeshModel
+import random
 
 def perform_experiment(core_number,job):
     # Initiate model.
@@ -9,9 +10,13 @@ def perform_experiment(core_number,job):
 
     dict = job[1]
     shortest_routes_sourcesinks = dict['shortest_routes_sourcesinks']
-    seed = dict['seed']
     file = dict['file']
     run_length = dict['run_length']
+
+    if dict['seed'] == True:  # If we want to use a random seed: use random seed, otherwise seed 1234567.
+        seed = random.seed()
+    else:
+        seed = 1234567
 
     sim_model = BangladeshModel(shortest_routes_sourcesinks, seed=seed,file = file,scenario=sce,replication=rep)
     for i in range(run_length):  # Run model as long as the run_length.

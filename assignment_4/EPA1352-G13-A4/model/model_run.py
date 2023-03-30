@@ -32,12 +32,7 @@ def main():
     else:
         run_settings_dict['run_length'] = long_run_length
 
-    use_random_seed = True
-
-    if use_random_seed == True:  # If we want to use a random seed: use random seed, otherwise seed 1234567.
-        run_settings_dict['seed'] = random.seed()
-    else:
-        run_settings_dict['seed'] = 1234567
+    run_settings_dict['seed'] = True
 
     multiprocessing = True
 
@@ -49,9 +44,9 @@ def main():
 
     sce_rep_dict = {}
 
-    for sce in range(2): # Five different scenarios.
+    for sce in range(5): # Five different scenarios.
         # Initiate an empty dataframe. We will store all data for a single scenario over all replications there.
-        for rep in range(1,6): # Ten replications per scenario.
+        for rep in range(1,11): # Ten replications per scenario.
             sce_rep_dict[(sce, rep)] = run_settings_dict
 
     if multiprocessing == True:
