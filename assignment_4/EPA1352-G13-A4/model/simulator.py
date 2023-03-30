@@ -1,17 +1,26 @@
 import multiprocessing as mp
 import pandas as pd
+from model import BangladeshModel
 
-#Definiëren scenario's. Ik zal ze hier in een lijst zetten. In het echt gaat dat iets gecompliceerder
-list_runs = [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2],[3,0],[3,1],[3,2]]
+def perform_experiment(core_number,job):
+    # Initiate model.
+    sce = job[0][0]
+    rep = job[0][1]
 
-def perform_experiment(core_number,run):
-    # hier zou dus iets moeten gebeuren met de input. In het echte model willen we een dataframe returnen
-    # deze dataframe zou aan het einde van alle runs samengevoegd moeten worden.
-    sce, rep = run
-    #print(f'core: {core_number} performing scenario: {sce} replication: {rep}')
-    dict_new_run = {'scenario':sce,'replication':rep,'core':core_number}
-    dataframe = pd.DataFrame.from_dict([dict_new_run])
-    return dataframe
+    dict = job[1]
+    shortest_routes_sourcesinks = dict['shortest_routes_sourcesinks']
+    seed = dict['seed']
+    file = dict['file']
+    run_length = dict['run_length']
+
+    sim_model = BangladeshModel(shortest_routes_sourcesinks, seed=seed,file = file,scenario=sce,replication=rep)
+    for i in range(run_length):  # Run model as long as the run_length.
+        if i % 100 == 0:
+            print(f'CORE {core_number}: At step {i} for replication {rep} for scenario {sce}')
+        sim_model.step()
+    print(f'CORE {core_number}: Finished replication {rep} for scenario {sce}')
+    results_df = sim_model.save_results()
+    return results_df
 
 def proc_func(procnum, jobs_r, results_w):
     running = True
@@ -24,7 +33,7 @@ def proc_func(procnum, jobs_r, results_w):
             result = perform_experiment(procnum, job)
             results_w.send(result)
 
-def perform_multi_threading(): # confirms that the code is under main function
+def perform_multi_threading(sce_rep_dict): # confirms that the code is under main function
     # instantiating process with arguments
     combined = pd.DataFrame()
     procs = []
@@ -39,21 +48,13 @@ def perform_multi_threading(): # confirms that the code is under main function
         procs.append((procnum, proc, jobs_w, results_r))
 
     # Submit jobs, reading results if available
-    for i, job in enumerate(list_runs):
+    for i, job in enumerate(sce_rep_dict.items()):
         core = procs[i%num_procs]
         procnum, proc, jobs_w, results_r = core
-        while results_r.poll():
-            text, df = results_r.recv()
-            #print(f"From {procnum}: {text}")
-            results.append(df)
         jobs_w.send(job)
 
     # Send termination signals, reading results if available
     for procnum, _, jobs_w, results_r in procs:
-        while results_r.poll():
-            text, df = results_r.recv()
-            #print(f"From {procnum}: {text}")
-            results.append(df)
         jobs_w.send(None)
         jobs_w.close()
 
@@ -71,10 +72,7 @@ def perform_multi_threading(): # confirms that the code is under main function
                     break # We've invalidated i, so break out to the outer while
                 else:
                     df = result
-                    print(df)
                     combined = pd.concat([combined, df])
-
-
 
     # Clean up
     for procnum, proc, _, _ in procs:
@@ -83,17 +81,10 @@ def perform_multi_threading(): # confirms that the code is under main function
 
     return combined
 
-def perform_single_threading():
+def perform_single_threading(sce_rep_dict):
     combined = pd.DataFrame()
-    results = []
-    for job in list_runs:
+    for job in sce_rep_dict.items():
         df = perform_experiment(0,job)
-        print(df)
         combined = pd.concat([combined,df])
 
     return combined
-
-if __name__ == "__main__":
-    #combined = perform_single_threading()
-    combined = perform_multi_threading()
-    print(combined)
