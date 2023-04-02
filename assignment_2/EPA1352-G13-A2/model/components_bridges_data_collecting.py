@@ -88,11 +88,21 @@ class Bridge(Infra):
         else:
             self.delay_time = 0
 
-        self.dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': self.delay_time, 'replication': self.model.replication,
-                            'scenario': self.model.scenario}
-        # print(self.dictionary_bridge)
-        self.model.df_bridge = self.model.df_bridge.append(self.dictionary_bridge, ignore_index=True)
-        # print(self.model.df_bridge)
+        if self.delay_time != 0:
+            if ((self.model.df_bridge.id == self.unique_id) & (self.model.df_bridge.replication == self.model.replication) & (self.model.df_bridge.scenario == self.model.scenario)).any() == True:
+                row_number = self.model.df_bridge.loc[(self.model.df_bridge.id == self.unique_id) & (
+                            self.model.df_bridge.replication == self.model.replication) & (
+                                                     self.model.df_bridge.scenario == self.model.scenario)].index[0]
+                self.model.df_bridge.loc[row_number, 'caused_delay_time'] += self.delay_time
+                self.model.df_bridge.loc[row_number, 'number_of_vehicles'] += 1
+            else:
+                self.dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': self.delay_time, 'replication': self.model.replication,
+                                    'scenario': self.model.scenario, 'number_of_vehicles': 1}
+                # print(self.dictionary_bridge)
+                self.delay_caused = pd.DataFrame.from_dict([self.dictionary_bridge])
+                #print(self.delay_caused)
+                self.model.df_bridge = pd.concat([self.model.df_bridge, self.delay_caused])
+                #print(self.model.df_bridge)
 
         return self.delay_time
 
@@ -305,7 +315,7 @@ class Vehicle(Agent):
             #print(self.drive_time)
             self.dictionary = {'id':self.unique_id, 'drive_time':self.drive_time, 'replication':self.model.replication, 'scenario':self.model.scenario}
             #print(self.dictionary)
-            self.model.df = self.model.df.append(self.dictionary, ignore_index=True)
+            #self.model.df = self.model.df.append(self.dictionary, ignore_index=True)
             #print(self.model.df)
 
             self.location.remove(self)

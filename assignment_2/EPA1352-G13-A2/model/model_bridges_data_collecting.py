@@ -68,7 +68,7 @@ class BangladeshModel(Model):
         self.replication = replication
         self.scenario = scenario
         self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario'])
-        self.df_bridge = pd.DataFrame()
+        self.df_bridge = pd.DataFrame(columns=['id','caused_delay_time','replication','scenario', 'number_of_vehicles'])
         #Setting the run length for the experiment. This used to be in the __init__ function, because this would be a better modelling structure,
         #but in this way of modelling the model_viz.py file does not run anymore. Therefore, we added this parameter as a constant.
         self.run_length_model = 5*24*60
