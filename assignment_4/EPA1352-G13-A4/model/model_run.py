@@ -26,7 +26,7 @@ def main():
     # The short run length reflects a run that will be used for debugging because it is a lot faster.
     short_run_length = 500
 
-    debug_run = False # If we want to debug: use the shorter run length.
+    debug_run = True # If we want to debug: use the shorter run length.
     if debug_run == True:
         run_settings_dict['run_length'] = short_run_length
     else:
@@ -44,26 +44,31 @@ def main():
 
     sce_rep_dict = {}
 
-    for sce in range(5): # Five different scenarios.
+    for sce in range(2): # Five different scenarios.
         # Initiate an empty dataframe. We will store all data for a single scenario over all replications there.
-        for rep in range(1,11): # Ten replications per scenario.
+        for rep in range(1,3): # Ten replications per scenario.
             sce_rep_dict[(sce, rep)] = run_settings_dict
 
     if multiprocessing == True:
-        results_df_combined = simulator.perform_multi_threading(sce_rep_dict)
+        results_df_combined_trucks, results_df_combined_bridges  = simulator.perform_multi_threading(sce_rep_dict)
     else:
-        results_df_combined = simulator.perform_single_threading(sce_rep_dict)
+        results_df_combined_trucks, results_df_combined_bridges  = simulator.perform_single_threading(sce_rep_dict)
 
-    scenarios = results_df_combined['scenario'].unique()
+    scenarios = results_df_combined_trucks['scenario'].unique() # Trucks and bridges have same scenario's
     for i in scenarios:
         if i == 0:
-            results_df_combined.loc[results_df_combined['scenario'] == 0].to_csv\
-                (r'../experiment\base_case_results.csv', index_label='index')
+            results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == 0].to_csv\
+                (r'../experiment\results_trucks\trucks_base_case_results.csv', index_label='index')
+            results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == 0].to_csv \
+                (r'../experiment\results_bridges\bridges_base_case_results.csv', index_label='index')
         else:
-            results_df_combined.loc[results_df_combined['scenario'] == i].to_csv \
-                (f'../experiment\scenario{sce}_results.csv', index_label='index')
+            results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == i].to_csv \
+                (f'../experiment\\results_trucks\\trucks_scenario{sce}_results.csv', index_label='index')
+            results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == i].to_csv \
+                (f'../experiment\\results_bridges\\bridges_scenario{sce}_results.csv', index_label='index')
 
-    results_df_combined.to_csv('../experiment\combined_results.csv')
+    results_df_combined_trucks.to_csv(r'../experiment\results_trucks\trucks_combined_results.csv')
+    results_df_combined_bridges.to_csv(r'../experiment\results_bridges\bridges_combined_results.csv')
 
     end_time = datetime.now()
 

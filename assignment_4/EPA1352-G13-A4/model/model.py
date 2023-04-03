@@ -71,7 +71,8 @@ class BangladeshModel(Model):
         self.file = file
         self.shortest_routes_sourcesinks = shortest_routes_sourcesinks # Load in the shortest path from every sourcesink to every other sourcesink.
 
-        self.df = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario']) # Create a dataframe to store the driving time of every vehicle.
+        self.df_trucks = pd.DataFrame(columns=['id', 'drive_time', 'replication', 'scenario']) # Create a dataframe to store the driving time of every vehicle.
+        self.df_bridges = pd.DataFrame(columns=['id', 'caused_delay_time', 'replication', 'scenario'])
 
         df_scenario = pd.read_csv(r'../experiment\experimental_input.csv') # Load in all the scenarios.
         df_scenario = df_scenario.loc[[scenario]] # Choose the current scenario.
@@ -219,6 +220,6 @@ class BangladeshModel(Model):
         """
         Return the dataframe that contains all data from current replication. Intended for use at end simulation.
         """
-        return self.df
+        return self.df_trucks, self.df_bridges
 
 # EOF -----------------------------------------------------------

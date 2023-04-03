@@ -82,6 +82,15 @@ class Bridge(Infra):
             elif self.length < 10:
                 self.delay_time = random.uniform(10, 20)
 
+        dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': self.delay_time,
+                                  'replication': self.model.replication,
+                                  'scenario': self.model.scenario}
+
+        df_bridge = pd.DataFrame.from_dict([dictionary_bridge])  # Convert the dictionary format to a dataframe format.
+
+        # print(self.dictionary_bridge)
+        self.model.df_bridges = pd.concat([self.model.df_bridges,df_bridge])
+
         return self.delay_time
 
 
@@ -306,8 +315,8 @@ class Vehicle(Agent):
                                'replication': self.model.replication, 'scenario': self.model.scenario}
             #print(self.dictionary)
             df_delay = pd.DataFrame.from_dict([self.dictionary]) # Convert the dictionary format to a dataframe format.
-            self.model.df = pd.concat([self.model.df, df_delay]) # The driving time for the trucks is stored in the dataframe of the model.
-            #print(self.model.df)
+            self.model.df_trucks = pd.concat([self.model.df_trucks, df_delay]) # The driving time for the trucks is stored in the dataframe of the model.
+            #print(self.model.df_trucks)
 
             self.location.remove(self)
             return
