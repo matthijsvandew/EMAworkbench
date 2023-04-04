@@ -26,7 +26,7 @@ def main():
     # The short run length reflects a run that will be used for debugging because it is a lot faster.
     short_run_length = 500
 
-    debug_run = True # If we want to debug: use the shorter run length.
+    debug_run = False # If we want to debug: use the shorter run length.
     if debug_run == True:
         run_settings_dict['run_length'] = short_run_length
     else:
@@ -44,7 +44,7 @@ def main():
 
     sce_rep_dict = {}
 
-    for sce in range(2): # Five different scenarios.
+    for sce in range(5): # Five different scenarios.
         # Initiate an empty dataframe. We will store all data for a single scenario over all replications there.
         for rep in range(1,3): # Ten replications per scenario.
             sce_rep_dict[(sce, rep)] = run_settings_dict

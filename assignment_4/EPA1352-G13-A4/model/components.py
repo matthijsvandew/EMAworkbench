@@ -81,15 +81,24 @@ class Bridge(Infra):
                 self.delay_time = random.uniform(15, 60)
             elif self.length < 10:
                 self.delay_time = random.uniform(10, 20)
+        else:
+            self.delay_time = 0
 
-        dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': self.delay_time,
-                                  'replication': self.model.replication,
-                                  'scenario': self.model.scenario}
-
-        df_bridge = pd.DataFrame.from_dict([dictionary_bridge])  # Convert the dictionary format to a dataframe format.
-
-        # print(self.dictionary_bridge)
-        self.model.df_bridges = pd.concat([self.model.df_bridges,df_bridge])
+        if self.delay_time != 0:
+            if ((self.model.df_bridges.id == self.unique_id) & (self.model.df_bridges.replication == self.model.replication) & (self.model.df_bridges.scenario == self.model.scenario)).any() == True:
+                row_number = self.model.df_bridges.loc[(self.model.df_bridges.id == self.unique_id) & (
+                            self.model.df_bridges.replication == self.model.replication) & (
+                                                     self.model.df_bridges.scenario == self.model.scenario)].index[0]
+                self.model.df_bridges.loc[row_number, 'caused_delay_time'] += self.delay_time
+                self.model.df_bridges.loc[row_number, 'number_of_vehicles'] += 1
+            else:
+                self.dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': self.delay_time, 'replication': self.model.replication,
+                                    'scenario': self.model.scenario, 'number_of_vehicles': 1}
+                # print(self.dictionary_bridge)
+                self.delay_caused = pd.DataFrame.from_dict([self.dictionary_bridge])
+                #print(self.delay_caused)
+                self.model.df_bridges = pd.concat([self.model.df_bridges, self.delay_caused])
+                #print(self.model.df_bridge)
 
         return self.delay_time
 
@@ -314,9 +323,9 @@ class Vehicle(Agent):
             self.dictionary = {'id': self.unique_id, 'drive_time': self.drive_time,
                                'replication': self.model.replication, 'scenario': self.model.scenario}
             #print(self.dictionary)
-            df_delay = pd.DataFrame.from_dict([self.dictionary]) # Convert the dictionary format to a dataframe format.
-            self.model.df_trucks = pd.concat([self.model.df_trucks, df_delay]) # The driving time for the trucks is stored in the dataframe of the model.
-            #print(self.model.df_trucks)
+            # df_delay = pd.DataFrame.from_dict([self.dictionary]) # Convert the dictionary format to a dataframe format.
+            # self.model.df_trucks = pd.concat([self.model.df_trucks, df_delay]) # The driving time for the trucks is stored in the dataframe of the model.
+            # #print(self.model.df_trucks)
 
             self.location.remove(self)
             return
