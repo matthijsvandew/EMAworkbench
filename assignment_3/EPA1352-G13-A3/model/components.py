@@ -166,8 +166,10 @@ class Source(Infra):
         Generates a truck, sets its path, increases the global and local counters
         """
         try:
+            print('str Source.truck_counter', str(Source.truck_counter))
             agent = Vehicle('Truck' + str(Source.truck_counter), self.model, self)
             if agent:
+                print('agent',agent)
                 self.model.schedule.add(agent)
                 agent.set_path()
                 Source.truck_counter += 1
@@ -266,6 +268,7 @@ class Vehicle(Agent):
         Set the origin destination path of the vehicle
         """
         self.path_ids = self.model.get_route(self.generated_by.unique_id)
+        print('self_path_ids',self.path_ids)
 
     def step(self):
         """

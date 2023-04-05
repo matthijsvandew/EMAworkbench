@@ -1,5 +1,6 @@
 from mesa import Agent
 from enum import Enum
+import inspect
 import pandas as pd
 import random
 
@@ -84,7 +85,12 @@ class Bridge(Infra):
         else:
             self.delay_time = 0
 
+        #list_cars_passed = []
         if self.delay_time != 0:
+            caller = inspect.currentframe().f_back.f_locals.get('self')
+            print('caller', caller)
+            #list_cars_passed.append(self.vehicle_unique_id)
+            #print('list',list_cars_passed)
             if ((self.model.df_bridges.id == self.unique_id) & (self.model.df_bridges.replication == self.model.replication) & (self.model.df_bridges.scenario == self.model.scenario)).any() == True:
                 row_number = self.model.df_bridges.loc[(self.model.df_bridges.id == self.unique_id) & (
                             self.model.df_bridges.replication == self.model.replication) & (
@@ -154,7 +160,7 @@ class Source(Infra):
     ...
 
     """
-
+    truck_counter = 0
     def __init__(self, unique_id, length,
                  name, road_name, model,number_of_trucks):
         super().__init__(unique_id, length, name, road_name, model)
@@ -167,16 +173,25 @@ class Source(Infra):
         #print('name',self.name,'trucks',self.number_of_trucks,'road name',self.road_name,'id',self.unique_id,'length',self.length)
         self.vehicle_count = 0
 
-        self.truck_counter = 0
+        #self.truck_counter = 0
         if self.number_of_trucks == None:
-            self.generation_frequency = 0
+            self.generation_frequency = 999999999999#float('inf')
+            #print('inf gen freq', self.generation_frequency)
         elif self.number_of_trucks == 0:
-            self.generation_frequency = 0
+            self.generation_frequency = 999999999999#float('inf')
+            #print('inf gen freq',self.generation_frequency)
+        elif pd.isna(self.number_of_trucks) == True:
+            self.generation_frequency = 999999999999#float('inf')
+            #print('inf gen freq', self.generation_frequency)
         else:
-            self.generation_frequency = ((24*60)/self.number_of_trucks)
+            self.generation_frequency = 50#round((1/((self.number_of_trucks)/6704)))
+            #print('trucks',self.number_of_trucks)
+            #print('gen_frequency',self.generation_frequency)
         self.vehicle_generated_flag = False
 
     def step(self):
+        #print('truck_counter',Source.truck_counter)
+        #if (self.number_of_trucks/6704) > random.random():
         if self.model.schedule.steps % self.generation_frequency == 0:
             self.generate_truck()
         else:
@@ -187,17 +202,21 @@ class Source(Infra):
         Generates a truck, sets its path, increases the global and local counters
         """
         try:
-            print(0)
+            #print(0)
+            #print('str self.truck_counter',str(Source.truck_counter))
+            #print('self',self)
             agent = Vehicle('Truck' + str(Source.truck_counter), self.model, self)
-            print(1)
+            #print(1)
             if agent:
-                print(2)
+                #print(2)
+                #self.truck_counter += 1
+                #print('agent',agent)
                 self.model.schedule.add(agent)
-                print('a')
+                #print('a')
                 agent.set_path()
-                print('b')
+                #print('b')
                 Source.truck_counter += 1
-                print('c')
+                #print('c')
                 self.vehicle_count += 1
                 self.vehicle_generated_flag = True
                 #print(str(self) + " GENERATE " + str(agent))
@@ -259,6 +278,7 @@ class Vehicle(Agent):
 
     # 48 km/h translated into meter per min
     speed = 48 * 1000 / 60
+    #print(speed)
     # One tick represents 1 minute
     step_time = 1
 
@@ -268,10 +288,10 @@ class Vehicle(Agent):
 
     def __init__(self, unique_id, model, generated_by,
                  location_offset=0, path_ids=None):
-        print('AA')
+        #print('AA')
         super().__init__(unique_id, model)
         self.generated_by = generated_by
-        print(self.generated_by)
+        #print(self.generated_by)
         self.generated_at_step = model.schedule.steps
         self.location = generated_by
         self.location_offset = location_offset
@@ -283,7 +303,7 @@ class Vehicle(Agent):
         self.waiting_time = 0
         self.waited_at = None
         self.removed_at_step = None
-        print(self.path_ids)
+        #print(self.path_ids)
 
     def __str__(self):
         return "Vehicle" + str(self.unique_id) + \
@@ -296,6 +316,7 @@ class Vehicle(Agent):
         Set the origin destination path of the vehicle
         """
         self.path_ids = self.model.get_route(self.generated_by.unique_id)
+        #print('self.path_ids',self.path_ids)
 
     def step(self):
         """
@@ -346,8 +367,8 @@ class Vehicle(Agent):
             # The following line determine the total driving time of a vehicle. This value is stored in dictionary format.
             self.drive_time = self.removed_at_step - self.generated_at_step
             # print(self.drive_time)
-            self.dictionary = {'id': self.unique_id, 'drive_time': self.drive_time,
-                               'replication': self.model.replication, 'scenario': self.model.scenario}
+            #self.dictionary = {'id': self.unique_id, 'drive_time': self.drive_time,
+                              # 'replication': self.model.replication, 'scenario': self.model.scenario}
             #print(self.dictionary)
             # df_delay = pd.DataFrame.from_dict([self.dictionary]) # Convert the dictionary format to a dataframe format.
             # self.model.df_trucks = pd.concat([self.model.df_trucks, df_delay]) # The driving time for the trucks is stored in the dataframe of the model.

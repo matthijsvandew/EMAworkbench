@@ -203,8 +203,9 @@ class BangladeshModel(Model):
             elif model_type == 'intersection':
                 if not row['id'] in self.schedule._agents:
                     agent = Intersection(row['id'], self, row['length'], name, row['road'])
-
+            #print('hallo')
             if agent:
+                #print('agent1',agent)
                 self.schedule.add(agent)
                 y = row['lat']
                 x = row['lon']
@@ -241,7 +242,7 @@ class BangladeshModel(Model):
         pick up a straight route given an origin
         """
 
-        #print(self.path_ids_dict[source, None])
+        #print(self.path_ids_dict)
         return self.path_ids_dict[source, None]
 
     def step(self):
