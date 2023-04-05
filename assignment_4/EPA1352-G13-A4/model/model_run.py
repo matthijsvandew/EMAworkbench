@@ -34,12 +34,12 @@ def main():
 
     run_settings_dict['seed'] = True
 
-    multiprocessing = True
+    multiprocessing = False
 
     file = '../data\input_data.csv'
     run_settings_dict['file'] = file
 
-    run_settings_dict['shortest_routes_sourcesinks'] = road_graph.find_shortest_path(file_name=file) # Find the shortest paths from every node to every other node in the network.
+   # run_settings_dict['shortest_routes_sourcesinks'] = road_graph.find_shortest_path(file_name=file) # Find the shortest paths from every node to every other node in the network.
                                                                                 # Call the find_shortest_path in the road_graph class, which are in the road_graph_nx.py file.
 
     sce_rep_dict = {}

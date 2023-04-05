@@ -155,9 +155,26 @@ class Source(Infra):
 
     """
 
-    truck_counter = 0
-    generation_frequency = 5
-    vehicle_generated_flag = False
+    def __init__(self, unique_id, length,
+                 name, road_name, model,number_of_trucks):
+        super().__init__(unique_id, length, name, road_name, model)
+        #super(Agent).__init__(unique_id, model)
+        self.number_of_trucks = number_of_trucks
+        #print(self.unique_id)
+        #print(self.length)
+        #print(self.name)
+        #print(self.road_name)
+        #print('name',self.name,'trucks',self.number_of_trucks,'road name',self.road_name,'id',self.unique_id,'length',self.length)
+        self.vehicle_count = 0
+
+        self.truck_counter = 0
+        if self.number_of_trucks == None:
+            self.generation_frequency = 0
+        elif self.number_of_trucks == 0:
+            self.generation_frequency = 0
+        else:
+            self.generation_frequency = ((24*60)/self.number_of_trucks)
+        self.vehicle_generated_flag = False
 
     def step(self):
         if self.model.schedule.steps % self.generation_frequency == 0:
@@ -170,11 +187,17 @@ class Source(Infra):
         Generates a truck, sets its path, increases the global and local counters
         """
         try:
+            print(0)
             agent = Vehicle('Truck' + str(Source.truck_counter), self.model, self)
+            print(1)
             if agent:
+                print(2)
                 self.model.schedule.add(agent)
+                print('a')
                 agent.set_path()
+                print('b')
                 Source.truck_counter += 1
+                print('c')
                 self.vehicle_count += 1
                 self.vehicle_generated_flag = True
                 #print(str(self) + " GENERATE " + str(agent))
@@ -245,8 +268,10 @@ class Vehicle(Agent):
 
     def __init__(self, unique_id, model, generated_by,
                  location_offset=0, path_ids=None):
+        print('AA')
         super().__init__(unique_id, model)
         self.generated_by = generated_by
+        print(self.generated_by)
         self.generated_at_step = model.schedule.steps
         self.location = generated_by
         self.location_offset = location_offset
@@ -258,6 +283,7 @@ class Vehicle(Agent):
         self.waiting_time = 0
         self.waited_at = None
         self.removed_at_step = None
+        print(self.path_ids)
 
     def __str__(self):
         return "Vehicle" + str(self.unique_id) + \
