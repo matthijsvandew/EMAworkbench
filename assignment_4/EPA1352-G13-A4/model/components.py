@@ -87,8 +87,8 @@ class Bridge(Infra):
 
         #list_cars_passed = []
         if self.delay_time != 0:
-            caller = inspect.currentframe().f_back.f_locals.get('self')
-            print('caller', caller)
+            #caller = inspect.currentframe().f_back.f_locals.get('self')
+            #print('caller', caller)
             #list_cars_passed.append(self.vehicle_unique_id)
             #print('list',list_cars_passed)
             if ((self.model.df_bridges.id == self.unique_id) & (self.model.df_bridges.replication == self.model.replication) & (self.model.df_bridges.scenario == self.model.scenario)).any() == True:
@@ -379,6 +379,7 @@ class Vehicle(Agent):
 
         elif isinstance(next_infra, Bridge):
             self.waiting_time = next_infra.get_delay_time()
+            print('vehicle_id',self.unique_id,'bridge_id',next_infra,'waiting_time_by_bridge',self.waiting_time)
             if self.waiting_time > 0:
                 # arrive at the bridge and wait
                 self.arrive_at_next(next_infra, 0)
