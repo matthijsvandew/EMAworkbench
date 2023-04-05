@@ -9,7 +9,7 @@ def perform_experiment(core_number,job):
     rep = job[0][1]
 
     dict = job[1]
-    #shortest_routes_sourcesinks = dict['shortest_routes_sourcesinks']
+    shortest_routes_sourcesinks = dict['shortest_routes_sourcesinks']
     file = dict['file']
     run_length = dict['run_length']
 
@@ -18,7 +18,7 @@ def perform_experiment(core_number,job):
     else:
         seed = 1234567
 
-    sim_model = BangladeshModel(seed=seed,file = file,scenario=sce,replication=rep)
+    sim_model = BangladeshModel(shortest_routes_sourcesinks, seed=seed,file = file,scenario=sce,replication=rep)
     for i in range(run_length):  # Run model as long as the run_length.
         if i % 100 == 0:
             print(f'CORE {core_number}: At step {i} for replication {rep} for scenario {sce}')

@@ -133,8 +133,6 @@ class BangladeshModel(Model):
         self.space = ContinuousSpace(x_max, y_max, True, x_min, y_min)
 
         for df in df_objects_all:
-            print(df)
-            print(df_objects_all)
             for _, row in df.iterrows():  # index, row in ...
 
                 # create agents according to model_type
@@ -148,7 +146,6 @@ class BangladeshModel(Model):
                     name = name.strip()
 
                 if model_type == 'source':
-                    #print('FHJFJFJHGHVNCNCNNNDDJDFHGDEOWFN',row)
                     agent = Source(row['id'], self, row['length'], name, row['road'])
                     self.sources.append(agent.unique_id)
                 elif model_type == 'sink':
