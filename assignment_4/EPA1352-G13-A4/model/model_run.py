@@ -44,7 +44,7 @@ def main():
 
     sce_rep_dict = {}
 
-    for sce in range(0,5): # Five different scenarios.
+    for sce in range(0,9): # Five different scenarios.
         # Initiate an empty dataframe. We will store all data for a single scenario over all replications there.
         for rep in range(1,11): # Ten replications per scenario.
             sce_rep_dict[(sce, rep)] = run_settings_dict
