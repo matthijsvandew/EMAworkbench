@@ -72,21 +72,21 @@ class Bridge(Infra):
             self.condition = 'broken'  # Change the condition from 'D' to 'broken'.
 
     def get_delay_time(self):
-        self.delay_time = 0 # If the bridge is not broken, the delay time is 0.
+        delay_time = 0 # If the bridge is not broken, the delay time is 0.
         if self.condition == 'broken': # If the bridge is broken, the delay time is based on length of the bridge.
             if self.length > 200:
-                self.delay_time = random.triangular(1, 2, 4)
+                delay_time = random.triangular(1, 2, 4)
             elif 200 > self.length > 50:
-                self.delay_time = random.uniform(45, 90)
+                delay_time = random.uniform(45, 90)
             elif 50 > self.length > 10:
-                self.delay_time = random.uniform(15, 60)
+                delay_time = random.uniform(15, 60)
             elif self.length < 10:
-                self.delay_time = random.uniform(10, 20)
+                delay_time = random.uniform(10, 20)
         else:
-            self.delay_time = 0
+            delay_time = 0
 
         #list_cars_passed = []
-        if self.delay_time != 0:
+        if delay_time != 0:
             #caller = inspect.currentframe().f_back.f_locals.get('self')
             #print('caller', caller)
             #list_cars_passed.append(self.vehicle_unique_id)
@@ -95,10 +95,10 @@ class Bridge(Infra):
                 row_number = self.model.df_bridges.loc[(self.model.df_bridges.id == self.unique_id) & (
                             self.model.df_bridges.replication == self.model.replication) & (
                                                      self.model.df_bridges.scenario == self.model.scenario)].index[0]
-                self.model.df_bridges.loc[row_number, 'caused_delay_time'] += self.delay_time
+                self.model.df_bridges.loc[row_number, 'caused_delay_time'] += delay_time
                 self.model.df_bridges.loc[row_number, 'number_of_vehicles'] += 1
             else:
-                self.dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': self.delay_time, 'replication': self.model.replication,
+                self.dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': delay_time, 'replication': self.model.replication,
                                     'scenario': self.model.scenario, 'number_of_vehicles': 1}
                 # print(self.dictionary_bridge)
                 self.delay_caused = pd.DataFrame.from_dict([self.dictionary_bridge])
@@ -106,7 +106,7 @@ class Bridge(Infra):
                 self.model.df_bridges = pd.concat([self.model.df_bridges, self.delay_caused])
                 #print(self.model.df_bridge)
 
-        return self.delay_time
+        return delay_time
 
 
 # ---------------------------------------------------------------
