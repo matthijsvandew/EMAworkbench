@@ -165,19 +165,11 @@ class Source(Infra):
         self.vehicle_count = 0
 
         #self.truck_counter = 0
-        if self.number_of_trucks == None:
-            self.generation_frequency = 999999999999#float('inf')
-        elif self.number_of_trucks == 0:
-            self.generation_frequency = 999999999999#float('inf')
-        elif pd.isna(self.number_of_trucks) == True:
-            self.generation_frequency = 999999999999#float('inf')
-        else:
-            self.generation_frequency = 50#round((1/((self.number_of_trucks)/6704)))
+
         self.vehicle_generated_flag = False
 
     def step(self):
-        #if (self.number_of_trucks/6704) > random.random():
-        if self.model.schedule.steps % self.generation_frequency == 0:
+        if (self.number_of_trucks/6704) > random.random():
             self.generate_truck()
         else:
             self.vehicle_generated_flag = False
