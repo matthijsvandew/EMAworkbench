@@ -58,17 +58,17 @@ def main():
     for sce in scenarios:
         if sce == 0:
             results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == 0].to_csv\
-                (r'../experiment\results_trucks\trucks_base_case_results.csv', index_label='index')
+                (r'../experiment\results_trucks\trucks_base_case_results.csv', index_label='index', index=False)
             results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == 0].to_csv \
-                (r'../experiment\results_bridges\bridges_base_case_results.csv', index_label='index')
+                (r'../experiment\results_bridges\bridges_base_case_results.csv', index_label='index', index=False)
         else:
             results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == sce].to_csv \
-                (f'../experiment\\results_trucks\\trucks_scenario{sce}_results.csv', index_label='index')
+                (f'../experiment\\results_trucks\\trucks_scenario{sce}_results.csv', index_label='index', index=False)
             results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == sce].to_csv \
-                (f'../experiment\\results_bridges\\bridges_scenario{sce}_results.csv', index_label='index')
+                (f'../experiment\\results_bridges\\bridges_scenario{sce}_results.csv', index_label='index', index=False)
 
-    results_df_combined_trucks.to_csv(r'../experiment\results_trucks\trucks_combined_results.csv')
-    results_df_combined_bridges.to_csv(r'../experiment\results_bridges\bridges_combined_results.csv')
+    results_df_combined_trucks.to_csv(r'../experiment\results_trucks\trucks_combined_results.csv', index=False)
+    results_df_combined_bridges.to_csv(r'../experiment\results_bridges\bridges_combined_results.csv', index=False)
 
     end_time = datetime.now()
 

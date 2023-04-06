@@ -1,2 +1,3 @@
-index,id,caused_delay_time,replication,scenario,number_of_vehicles
-0,982,24795.308329706306,3,1,660.0
+id,caused_delay_time,replication,scenario,number_of_vehicles
+904,41921.107591689324,2,1,622.0
+982,25361.282197430348,6,1,701.0

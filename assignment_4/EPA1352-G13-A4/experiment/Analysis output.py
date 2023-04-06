@@ -1,8 +1,8 @@
 import pandas as pd
 
-df_analysis_3 = pd.read_csv(r'../experiment\results_bridges\bridges_scenario3_results.csv')
+df_analysis_3 = pd.read_csv(r'../experiment\results_bridges\bridges_combined_results.csv')
 
-#print(df_analysis_3.head())
+print(df_analysis_3)
 
 df_analysis_3.insert(loc=6,column='Part_of_road',value=0)
 
@@ -80,6 +80,9 @@ df = df.reset_index()
 df = df.rename(columns={'index': 'bridge_id'})
 #print(df)
 
+df.delay_time.describe()
+print(df.delay_time.describe())
+
 #highest top 10
 df.sort_values('delay_time',ascending=False,inplace=True)
 print(df.head(10))
@@ -89,3 +92,7 @@ df.sort_values('delay_time',ascending=True,inplace=True)
 print(df.head(10))
 
 #df.to_csv(r"../experiment\test_analysis1.csv", index = True)
+
+sns.boxplot(data=df,x='delay_time', ax=ax[0,0], color='r').set(title= 'Boxplot driving time base scenario');
+
+plt.show()
