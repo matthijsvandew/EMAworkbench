@@ -1,6 +1,6 @@
 import pandas as pd
 
-df_analysis_3 = pd.read_csv(r'../experiment\results_bridges\bridges_scenario3_results.csv')
+df_analysis_3 = pd.read_csv(r'../experiment\results_bridges\bridges_scenario8_results.csv')
 
 #print(df_analysis_3.head())
 
@@ -67,7 +67,7 @@ for i in range(len(df_analysis_3['id'])):
 for i in range(len(df_analysis_3['id'])):
     Delaytime_dict[df_analysis_3.loc[i, 'id']] += [df_analysis_3.loc[i, 'caused_delay_time']]
 
-print(Delaytime_dict)
+#print(Delaytime_dict)
 
 Average_delaytime_dict = {}
 for i in Delaytime_dict:
@@ -84,10 +84,10 @@ df = df.rename(columns={'index': 'bridge_id'})
 
 #highest top 10
 df.sort_values('delay_time',ascending=False,inplace=True)
-print(df.head(10))
+print(df.head(3))
 
 #lowest top10
 df.sort_values('delay_time',ascending=True,inplace=True)
-print(df.head(10))
+#print(df.head(10))
 
 #df.to_csv(r"../experiment\test_analysis1.csv", index = True)
