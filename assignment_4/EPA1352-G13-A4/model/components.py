@@ -99,7 +99,7 @@ class Bridge(Infra):
                 delay_caused = pd.DataFrame.from_dict([dictionary_bridge])
                 self.model.df_bridges = pd.concat([self.model.df_bridges, delay_caused])
 
-            self.model.df_bridges = self.model.df_bridges.reset_index(drop=True)
+                self.model.df_bridges = self.model.df_bridges.reset_index(drop=True)
 
         return delay_time
 
