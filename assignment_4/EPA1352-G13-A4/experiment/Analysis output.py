@@ -67,11 +67,13 @@ for i in range(len(df_analysis_3['id'])):
 for i in range(len(df_analysis_3['id'])):
     Delaytime_dict[df_analysis_3.loc[i, 'id']] += [df_analysis_3.loc[i, 'caused_delay_time']]
 
+print(Delaytime_dict)
+
 Average_delaytime_dict = {}
 for i in Delaytime_dict:
     Average_delaytime_dict[i] = sum(Delaytime_dict[i])/len(Delaytime_dict[i])
 
-print(Average_delaytime_dict)
+#print(Average_delaytime_dict)
 
 df = pd.DataFrame.from_records(Average_delaytime_dict, index=['delay_time'])
 df = df.transpose()
