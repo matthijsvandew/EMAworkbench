@@ -98,12 +98,12 @@ class Bridge(Infra):
                 self.model.df_bridges.loc[row_number, 'caused_delay_time'] += delay_time
                 self.model.df_bridges.loc[row_number, 'number_of_vehicles'] += 1
             else:
-                self.dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': delay_time, 'replication': self.model.replication,
+                dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': delay_time, 'replication': self.model.replication,
                                     'scenario': self.model.scenario, 'number_of_vehicles': 1}
                 # print(self.dictionary_bridge)
-                self.delay_caused = pd.DataFrame.from_dict([self.dictionary_bridge])
+                delay_caused = pd.DataFrame.from_dict([dictionary_bridge])
                 #print(self.delay_caused)
-                self.model.df_bridges = pd.concat([self.model.df_bridges, self.delay_caused])
+                self.model.df_bridges = pd.concat([self.model.df_bridges, delay_caused])
                 #print(self.model.df_bridge)
 
         return delay_time
