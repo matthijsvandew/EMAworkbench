@@ -54,17 +54,17 @@ def main():
     else:
         results_df_combined_trucks, results_df_combined_bridges  = simulator.perform_single_threading(sce_rep_dict)
 
-    scenarios = results_df_combined_trucks['scenario'].unique() # Trucks and bridges have same scenario's
-    for i in scenarios:
-        if i == 0:
+    scenarios = results_df_combined_bridges['scenario'].unique() # Trucks and bridges have same scenario's
+    for sce in scenarios:
+        if sce == 0:
             results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == 0].to_csv\
                 (r'../experiment\results_trucks\trucks_base_case_results.csv', index_label='index')
             results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == 0].to_csv \
                 (r'../experiment\results_bridges\bridges_base_case_results.csv', index_label='index')
         else:
-            results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == i].to_csv \
+            results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == sce].to_csv \
                 (f'../experiment\\results_trucks\\trucks_scenario{sce}_results.csv', index_label='index')
-            results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == i].to_csv \
+            results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == sce].to_csv \
                 (f'../experiment\\results_bridges\\bridges_scenario{sce}_results.csv', index_label='index')
 
     results_df_combined_trucks.to_csv(r'../experiment\results_trucks\trucks_combined_results.csv')
