@@ -87,10 +87,6 @@ class Bridge(Infra):
 
         #list_cars_passed = []
         if delay_time != 0:
-            #caller = inspect.currentframe().f_back.f_locals.get('self')
-            #print('caller', caller)
-            #list_cars_passed.append(self.vehicle_unique_id)
-            #print('list',list_cars_passed)
             if ((self.model.df_bridges.id == self.unique_id) & (self.model.df_bridges.replication == self.model.replication) & (self.model.df_bridges.scenario == self.model.scenario)).any() == True:
                 row_number = self.model.df_bridges.loc[(self.model.df_bridges.id == self.unique_id) & (
                             self.model.df_bridges.replication == self.model.replication) & (
@@ -100,11 +96,8 @@ class Bridge(Infra):
             else:
                 dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': delay_time, 'replication': self.model.replication,
                                     'scenario': self.model.scenario, 'number_of_vehicles': 1}
-                # print(self.dictionary_bridge)
                 delay_caused = pd.DataFrame.from_dict([dictionary_bridge])
-                #print(self.delay_caused)
                 self.model.df_bridges = pd.concat([self.model.df_bridges, delay_caused])
-                #print(self.model.df_bridge)
 
             self.model.df_bridges = self.model.df_bridges.reset_index(drop=True)
 
@@ -168,31 +161,21 @@ class Source(Infra):
         super().__init__(unique_id, length, name, road_name, model)
         #super(Agent).__init__(unique_id, model)
         self.number_of_trucks = number_of_trucks
-        #print(self.unique_id)
-        #print(self.length)
-        #print(self.name)
-        #print(self.road_name)
-        #print('name',self.name,'trucks',self.number_of_trucks,'road name',self.road_name,'id',self.unique_id,'length',self.length)
+
         self.vehicle_count = 0
 
         #self.truck_counter = 0
         if self.number_of_trucks == None:
             self.generation_frequency = 999999999999#float('inf')
-            #print('inf gen freq', self.generation_frequency)
         elif self.number_of_trucks == 0:
             self.generation_frequency = 999999999999#float('inf')
-            #print('inf gen freq',self.generation_frequency)
         elif pd.isna(self.number_of_trucks) == True:
             self.generation_frequency = 999999999999#float('inf')
-            #print('inf gen freq', self.generation_frequency)
         else:
             self.generation_frequency = 50#round((1/((self.number_of_trucks)/6704)))
-            #print('trucks',self.number_of_trucks)
-            #print('gen_frequency',self.generation_frequency)
         self.vehicle_generated_flag = False
 
     def step(self):
-        #print('truck_counter',Source.truck_counter)
         #if (self.number_of_trucks/6704) > random.random():
         if self.model.schedule.steps % self.generation_frequency == 0:
             self.generate_truck()
@@ -204,21 +187,12 @@ class Source(Infra):
         Generates a truck, sets its path, increases the global and local counters
         """
         try:
-            #print(0)
-            #print('str self.truck_counter',str(Source.truck_counter))
-            #print('self',self)
             agent = Vehicle('Truck' + str(Source.truck_counter), self.model, self)
-            #print(1)
             if agent:
-                #print(2)
                 #self.truck_counter += 1
-                #print('agent',agent)
                 self.model.schedule.add(agent)
-                #print('a')
                 agent.set_path()
-                #print('b')
                 Source.truck_counter += 1
-                #print('c')
                 self.vehicle_count += 1
                 self.vehicle_generated_flag = True
                 #print(str(self) + " GENERATE " + str(agent))
@@ -280,7 +254,6 @@ class Vehicle(Agent):
 
     # 48 km/h translated into meter per min
     speed = 48 * 1000 / 60
-    #print(speed)
     # One tick represents 1 minute
     step_time = 1
 
@@ -290,10 +263,8 @@ class Vehicle(Agent):
 
     def __init__(self, unique_id, model, generated_by,
                  location_offset=0, path_ids=None):
-        #print('AA')
         super().__init__(unique_id, model)
         self.generated_by = generated_by
-        #print(self.generated_by)
         self.generated_at_step = model.schedule.steps
         self.location = generated_by
         self.location_offset = location_offset
@@ -305,7 +276,6 @@ class Vehicle(Agent):
         self.waiting_time = 0
         self.waited_at = None
         self.removed_at_step = None
-        #print(self.path_ids)
 
     def __str__(self):
         return "Vehicle" + str(self.unique_id) + \
@@ -336,7 +306,6 @@ class Vehicle(Agent):
         """
         To print the vehicle trajectory at each step
         """
-        #print(self)
 
     def drive(self):
 
@@ -368,7 +337,6 @@ class Vehicle(Agent):
 
             # The following line determine the total driving time of a vehicle. This value is stored in dictionary format.
             self.drive_time = self.removed_at_step - self.generated_at_step
-            # print(self.drive_time)
             #self.dictionary = {'id': self.unique_id, 'drive_time': self.drive_time,
                               # 'replication': self.model.replication, 'scenario': self.model.scenario}
             #print(self.dictionary)
@@ -381,7 +349,7 @@ class Vehicle(Agent):
 
         elif isinstance(next_infra, Bridge):
             self.waiting_time = next_infra.get_delay_time()
-            print('vehicle_id',self.unique_id,'bridge_id',next_infra,'waiting_time_by_bridge',self.waiting_time)
+            #print('vehicle_id',self.unique_id,'bridge_id',next_infra,'waiting_time_by_bridge',self.waiting_time)
             if self.waiting_time > 0:
                 # arrive at the bridge and wait
                 self.arrive_at_next(next_infra, 0)

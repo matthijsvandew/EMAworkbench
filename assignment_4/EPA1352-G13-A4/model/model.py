@@ -61,7 +61,8 @@ class BangladeshModel(Model):
 
         self.schedule = BaseScheduler(self)
         self.running = True
-        self.path_ids_dict = defaultdict(lambda: pd.Series())
+        self.path_ids_dict = defaultdict(lambda: pd.Series(dtype='int64'))
+
         self.space = None
         self.sources = []
         self.sinks = []
@@ -115,26 +116,15 @@ class BangladeshModel(Model):
         for objects in range (len(df_objects_on_road)):
             if df_objects_on_road.loc[objects, 'model_type'] == 'sourcesink':
                 intersection_index = df_objects_on_road.loc[objects, 'id']
-                #print('intersection index',(intersection_index))
-                #print(type(len(df_objects_on_road)))
-                #print('first intersection',intersection_index)
-                #print('road',road)
                 if intersection_index == len(df_objects_on_road):
                     break
                 for j in range(intersection_index+1,len(df_objects_on_road)):
                     if df_objects_on_road.loc[j, 'model_type'] == 'sourcesink':
-                        #print(df_objects_on_road)
                         next_intersection_index = df_objects_on_road.loc[j, 'id']
-                        #print('next intersection',next_intersection_index)
                         df_objects_till_intersection = df_objects_on_road.loc[(df_objects_on_road['id'] >= intersection_index) & (df_objects_on_road['id'] <= next_intersection_index)]
-                        #print('dataframe', df_objects_till_intersection)
                         path_ids = df_objects_till_intersection['id']
-                        #print('path ids',path_ids)
-                        #print('path id[0]',path_ids.iloc[0])
-                        #print('path id[1]', path_ids.iloc[-1])
                         path_ids.reset_index(inplace=True, drop=True)
                         self.path_ids_dict[path_ids.iloc[0], path_ids.iloc[-1]] = path_ids
-                        #print(self.path_ids_dict)
                         self.path_ids_dict[path_ids.iloc[0], None] = path_ids
                         #print(self.path_ids_dict)
                         # path_ids = path_ids[::-1]
@@ -170,7 +160,6 @@ class BangladeshModel(Model):
         #     #print(df_objects_all)
 
         for _, row in df_objects_on_road.iterrows():  # index, row in ...
-           # print('row',row)
             # create agents according to model_type
             model_type = row['model_type'].strip()
             agent = None
@@ -182,16 +171,12 @@ class BangladeshModel(Model):
                 name = name.strip()
 
             if model_type == 'source':
-                #print(row['road'])
-                #print(row['number_of_trucks'])
                 agent = Source(row['id'], self, row['length'], name, row['road'])
                 self.sources.append(agent.unique_id)
             elif model_type == 'sink':
                 agent = Sink(row['id'], self, row['length'], name, row['road'])
                 self.sinks.append(agent.unique_id)
             elif model_type == 'sourcesink':
-                #print('row', row)
-                #print(row['number_of_trucks'])
                 agent = SourceSink(row['id'], self, row['length'], name, row['road'], row['number_of_trucks'])
                 self.sources.append(agent.unique_id)
                 self.sinks.append(agent.unique_id)
@@ -203,9 +188,7 @@ class BangladeshModel(Model):
             elif model_type == 'intersection':
                 if not row['id'] in self.schedule._agents:
                     agent = Intersection(row['id'], self, row['length'], name, row['road'])
-            #print('hallo')
             if agent:
-                #print('agent1',agent)
                 self.schedule.add(agent)
                 y = row['lat']
                 x = row['lon']
@@ -219,17 +202,13 @@ class BangladeshModel(Model):
         """
         while True:
             # different source and sink
-            #print('sinks that I can go to',self.sinks)
             sink = self.random.choice(self.sinks)
-            #print('This is my sink',sink)
             if sink is not source:
                 break
 
-        #print(self.shortest_routes_sourcesinks[(source, sink)])
         shortestpath = pd.Series(self.shortest_routes_sourcesinks[(source, sink)]) # Turn the values from the dictionary (shortest path between two sourcesinks) given an key (origin-destination) in a Series format so that there are no formatting issues.
         shortestpath = shortestpath.rename('id')
-        #print(serie)
-        #print('I can find my random route based on shortest path')
+
         return shortestpath
 
     # TODO
@@ -237,7 +216,6 @@ class BangladeshModel(Model):
         return self.get_straight_route(source) # Choose a random destination.
 
     def get_straight_route(self, source):
-        #print(source)
         """
         pick up a straight route given an origin
         """
