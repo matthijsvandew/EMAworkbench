@@ -1,10 +1,10 @@
 import pandas as pd
 
-df_analysis_3 = pd.read_csv(r'../experiment\results_bridges\bridges_scenario8_results.csv')
+df_analysis_3 = pd.read_csv(r'../experiment\results_bridges\bridges_scenario6_results.csv')
 
 #print(df_analysis_3.head())
 
-df_analysis_3.insert(loc=6,column='Part_of_road',value=0)
+df_analysis_3.insert(loc=5,column='Part_of_road',value=0)
 
 for i in range(len(df_analysis_3['id'])):
     if df_analysis_3.loc[i,'id'] <= 7 and df_analysis_3.loc[i,'id'] >= 0:
@@ -82,12 +82,13 @@ df = df.reset_index()
 df = df.rename(columns={'index': 'bridge_id'})
 #print(df)
 
-#highest top 10
+#highest top3
 df.sort_values('delay_time',ascending=False,inplace=True)
 print(df.head(3))
 
 #lowest top10
-df.sort_values('delay_time',ascending=True,inplace=True)
+#df.sort_values('delay_time',ascending=True,inplace=True)
 #print(df.head(10))
 
 #df.to_csv(r"../experiment\test_analysis1.csv", index = True)
+
