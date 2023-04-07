@@ -12,7 +12,7 @@ Created by: EPA1352 Group 13
 
 ### Getting started
 
-First setup a new virtual environement in **Python 3.10**
+First setup a new virtual environment in **Python 3.10**
 
 Install the requirements:
 
@@ -24,7 +24,7 @@ Install the requirements:
 ## Introduction
 
 This Readme file contains an explanation on a high aggregration level  of how the model for assignment 
-3 in the course EPA1352 is structured. This is a general description of the model and more detailed information about 
+4 in the course EPA1352 is structured. This is a general description of the model and more detailed information about 
 the model could be found in the README files within the folders of the assignment. Furthermore, the README files contain 
 information about the usage of the dedicated part of the model, 
 but the coding section is explained with markdown lines in between the lines of codes.
@@ -33,7 +33,7 @@ but the coding section is explained with markdown lines in between the lines of 
 The assignment is structured in such a way that the model files are combined in the folder `model`, 
 the input data that is being used by the model in the folder `data` and the results of the experiments and the
 experimental setup are given in the folder `experiment`. The report pdf is stored as 
-`Advanced_Simulation_assignment_3.pdf`
+`Advanced_Simulation_assignment_4.pdf`
 
 In order to run the model, one should open and run the `model_run.py` file. This file is connected with other 
 files containing data, model information etc. While running the model_run file, the other files are being activated 
@@ -59,8 +59,8 @@ extend this analysis by implementing more statistical measures.
 
 ## File-structure
 
-**Advanced_Simulation_assignment_3.pdf**
-This file is the report for assignment 3
+**Advanced_Simulation_assignment_4.pdf**
+This file is the report for assignment 4
 
 **data**
 Used for input data for the model.
@@ -69,6 +69,7 @@ Used for input data for the model.
 - `demo-4.csv`
 - `Overview_intersections.xlsx`
 - `Overview_intersections2.xlsx`
+- `input_origin_destination_trucks.csv`
 
 **Experiment** 
 Used to design experimental input and store the experimental output.
@@ -78,7 +79,11 @@ Used to design experimental input and store the experimental output.
 - `scenario2_results.csv`
 - `scenario3_results.csv`
 - `scenario4_results.csv`
-- `visuals.py`
+- `scenario5_results.csv`
+- `scenario6_results.csv`
+- `scenario7_results.csv`
+- `scenario8_results.csv`
+- `Visuals.py`
 
 **model**
 - ContinuousSpace folder: `simple_continuous_canvas.js` `SimpleContinuousModule.py`
@@ -88,11 +93,6 @@ Used to design experimental input and store the experimental output.
 - `model_run.py`
 - `model_viz.py`
 - `road_graph_nx.py`
-
-**bonus**
-Contains the files for the bonus assignment
-`assignment3_bonus_intersections_roads_conclusion.ipynb`
-`intersections_roads_bonus_assingment3_input_file.ipynb`
 
 **img**
 Shows some pictures which visualises how the model works.

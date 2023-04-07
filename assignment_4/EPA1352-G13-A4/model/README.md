@@ -13,7 +13,7 @@ Version:
 
 ## Introduction
 
-A simple transport model demo in MESA for EPA1352 Advanced Simulation course Assignment 3. 
+A simple transport model demo in MESA for EPA1352 Advanced Simulation course Assignment 4. 
 
 ## How to Use
 
@@ -44,6 +44,11 @@ A simple transport model demo in MESA for EPA1352 Advanced Simulation course Ass
 * [model_run.py](model_run.py): Sets up the model run (conditions). Calls the model. Run the simulation without visualization. 
 
     In this file, you define model batch runs.
+
+* [simulator.py](simulator.py): Creates the option to use multiple cores (multi-treading) to decrease run time.
+
+* [create_input_data_roads.py](create_input_data_roads.py): Generates the input_data.csv in the data folder. With this file, the simulation can start 
+and the model can be generated.
 
 * [road_graph_nx.py](road_graph_nx.py): Draws a graph from the file that is also used in `model.py`.
 Uses the information in the file to calculate the shortest paths between sourcesinks.
