@@ -62,6 +62,9 @@ def main():
     scenarios = results_df_combined_bridges['scenario'].unique()
     for sce in scenarios:
         if sce == 0: # Scenario 0 will be caved as the base-case
+
+            # Driving time for vehicles could be returned by the model. However, the focus in assignment 4 is on bridges, not on vehicles, so the code is commented out.
+
            # results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == 0].to_csv\
               #  (r'../experiment\results_trucks\trucks_base_case_results.csv', index_label='index', index=False)
             results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == 0].to_csv \
