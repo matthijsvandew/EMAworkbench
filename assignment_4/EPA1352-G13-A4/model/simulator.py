@@ -13,7 +13,7 @@ def perform_experiment(core_number,job):
     file = dict['file']
     run_length = dict['run_length']
 
-    if dict['seed'] == True:  # If we want to use a random seed: use random seed, otherwise seed 1234567.
+    if dict['random-seed'] == True:  # If we want to use a random seed: use random seed, otherwise seed 1234567.
         seed = random.seed()
     else:
         seed = 1234567

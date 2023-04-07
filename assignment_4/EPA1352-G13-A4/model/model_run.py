@@ -7,16 +7,25 @@ from datetime import datetime
 import simulator
 
 def main():
-    start_time = datetime.now()
-
-    print("The start time of the simulation =", start_time)
-
     """
         Run simulation
         Print output at terminal
     """
+    # ---------------------------------------------------------------
+    # Run settings:
+
+    debug_run = False  # If we want to debug: use the shorter run length.
+    multiprocessing = True # Run on multiple cores or on single-core
+    random_seed = True # Use a random seed or with a static seed
+    file = '../data\input_data.csv' # Use this input file for the road network for the simulation
 
     # ---------------------------------------------------------------
+    # Simulate:
+
+    start_time = datetime.now()
+
+    print("The start time of the simulation =", start_time)
+
     run_settings_dict = {}
 
     # The long run length reflects the run that will be used for experimentation.
@@ -26,18 +35,14 @@ def main():
     # The short run length reflects a run that will be used for debugging because it is a lot faster.
     short_run_length = 500
 
-    debug_run = False # If we want to debug: use the shorter run length.
     if debug_run == True:
         run_settings_dict['run_length'] = short_run_length
     else:
         run_settings_dict['run_length'] = long_run_length
 
-    run_settings_dict['seed'] = True
-
-    multiprocessing = True
-
-    file = '../data\input_data.csv'
     run_settings_dict['file'] = file
+
+    run_settings_dict['random-seed'] = random_seed
 
    # run_settings_dict['shortest_routes_sourcesinks'] = road_graph.find_shortest_path(file_name=file) # Find the shortest paths from every node to every other node in the network.
                                                                                 # Call the find_shortest_path in the road_graph class, which are in the road_graph_nx.py file.
