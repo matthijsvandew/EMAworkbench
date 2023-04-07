@@ -4,7 +4,10 @@ from model import BangladeshModel
 import random
 
 def perform_experiment(core_number,job):
-    # Initiate model.
+    # This function actually runs a single simulation of the BangladeshModel
+    # Function is used multiple times for multi-threading and only 1 time for single-threading
+
+    # Initiate model. Read all information from the job it received
     sce = job[0][0]
     rep = job[0][1]
 
@@ -39,13 +42,13 @@ def proc_func(procnum, jobs_r, results_w):
             results_w.send(result)
 
 def perform_multi_threading(sce_rep_dict): # confirms that the code is under main function
-    # instantiating process with arguments
+    # Initialize empty dataframes
     results_df_combined_trucks = pd.DataFrame()
     results_df_combined_bridges = pd.DataFrame()
 
     procs = []
     results = []
-    num_procs = max(1, mp.cpu_count()-2) # Start at least 1 process
+    num_procs = max(1, mp.cpu_count()-2) # Start at least 1 process (1 core), otherwise amount of cores -2
     # Setup processes and pipes
     for procnum in range(num_procs):
         jobs_r, jobs_w = mp.Pipe(False)
@@ -78,6 +81,7 @@ def perform_multi_threading(sce_rep_dict): # confirms that the code is under mai
                     #print(f"Process {procnum} is done")
                     break # We've invalidated i, so break out to the outer while
                 else:
+                    # Run model multi_threaded, store all results into a single dataframe
                     results_df_trucks, results_df_bridges = result
                     results_df_combined_trucks = pd.concat([results_df_combined_trucks, results_df_trucks])
                     results_df_combined_bridges = pd.concat([results_df_combined_bridges, results_df_bridges])
@@ -87,14 +91,18 @@ def perform_multi_threading(sce_rep_dict): # confirms that the code is under mai
         proc.join()
         #print(f"Joined process {procnum}")
 
+    # Return dataframe which contains all results from all replications and scenarios
     return results_df_combined_trucks, results_df_combined_bridges
 
 def perform_single_threading(sce_rep_dict):
+    # Initialize empty dataframes
     results_df_combined_trucks = pd.DataFrame()
     results_df_combined_bridges = pd.DataFrame()
-    for job in sce_rep_dict.items():
+
+    for job in sce_rep_dict.items(): # Run model single_threaded, store all results into a single dataframe
         results_df_trucks, results_df_bridges = perform_experiment(0,job)
         results_df_combined_trucks = pd.concat([results_df_combined_trucks, results_df_trucks])
         results_df_combined_bridges = pd.concat([results_df_combined_bridges, results_df_bridges])
 
+    # Return dataframe which contains all results from all replications and scenarios
     return results_df_combined_trucks, results_df_combined_bridges

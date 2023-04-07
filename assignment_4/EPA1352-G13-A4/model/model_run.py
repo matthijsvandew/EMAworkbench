@@ -22,7 +22,7 @@ def main():
     # ---------------------------------------------------------------
     # Simulate:
 
-    start_time = datetime.now()
+    start_time = datetime.now() # To keep track of run time
 
     print("The start time of the simulation =", start_time)
 
@@ -54,28 +54,29 @@ def main():
         for rep in range(1,11): # Ten replications per scenario.
             sce_rep_dict[(sce, rep)] = run_settings_dict
 
-    if multiprocessing == True:
+    if multiprocessing == True: # Run the model on multi-threading
         results_df_combined_trucks, results_df_combined_bridges  = simulator.perform_multi_threading(sce_rep_dict)
     else:
         results_df_combined_trucks, results_df_combined_bridges  = simulator.perform_single_threading(sce_rep_dict)
 
-    scenarios = results_df_combined_bridges['scenario'].unique() # Trucks and bridges have same scenario's
+    scenarios = results_df_combined_bridges['scenario'].unique()
     for sce in scenarios:
-        if sce == 0:
+        if sce == 0: # Scenario 0 will be caved as the base-case
            # results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == 0].to_csv\
               #  (r'../experiment\results_trucks\trucks_base_case_results.csv', index_label='index', index=False)
             results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == 0].to_csv \
                 (r'../experiment\results_bridges\bridges_base_case_results.csv', index_label='index', index=False)
-        else:
+        else: # Other scenarios will be saved by their scenario number
             #results_df_combined_trucks.loc[results_df_combined_trucks['scenario'] == sce].to_csv \
               #  (f'../experiment\\results_trucks\\trucks_scenario{sce}_results.csv', index_label='index', index=False)
             results_df_combined_bridges.loc[results_df_combined_bridges['scenario'] == sce].to_csv \
                 (f'../experiment\\results_bridges\\bridges_scenario{sce}_results.csv', index_label='index', index=False)
 
+    # Also save the results of all scenarios in the combined dataframe
    # results_df_combined_trucks.to_csv(r'../experiment\results_trucks\trucks_combined_results.csv', index=False)
     results_df_combined_bridges.to_csv(r'../experiment\results_bridges\bridges_combined_results.csv', index=False)
 
-    end_time = datetime.now()
+    end_time = datetime.now() # To keep track of run time
 
     print("The simulation started at ", start_time, "The end time of the simulation is ", end_time)
     print("Therefore the simulation ran for ",end_time-start_time)
