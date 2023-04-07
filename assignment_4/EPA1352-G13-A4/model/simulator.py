@@ -21,7 +21,7 @@ def perform_experiment(core_number,job):
     sim_model = BangladeshModel(seed=seed,file = file,scenario=sce,replication=rep)
     for i in range(run_length):  # Run model as long as the run_length.
         if i % 100 == 0:
-            print(f'CORE {core_number}: At step {i} for replication {rep} for scenario {sce}')
+            print(f'CORE {core_number}: At step {i} of 7200 steps for replication {rep} for scenario {sce}')
         sim_model.step()
     print(f'CORE {core_number}: Finished replication {rep} for scenario {sce}')
     results_df_trucks, results_df_bridges = sim_model.save_results()
