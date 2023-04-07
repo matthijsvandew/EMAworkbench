@@ -85,15 +85,15 @@ class Bridge(Infra):
         else:
             delay_time = 0
 
-        #list_cars_passed = []
-        if delay_time != 0:
+        if delay_time != 0: # Save the caused delay time by the bridge and the number of vehicles that passed the bridge.
             if ((self.model.df_bridges.id == self.unique_id) & (self.model.df_bridges.replication == self.model.replication) & (self.model.df_bridges.scenario == self.model.scenario)).any() == True:
                 row_number = self.model.df_bridges.loc[(self.model.df_bridges.id == self.unique_id) & (
                             self.model.df_bridges.replication == self.model.replication) & (
-                                                     self.model.df_bridges.scenario == self.model.scenario)].index[0]
-                self.model.df_bridges.loc[row_number, 'caused_delay_time'] += delay_time
-                self.model.df_bridges.loc[row_number, 'number_of_vehicles'] += 1
-            else:
+                                                     self.model.df_bridges.scenario == self.model.scenario)].index[0] # Select the bridge, if it is already in the dataframe.
+                self.model.df_bridges.loc[row_number, 'caused_delay_time'] += delay_time # Add delay time to the bridge that is already in the dataframe.
+                self.model.df_bridges.loc[row_number, 'number_of_vehicles'] += 1 # Add the number of vehicles that passed the bridge.
+
+            else: # Create a new bridge in the dataframe is in not there yet (in the current replication and scenario)
                 dictionary_bridge = {'id': self.unique_id, 'caused_delay_time': delay_time, 'replication': self.model.replication,
                                     'scenario': self.model.scenario, 'number_of_vehicles': 1}
                 delay_caused = pd.DataFrame.from_dict([dictionary_bridge])
@@ -159,17 +159,15 @@ class Source(Infra):
     def __init__(self, unique_id, length,
                  name, road_name, model,number_of_trucks):
         super().__init__(unique_id, length, name, road_name, model)
-        #super(Agent).__init__(unique_id, model)
+
         self.number_of_trucks = number_of_trucks
 
         self.vehicle_count = 0
 
-        #self.truck_counter = 0
-
         self.vehicle_generated_flag = False
 
     def step(self):
-        if (self.number_of_trucks/6704) > random.random():
+        if (self.number_of_trucks/6704) > random.random(): # Generate a truck based on the number of truck that a sourcesink should make, according to the input_origin_destination_trucks.csv file.
             self.generate_truck()
         else:
             self.vehicle_generated_flag = False

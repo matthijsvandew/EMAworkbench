@@ -2,6 +2,8 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Load in results from the different scenarios.
+
 scenario_1_data = pd.read_csv(r'../experiment\results_bridges\bridges_scenario1_results.csv')
 scenario_2_data = pd.read_csv(r'../experiment\results_bridges\bridges_scenario2_results.csv')
 scenario_3_data = pd.read_csv(r'../experiment\results_bridges\bridges_scenario3_results.csv')
@@ -12,8 +14,11 @@ scenario_7_data = pd.read_csv(r'../experiment\results_bridges\bridges_scenario7_
 scenario_8_data = pd.read_csv(r'../experiment\results_bridges\bridges_scenario8_results.csv')
 scenario_8_30_data = pd.read_csv(r'../experiment\results_bridges\bridges_scenario_8_30_results.csv')
 
+# Create plot frame.
+
 fig , ax = plt.subplots(3,3, figsize=(17,10))
 
+# Create boxplots.
 
 sns.boxplot(data=scenario_1_data,x='caused_delay_time', ax=ax[0,0], color='r').set(title= 'Boxplot delay time scenario 1');
 sns.boxplot(data=scenario_2_data,x='caused_delay_time', ax=ax[0,1], color='r').set(title= 'Boxplot delay time scenario 2');

@@ -5,16 +5,18 @@ df_analysis = pd.read_csv(r'../experiment\results_bridges\bridges_scenario3_resu
 
 #print(df_analysis.head())
 
-
+# Set up a dictionary for the delay time that a bridge caused.
 Delaytime_dict = {}
 for i in range(len(df_analysis['id'])):
     Delaytime_dict[df_analysis.loc[i, 'id']] = []
 
+# Add values (caused delay time) to the keys (bridge ids) in the dictionary.
 for i in range(len(df_analysis['id'])):
     Delaytime_dict[df_analysis.loc[i, 'id']] += [df_analysis.loc[i, 'caused_delay_time']]
 
 #print(Delaytime_dict)
 
+# Calculate the average delay time casued by a bridge.
 Average_delaytime_dict = {}
 for i in Delaytime_dict:
     Average_delaytime_dict[i] = sum(Delaytime_dict[i])/len(Delaytime_dict[i])
@@ -29,23 +31,26 @@ df_delaytime = df_delaytime.rename(columns={'index': 'bridge_id'})
 #print(df)
 
 
-
+# Set up a dictionary for the number of vehicles that passed a bridge.
 Number_of_trucks_dict = {}
 for i in range(len(df_analysis['id'])):
     Number_of_trucks_dict[df_analysis.loc[i, 'id']] = []
 
+# Add values (number of vehicles) to the keys (bridge ids) in the dictionary.
 for i in range(len(df_analysis['id'])):
     Number_of_trucks_dict[df_analysis.loc[i, 'id']] += [df_analysis.loc[i, 'number_of_vehicles']]
 
 #print(Number_of_trucks_dict)
 #print(Delaytime_dict)
 
+# Calculate average number of vehicles that passed the bridge.
 Average_trucks_dict = {}
 for i in Number_of_trucks_dict:
     Average_trucks_dict[i] = sum(Number_of_trucks_dict[i])/len(Number_of_trucks_dict[i])
 
 #print(Average_trucks_dict)
 
+# Create dataframe from dictionary.
 df_trucks = pd.DataFrame.from_records(Average_trucks_dict, index=['number_of_vehicles'])
 df_trucks = df_trucks.transpose()
 
@@ -68,6 +73,8 @@ df_merged.sort_values('delay_time',ascending=False,inplace=True)
 df_merged = df_merged.reset_index()
 df_merged = df_merged.drop(columns='index')
 df_merged.insert(loc=3,column='Part_of_road',value=0)
+
+# Add road segment information to dataframe, based on id of the bridge.
 
 for i in range(len(df_merged['bridge_id'])):
     if df_merged.loc[i,'bridge_id'] <= 7 and df_merged.loc[i,'bridge_id'] >= 0:

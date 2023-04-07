@@ -83,7 +83,7 @@ merge_right.insert(loc=0,column='id',value=0)
 for i in range(len(merge_right)): # Give each row in the dataframe a proper id number.
      merge_right.loc[i, 'id'] = round(i)
 
-# Specify the types of elements in the network. Source sinks will be added later.
+# Specify the types of elements in the network. Sourcesinks will be added later.
 
 for i in range(len(merge_right)):
      if i == len(merge_right):
@@ -125,10 +125,6 @@ merge_right.insert(loc=0,column='id',value=0)
 for i in range(len(merge_right)):
      merge_right.loc[i, 'id'] = round(i)
 
-# Integrate intersections in the dataframe that should be in the data already, but are not. These intersections exist, but are not in the data.
-#merge_right.loc[(565+0.5)] = [(565+1), merge_right.road[565], 'LRP_inserted', 0, 0, 91.833060, 22.368996, 'intersection', 'inserted_intersection', 'NaN']
-#merge_right.loc[(1938+0.5)] = [(565+1), merge_right.road[1939], 'LRP_inserted', 0, 0, 91.833060, 22.368996, 'intersection', 'inserted_intersection', 'NaN']
-
 merge_right = merge_right.sort_index().reset_index(drop=True)
 
 merge_right = merge_right.drop(columns=['id'])
@@ -138,33 +134,7 @@ merge_right.insert(loc=0,column='id',value=0)
 for i in range(len(merge_right)):
      merge_right.loc[i, 'id'] = round(i)
 
-# Some (extra) sourcesinks/links need to be intersections points. This is determined based on the information about each LRP given in the dataframe and Google Maps.
-
-#merge_right.loc[1941,['model_type']] = ['link'] # 1940 becomes an intersection. 1941 needs to be a link.
-# merge_right.loc[1477,['model_type']] = ['intersection']
-# merge_right.loc[1691,['model_type']] = ['intersection']
-# merge_right.loc[1687,['model_type']] = ['intersection']
-# merge_right.loc[1811,['model_type']] = ['intersection']
-# merge_right.loc[3021,['model_type']] = ['intersection']
-# merge_right.loc[3058,['model_type']] = ['intersection']
-# merge_right.loc[3412,['model_type']] = ['intersection']
-# merge_right.loc[3657,['model_type']] = ['intersection']
-
-# merge_right.loc[1940,['id','lon','lat']] = ['566','91.83306','22.368996'] # intersection N1 N106
-# merge_right.loc[2194,['id','lon','lat']] = ['16','90.521527','23.7060833'] # intersection N1 N2
-# merge_right.loc[1477,['id','lon','lat']] = ['175','91.118166','23.4789716'] # intersection N1 N102
-# merge_right.loc[1691,['id','lon','lat']] = ['325','91.3813604','23.0095556'] # intersection N1 N104
-# merge_right.loc[1811,['id','lon','lat']] = ['29','90.5466108','23.6904163'] # intersection N1 N105
-# merge_right.loc[2211,['id','lon','lat']] = ['1840','90.5688049','23.7851941'] # intersection N105 N2
-# merge_right.loc[2438,['id','lon','lat']] = ['1687','91.1144444','24.0508333'] # intersection N102 N2
-# merge_right.loc[3173,['id','lon','lat']] = ['2514','91.3464441','24.1478608'] # intersection N2 N204
-# merge_right.loc[3279,['id','lon','lat']] = ['2654','91.5100833','24.294721'] # intersection N2 N207
-# merge_right.loc[3461,['id','lon','lat']] = ['2918','91.6774993','24.6264993'] # intersection N2 N207
-# merge_right.loc[3663,['id','lon','lat']] = ['3021','91.8752771','24.8776938'] # intersection N2 N208
-# merge_right.loc[3664,['id','lon','lat']] = ['3058','91.949583','24.9163056'] # intersection N2 N210
-# merge_right.loc[3462,['id','lon','lat']] = ['3412','91.7654722','24.4714438'] # intersection N207 N208
-# merge_right.loc[3714,['id','lon','lat']] = ['3657','91.896583','24.8479997'] # intersection N208 N210
-
+# Place, based on the input_origin_destination_trucks.csv, the correct sourcesinks in the data file and provide the number of vehicles they generate.
 merge_right.insert(column='number_of_trucks',value=None,loc=10)
 df_sourcesinks = pd.read_csv('../data\input_origin_destination_trucks.csv')
 for row in range(len(df_sourcesinks)):
